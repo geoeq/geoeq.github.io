@@ -1,64 +1,1160 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GeoEq</title>
+    <title>GeoEq - Geotechnical Engineering Calculations for Python</title>
+    <meta name="description"
+        content="GeoEq is an open-source Python library for geotechnical engineering calculations. Soil properties, bearing capacity, settlement, and more.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
     <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --blue-900: #0c1a3a;
+            --blue-800: #122450;
+            --blue-700: #1a3570;
+            --blue-600: #1e4d8f;
+            --blue-500: #2563a8;
+            --blue-400: #3b82c4;
+            --blue-300: #6ba3d6;
+            --blue-200: #a3c8e8;
+            --blue-100: #dbeaf7;
+            --blue-50: #f0f6fc;
+            --white: #ffffff;
+            --gray-50: #f8f9fb;
+            --gray-100: #eef1f5;
+            --gray-200: #d8dde6;
+            --gray-300: #b0b8c8;
+            --gray-400: #8892a4;
+            --gray-500: #5f6b7a;
+            --gray-600: #3d4856;
+            --gray-700: #2a3240;
+            --gray-800: #1a2030;
+            --accent: #e8a825;
+            --font-body: 'DM Sans', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-            max-width: 720px;
-            margin: 60px auto;
-            padding: 0 20px;
-            color: #24292e;
-            line-height: 1.6;
+            font-family: var(--font-body);
+            color: var(--gray-700);
+            background: var(--white);
+            line-height: 1.65;
+            -webkit-font-smoothing: antialiased;
         }
-        h1 { font-size: 2.4em; margin-bottom: 0.2em; }
-        .tagline { color: #586069; font-size: 1.2em; margin-bottom: 2em; }
-        code {
-            background: #f6f8fa;
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-size: 0.95em;
+
+        /* ---- NAV ---- */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--gray-100);
+            transition: box-shadow 0.3s;
         }
-        pre {
-            background: #f6f8fa;
-            padding: 16px;
-            border-radius: 6px;
+
+        .nav.scrolled {
+            box-shadow: 0 1px 12px rgba(0, 0, 0, 0.06);
+        }
+
+        .nav-inner {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 0 32px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--blue-800);
+        }
+
+        .nav-logo-icon {
+            width: 34px;
+            height: 34px;
+        }
+
+        .nav-logo-text {
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--gray-500);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--blue-600);
+        }
+
+        .nav-links .btn-nav {
+            background: var(--blue-600);
+            color: var(--white);
+            padding: 8px 20px;
+            border-radius: 7px;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        .nav-links .btn-nav:hover {
+            background: var(--blue-700);
+            color: var(--white);
+        }
+
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        .mobile-toggle span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: var(--gray-600);
+            margin: 5px 0;
+            transition: 0.3s;
+        }
+
+        /* ---- HERO ---- */
+        .hero {
+            padding: 160px 32px 100px;
+            background: linear-gradient(168deg, var(--white) 0%, var(--blue-50) 50%, var(--blue-100) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -200px;
+            right: -200px;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(37, 99, 168, 0.06) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -100px;
+            left: -100px;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(37, 99, 168, 0.04) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-inner {
+            max-width: 1120px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--white);
+            border: 1px solid var(--blue-200);
+            color: var(--blue-600);
+            font-size: 0.82rem;
+            font-weight: 600;
+            padding: 6px 16px;
+            border-radius: 100px;
+            margin-bottom: 28px;
+            animation: fadeUp 0.6s ease both;
+        }
+
+        .hero-badge .dot {
+            width: 7px;
+            height: 7px;
+            background: #34c759;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.4;
+            }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.4rem, 5vw, 3.8rem);
+            font-weight: 700;
+            color: var(--blue-900);
+            line-height: 1.15;
+            letter-spacing: -0.03em;
+            max-width: 700px;
+            margin-bottom: 20px;
+            animation: fadeUp 0.6s 0.1s ease both;
+        }
+
+        .hero h1 span {
+            color: var(--blue-500);
+        }
+
+        .hero-sub {
+            font-size: 1.15rem;
+            color: var(--gray-500);
+            max-width: 540px;
+            margin-bottom: 36px;
+            animation: fadeUp 0.6s 0.2s ease both;
+        }
+
+        .hero-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            animation: fadeUp 0.6s 0.3s ease both;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 13px 28px;
+            border-radius: 8px;
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--blue-600);
+            color: var(--white);
+            box-shadow: 0 2px 8px rgba(30, 77, 143, 0.25);
+        }
+
+        .btn-primary:hover {
+            background: var(--blue-700);
+            box-shadow: 0 4px 16px rgba(30, 77, 143, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: var(--white);
+            color: var(--gray-700);
+            border: 1px solid var(--gray-200);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--blue-300);
+            color: var(--blue-600);
+        }
+
+        .btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .hero-install {
+            margin-top: 40px;
+            animation: fadeUp 0.6s 0.4s ease both;
+        }
+
+        .install-box {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--blue-900);
+            color: var(--blue-200);
+            padding: 14px 24px;
+            border-radius: 10px;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .install-box:hover {
+            background: var(--blue-800);
+        }
+
+        .install-box .prompt {
+            color: var(--gray-400);
+            user-select: none;
+        }
+
+        .install-box .cmd {
+            color: #a3d9ff;
+        }
+
+        .install-box .pkg {
+            color: var(--white);
+            font-weight: 500;
+        }
+
+        .copy-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: var(--gray-300);
+            padding: 4px 10px;
+            border-radius: 5px;
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--white);
+        }
+
+        .copy-btn.copied {
+            color: #34c759;
+        }
+
+        /* ---- STATS BAR ---- */
+        .stats-bar {
+            background: var(--white);
+            border-top: 1px solid var(--gray-100);
+            border-bottom: 1px solid var(--gray-100);
+            padding: 32px;
+        }
+
+        .stats-inner {
+            max-width: 1120px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--blue-700);
+            letter-spacing: -0.02em;
+        }
+
+        .stat-label {
+            font-size: 0.82rem;
+            color: var(--gray-400);
+            font-weight: 500;
+            margin-top: 2px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        /* ---- SECTIONS ---- */
+        .section {
+            padding: 100px 32px;
+        }
+
+        .section-inner {
+            max-width: 1120px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--blue-500);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-size: clamp(1.6rem, 3vw, 2.2rem);
+            font-weight: 700;
+            color: var(--blue-900);
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+        }
+
+        .section-desc {
+            font-size: 1.05rem;
+            color: var(--gray-500);
+            max-width: 580px;
+            margin-bottom: 48px;
+        }
+
+        /* ---- CODE EXAMPLE ---- */
+        .code-section {
+            background: var(--gray-50);
+        }
+
+        .code-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: center;
+        }
+
+        .code-block {
+            background: var(--blue-900);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(12, 26, 58, 0.15);
+        }
+
+        .code-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 20px;
+            background: rgba(0, 0, 0, 0.15);
+        }
+
+        .code-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .code-dot.r {
+            background: #ff5f57;
+        }
+
+        .code-dot.y {
+            background: #ffbd2e;
+        }
+
+        .code-dot.g {
+            background: #28c840;
+        }
+
+        .code-header span {
+            margin-left: auto;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--gray-400);
+        }
+
+        .code-body {
+            padding: 24px;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            line-height: 1.75;
+            color: #c9d1d9;
             overflow-x: auto;
         }
-        a { color: #0366d6; text-decoration: none; }
-        a:hover { text-decoration: underline; }
+
+        .code-body .kw {
+            color: #ff7b72;
+        }
+
+        .code-body .fn {
+            color: #79c0ff;
+        }
+
+        .code-body .str {
+            color: #a5d6ff;
+        }
+
+        .code-body .num {
+            color: #79c0ff;
+        }
+
+        .code-body .cm {
+            color: #6e7681;
+            font-style: italic;
+        }
+
+        .code-body .op {
+            color: #c9d1d9;
+        }
+
+        .code-body .var {
+            color: #ffa657;
+        }
+
+        /* ---- FEATURES ---- */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .feature-card {
+            background: var(--white);
+            border: 1px solid var(--gray-100);
+            border-radius: 12px;
+            padding: 32px 28px;
+            transition: all 0.25s;
+        }
+
+        .feature-card:hover {
+            border-color: var(--blue-200);
+            box-shadow: 0 4px 20px rgba(37, 99, 168, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .feature-icon {
+            width: 44px;
+            height: 44px;
+            background: var(--blue-50);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 18px;
+        }
+
+        .feature-icon svg {
+            width: 22px;
+            height: 22px;
+            color: var(--blue-500);
+        }
+
+        .feature-card h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--blue-900);
+            margin-bottom: 8px;
+        }
+
+        .feature-card p {
+            font-size: 0.9rem;
+            color: var(--gray-500);
+            line-height: 1.6;
+        }
+
+        /* ---- ROADMAP ---- */
+        .roadmap-section {
+            background: var(--blue-900);
+            color: var(--white);
+        }
+
+        .roadmap-section .section-label {
+            color: var(--blue-300);
+        }
+
+        .roadmap-section .section-title {
+            color: var(--white);
+        }
+
+        .roadmap-section .section-desc {
+            color: var(--blue-200);
+        }
+
+        .roadmap-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .roadmap-card {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            padding: 24px;
+            transition: all 0.2s;
+        }
+
+        .roadmap-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .roadmap-version {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--blue-300);
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .roadmap-card h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 6px;
+        }
+
+        .roadmap-card p {
+            font-size: 0.82rem;
+            color: var(--blue-200);
+            line-height: 1.55;
+        }
+
+        .roadmap-card.active {
+            border-color: var(--blue-400);
+            background: rgba(37, 99, 168, 0.15);
+        }
+
+        .roadmap-card.active .roadmap-version {
+            color: #34c759;
+        }
+
+        /* ---- CTA / COLLABORATE ---- */
+        .cta-section {
+            background: linear-gradient(168deg, var(--blue-50) 0%, var(--white) 100%);
+            text-align: center;
+        }
+
+        .cta-section .section-title {
+            max-width: 600px;
+            margin: 0 auto 16px;
+        }
+
+        .cta-section .section-desc {
+            max-width: 520px;
+            margin: 0 auto 36px;
+        }
+
+        .cta-actions {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        /* ---- FOOTER ---- */
+        .footer {
+            background: var(--gray-50);
+            border-top: 1px solid var(--gray-100);
+            padding: 48px 32px;
+        }
+
+        .footer-inner {
+            max-width: 1120px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-left svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .footer-text {
+            font-size: 0.85rem;
+            color: var(--gray-400);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+            list-style: none;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: var(--gray-400);
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--blue-600);
+        }
+
+        /* ---- ANIMATIONS ---- */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ---- RESPONSIVE ---- */
+        @media (max-width: 900px) {
+            .code-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .stats-inner {
+                gap: 32px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-toggle {
+                display: block;
+            }
+
+            .nav-links.open {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 64px;
+                left: 0;
+                right: 0;
+                background: var(--white);
+                border-bottom: 1px solid var(--gray-100);
+                padding: 20px 32px;
+                gap: 16px;
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+            }
+
+            .hero {
+                padding: 130px 24px 80px;
+            }
+
+            .section {
+                padding: 64px 24px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-actions {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
     </style>
 </head>
+
 <body>
-    <h1>GeoEq</h1>
-    <p class="tagline">A Python library for geotechnical engineering calculations.</p>
 
-    <h2>Install</h2>
-    <pre><code>pip install geoeq</code></pre>
+    <!-- NAV -->
+    <nav class="nav" id="nav">
+        <div class="nav-inner">
+            <a href="#" class="nav-logo">
+                <svg class="nav-logo-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="40" height="40" rx="8" fill="#1e4d8f" />
+                    <path d="M11 28V16.5C11 13.5 13.5 11 16.5 11H20C23 11 25.5 13.5 25.5 16.5V19" stroke="white"
+                        stroke-width="2.5" stroke-linecap="round" />
+                    <circle cx="25" cy="24" r="5" stroke="white" stroke-width="2.2" />
+                    <path d="M28.5 27.5L31 30" stroke="white" stroke-width="2.2" stroke-linecap="round" />
+                    <line x1="22" y1="24" x2="28" y2="24" stroke="white" stroke-width="1.5" stroke-linecap="round" />
+                    <line x1="25" y1="21" x2="25" y2="27" stroke="white" stroke-width="1.5" stroke-linecap="round" />
+                </svg>
+                <span class="nav-logo-text">GeoEq</span>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#quickstart">Quick Start</a></li>
+                <li><a href="#roadmap">Roadmap</a></li>
+                <li><a href="https://pypi.org/project/geoeq/" target="_blank">PyPI</a></li>
+                <li><a href="https://github.com/geoeq/geoeq" target="_blank" class="btn-nav">GitHub</a></li>
+            </ul>
+            <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
 
-    <h2>Quick start</h2>
-    <pre><code>import geoeq as ge
-from geoeq.soil import properties as sp
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="hero-badge"><span class="dot"></span> v0.0.2 Released</div>
+            <h1>Geotechnical equations,<br><span>solved in Python.</span></h1>
+            <p class="hero-sub">GeoEq is an open-source Python library that brings validated geotechnical formulas into
+                one clean, consistent, and well-documented package.</p>
+            <div class="hero-actions">
+                <a href="https://pypi.org/project/geoeq/" target="_blank" class="btn btn-primary">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                        <polyline points="7 10 12 15 17 10" />
+                        <line x1="12" y1="15" x2="12" y2="3" />
+                    </svg>
+                    Install from PyPI
+                </a>
+                <a href="#collaborate" class="btn btn-secondary">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                        <circle cx="9" cy="7" r="4" />
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                    </svg>
+                    Collaborate
+                </a>
+            </div>
+            <div class="hero-install">
+                <div class="install-box" id="installBox" title="Click to copy">
+                    <span class="prompt">$</span>
+                    <span class="cmd">pip install</span>
+                    <span class="pkg">geoeq</span>
+                    <button class="copy-btn" id="copyBtn">copy</button>
+                </div>
+            </div>
+        </div>
+    </section>
 
-gamma_d = sp.dry_unit_weight(Gs=2.65, e=0.72)
-print(f"Dry unit weight: {gamma_d:.2f} kN/m3")</code></pre>
+    <!-- STATS -->
+    <div class="stats-bar">
+        <div class="stats-inner">
+            <div class="stat-item">
+                <div class="stat-value">16</div>
+                <div class="stat-label">Functions</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">43</div>
+                <div class="stat-label">Tests</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">0</div>
+                <div class="stat-label">Dependencies</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">MIT</div>
+                <div class="stat-label">License</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">3.9+</div>
+                <div class="stat-label">Python</div>
+            </div>
+        </div>
+    </div>
 
-    <h2>Links</h2>
-    <p>
-        <a href="https://pypi.org/project/geoeq/">PyPI</a> |
-        <a href="https://github.com/geoeq/geoeq">GitHub</a>
-    </p>
+    <!-- FEATURES -->
+    <section class="section" id="features">
+        <div class="section-inner">
+            <div class="section-label">What's inside</div>
+            <h2 class="section-title">Built for geotechnical engineers.</h2>
+            <p class="section-desc">Every function validates inputs, documents units, references its source method, and
+                returns clear results. No hidden surprises.</p>
+            <div class="features-grid">
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                        </svg>
+                    </div>
+                    <h3>Validated inputs</h3>
+                    <p>Every function checks for physically impossible values and raises clear errors before computing.
+                        No silent failures.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                            <polyline points="14 2 14 8 20 8" />
+                            <line x1="16" y1="13" x2="8" y2="13" />
+                            <line x1="16" y1="17" x2="8" y2="17" />
+                        </svg>
+                    </div>
+                    <h3>Documented units</h3>
+                    <p>Every docstring states what units are expected and returned. kN/m3, kPa, degrees -- never left to
+                        guesswork.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+                            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+                        </svg>
+                    </div>
+                    <h3>Traceable methods</h3>
+                    <p>Every formula references its source textbook or paper. Das, Holtz, Craig -- fully traceable
+                        engineering methods.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="16 18 22 12 16 6" />
+                            <polyline points="8 6 2 12 8 18" />
+                        </svg>
+                    </div>
+                    <h3>Zero dependencies</h3>
+                    <p>Pure Python standard library. Install it anywhere -- no numpy, no scipy, no heavy packages
+                        required.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                            <polyline points="22 4 12 14.01 9 11.01" />
+                        </svg>
+                    </div>
+                    <h3>Tested formulas</h3>
+                    <p>43 tests against hand-calculated values and textbook examples. Every function verified before
+                        release.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                            <line x1="3" y1="9" x2="21" y2="9" />
+                            <line x1="9" y1="21" x2="9" y2="9" />
+                        </svg>
+                    </div>
+                    <h3>Clean API</h3>
+                    <p>Readable function names, consistent parameters, dataclass results. Designed to feel natural in
+                        your workflow.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <h2>Status</h2>
-    <p>
-        v0.0.1 -- soil property and phase-relationship formulas.
-        More modules coming soon.
-    </p>
+    <!-- CODE EXAMPLE -->
+    <section class="section code-section" id="quickstart">
+        <div class="section-inner">
+            <div class="code-grid">
+                <div>
+                    <div class="section-label">Quick start</div>
+                    <h2 class="section-title">Up and running in seconds.</h2>
+                    <p class="section-desc">Install from PyPI and start computing soil properties immediately. No
+                        configuration, no setup files, no boilerplate.</p>
+                    <p style="font-size:0.9rem; color:var(--gray-500); line-height:1.7;">
+                        v0.0.1 includes 16 soil phase-relationship functions covering void ratio, porosity, saturation,
+                        unit weights, density, relative density, and Atterberg limit indices.
+                    </p>
+                </div>
+                <div class="code-block fade-in">
+                    <div class="code-header">
+                        <div class="code-dot r"></div>
+                        <div class="code-dot y"></div>
+                        <div class="code-dot g"></div>
+                        <span>example.py</span>
+                    </div>
+                    <pre
+                        class="code-body"><span class="kw">import</span> geoeq <span class="kw">as</span> ge
+<span class="kw">from</span> geoeq.soil <span class="kw">import</span> properties <span class="kw">as</span> sp
 
-    <p style="margin-top: 3em; color: #586069; font-size: 0.9em;">
-        Copyright 2026 Ripon Chandra Malo. MIT License.
-    </p>
+<span class="cm"># Unit weights from Gs and void ratio</span>
+<span class="var">gamma_d</span>   <span class="op">=</span> sp.<span class="fn">dry_unit_weight</span>(Gs=<span class="num">2.65</span>, e=<span class="num">0.72</span>)
+<span class="var">gamma_sat</span> <span class="op">=</span> sp.<span class="fn">saturated_unit_weight</span>(Gs=<span class="num">2.65</span>, e=<span class="num">0.72</span>)
+<span class="var">gamma_sub</span> <span class="op">=</span> sp.<span class="fn">submerged_unit_weight</span>(Gs=<span class="num">2.65</span>, e=<span class="num">0.72</span>)
+
+<span class="cm"># Phase relations</span>
+<span class="var">S</span>  <span class="op">=</span> sp.<span class="fn">degree_of_saturation</span>(w=<span class="num">0.18</span>, Gs=<span class="num">2.65</span>, e=<span class="num">0.72</span>)
+<span class="var">Dr</span> <span class="op">=</span> sp.<span class="fn">relative_density</span>(e=<span class="num">0.60</span>, e_max=<span class="num">0.85</span>, e_min=<span class="num">0.45</span>)
+
+<span class="cm"># Atterberg limits</span>
+<span class="var">PI</span> <span class="op">=</span> sp.<span class="fn">plasticity_index</span>(LL=<span class="num">48</span>, PL=<span class="num">22</span>)
+<span class="var">LI</span> <span class="op">=</span> sp.<span class="fn">liquidity_index</span>(w=<span class="num">35</span>, PL=<span class="num">22</span>, PI=<span class="num">26</span>)
+
+<span class="fn">print</span>(<span class="str">f"Dry: </span><span class="str">{gamma_d:.2f}</span> <span class="str">kN/m3"</span>)</pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ROADMAP -->
+    <section class="section roadmap-section" id="roadmap">
+        <div class="section-inner">
+            <div class="section-label">Roadmap</div>
+            <h2 class="section-title">Growing into a full engineering toolkit.</h2>
+            <p class="section-desc">GeoEq starts with fundamentals and expands into advanced geotechnical methods. Here
+                is what is planned.</p>
+            <div class="roadmap-grid">
+                <div class="roadmap-card active">
+                    <div class="roadmap-version">v0.0.1 -- current</div>
+                    <h4>Soil Properties</h4>
+                    <p>Phase relations, unit weights, density, relative density, Atterberg limits.</p>
+                </div>
+                <div class="roadmap-card">
+                    <div class="roadmap-version">v0.1.x</div>
+                    <h4>Stress &amp; Seepage</h4>
+                    <p>Effective stress, pore pressure, hydraulic gradient, quick condition.</p>
+                </div>
+                <div class="roadmap-card">
+                    <div class="roadmap-version">v0.2.x</div>
+                    <h4>Foundations</h4>
+                    <p>Bearing capacity, settlement, Schmertmann method, eccentric loading.</p>
+                </div>
+                <div class="roadmap-card">
+                    <div class="roadmap-version">v0.3.x</div>
+                    <h4>Site Investigation</h4>
+                    <p>SPT/CPT correlations, USCS classification, soil profile objects.</p>
+                </div>
+                <div class="roadmap-card">
+                    <div class="roadmap-version">v0.4.x</div>
+                    <h4>Earth Pressure</h4>
+                    <p>Rankine, Coulomb, retaining wall stability, consolidation.</p>
+                </div>
+                <div class="roadmap-card">
+                    <div class="roadmap-version">v0.5.x</div>
+                    <h4>Advanced Methods</h4>
+                    <p>Pile capacity, slope stability, liquefaction, seismic assessment.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- COLLABORATE CTA -->
+    <section class="section cta-section" id="collaborate">
+        <div class="section-inner">
+            <div class="section-label">Open source</div>
+            <h2 class="section-title">Help shape the future of geotechnical computing.</h2>
+            <p class="section-desc">GeoEq is an open-source project built to make geotechnical calculations clean,
+                consistent, and accessible. Engineers, students, and researchers are invited to collaborate -- add
+                methods, write tests, improve docs, or share feedback.</p>
+            <div class="cta-actions">
+                <a href="https://github.com/geoeq/geoeq" target="_blank" class="btn btn-primary">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                    </svg>
+                    View on GitHub
+                </a>
+                <a href="https://pypi.org/project/geoeq/" target="_blank" class="btn btn-secondary">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                        <polyline points="7 10 12 15 17 10" />
+                        <line x1="12" y1="15" x2="12" y2="3" />
+                    </svg>
+                    Download from PyPI
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-left">
+                <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="40" height="40" rx="8" fill="#1e4d8f" />
+                    <path d="M11 28V16.5C11 13.5 13.5 11 16.5 11H20C23 11 25.5 13.5 25.5 16.5V19" stroke="white"
+                        stroke-width="2.5" stroke-linecap="round" />
+                    <circle cx="25" cy="24" r="5" stroke="white" stroke-width="2.2" />
+                    <path d="M28.5 27.5L31 30" stroke="white" stroke-width="2.2" stroke-linecap="round" />
+                    <line x1="22" y1="24" x2="28" y2="24" stroke="white" stroke-width="1.5" stroke-linecap="round" />
+                    <line x1="25" y1="21" x2="25" y2="27" stroke="white" stroke-width="1.5" stroke-linecap="round" />
+                </svg>
+                <span class="footer-text">GeoEq &copy; 2026 Ripon Chandra Malo. MIT License.</span>
+            </div>
+            <ul class="footer-links">
+                <li><a href="https://pypi.org/project/geoeq/" target="_blank">PyPI</a></li>
+                <li><a href="https://github.com/geoeq/geoeq" target="_blank">GitHub</a></li>
+                <li><a href="https://github.com/geoeq/geoeq/blob/main/CHANGELOG.md" target="_blank">Changelog</a></li>
+                <li><a href="https://github.com/geoeq/geoeq/blob/main/LICENSE" target="_blank">License</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <script>
+        // Nav scroll effect
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 10);
+        });
+
+        // Mobile menu
+        const mobileToggle = document.getElementById('mobileToggle');
+        const navLinks = document.getElementById('navLinks');
+        mobileToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('open');
+        });
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => navLinks.classList.remove('open'));
+        });
+
+        // Copy install command
+        const installBox = document.getElementById('installBox');
+        const copyBtn = document.getElementById('copyBtn');
+        function copyInstall() {
+            navigator.clipboard.writeText('pip install geoeq').then(() => {
+                copyBtn.textContent = 'copied!';
+                copyBtn.classList.add('copied');
+                setTimeout(() => {
+                    copyBtn.textContent = 'copy';
+                    copyBtn.classList.remove('copied');
+                }, 2000);
+            });
+        }
+        installBox.addEventListener('click', copyInstall);
+
+        // Scroll fade-in
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
 </body>
+
 </html>
