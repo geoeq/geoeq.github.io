@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Guide - GeoEq Geotechnical Engineering</title>
+    <meta name="description" content="Detailed manual and user guide for GeoEq Python library. Soil properties, phase relations, and more.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <style>
+        /* Sidebar transition for mobile */
+        @media (max-width: 960px) {
+            .mobile-sidebar-toggle {
+                display: block;
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background: var(--blue-600);
+                color: white;
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+                z-index: 1100;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAV -->
+    <nav class="nav" id="nav">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo">
+                <svg class="nav-logo-icon" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect id="background" x="0" y="0" width="512" height="512" rx="91" ry="91" fill="#1e4d8f" />
+                    <path id="letter-G" d="M 307,108 C 230,108  131,182  131,273 C 131,364  230,438  307,438 C 352,438  381,420  381,420 L 381,296" fill="none" stroke="#ffffff" stroke-width="23" stroke-linecap="round" stroke-linejoin="round" />
+                    <line id="equals-top" x1="307" y1="256" x2="420" y2="256" stroke="#ffffff" stroke-width="16" stroke-linecap="round" />
+                    <line id="equals-bottom" x1="307" y1="307" x2="420" y2="307" stroke="#ffffff" stroke-width="16" stroke-linecap="round" />
+                </svg>
+                <span class="nav-logo-text">GeoEq</span>
+            </a>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html#quickstart">Getting started</a></li>
+                <li><a href="user-guide.html" class="active">User Guide</a></li>
+                <li><a href="https://github.com/geoeq/geoeq#api" target="_blank">API</a></li>
+                <li><a href="https://github.com/sponsors/geoeq" target="_blank">Donation</a></li>
+                <li><a href="https://github.com/geoeq/geoeq/blob/main/CHANGELOG.md" target="_blank">Release note</a></li>
+            </ul>
+
+            <div class="search-container">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="text" class="search-input" id="searchInput" placeholder="Search manual...">
+            </div>
+
+            <div class="nav-actions">
+                <button class="icon-btn" id="themeToggle" title="Toggle theme">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+                <a href="https://github.com/geoeq/geoeq" target="_blank" class="icon-btn" title="GitHub Repository">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                    </svg>
+                </a>
+            </div>
+
+            <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="docs-container animate-fade">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Getting Started</h3>
+                <ul class="sidebar-links">
+                    <li><a href="#intro" class="active">Introduction</a></li>
+                    <li><a href="#install">Installation</a></li>
+                    <li><a href="#quickstart">Quick Start</a></li>
+                </ul>
+            </div>
+            
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">User Guide</h3>
+                <ul class="sidebar-links">
+                    <li><a href="#soil-props">Soil Properties</a></li>
+                    <li><a href="#atterberg">Atterberg Limits</a></li>
+                    <li><a href="#unit-weights">Unit Weights</a></li>
+                    <li><a href="#relative-density">Relative Density</a></li>
+                    <li><a href="#phase-relations">Phase Relations</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Advanced</h3>
+                <ul class="sidebar-links">
+                    <li><a href="#formulas">Formula Reference</a></li>
+                    <li><a href="#best-practices">Best Practices</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content content">
+            <nav class="breadcrumbs">
+                <a href="index.html" class="breadcrumb-item">Home</a>
+                <span class="breadcrumb-item">User Guide</span>
+                <span class="breadcrumb-item">Manual</span>
+            </nav>
+
+            <section id="intro">
+                <h1>User Guide</h1>
+                <p>The User Guide covers all aspects of GeoEq, from basic soil property calculations to advanced geotechnical modeling. Each section introduces a topic (such as "unit weight calculations") and discusses how GeoEq approaches the problem, complete with code examples.</p>
+                <p>GeoEq is designed to be lightweight, traceable, and reliable. Every formula used in this library is cross-referenced with standard geotechnical textbooks like Das, Holtz, and Craig.</p>
+            </section>
+
+            <section id="soil-props">
+                <h2>Soil Properties</h2>
+                <p>Soil properties form the foundation of geotechnical engineering. GeoEq provides a comprehensive set of functions to calculate these properties from basic laboratory data.</p>
+                
+                <div class="code-container">
+                    <div class="code-header">
+                        <div class="code-dots">
+                            <div class="code-dot dot-red"></div>
+                            <div class="code-dot dot-yellow"></div>
+                            <div class="code-dot dot-green"></div>
+                        </div>
+                        <span class="code-lang">python</span>
+                    </div>
+                    <button class="copy-btn">Copy</button>
+                    <div class="code-block">
+                        <pre><span class="imp">from</span> geoeq.soil <span class="imp">import</span> properties <span class="imp">as</span> sp
+
+<span class="cm"># Calculate void ratio from porosity</span>
+<span class="var">void_ratio</span> = sp.<span class="fn">void_ratio_from_porosity</span>(n=<span class="num">0.42</span>)
+<span class="fn">print</span>(<span class="str">f"Void Ratio: </span><span class="str">{void_ratio:.3f}</span><span class="str">"</span>)</pre>
+                    </div>
+                </div>
+
+                <p>All property functions validate that input values fall within physically possible ranges (e.g., porosity cannot be greater than 1 or less than 0).</p>
+            </section>
+
+            <section id="unit-weights">
+                <h2>Unit Weight Calculations</h2>
+                <p>Calculating the dry, saturated, and submerged unit weights of soil is a frequent task. GeoEq implements these using specific gravity (Gs), void ratio (e), and moisture content (w).</p>
+                
+                <div class="code-container">
+                    <div class="code-header">
+                        <div class="code-dots">
+                            <div class="code-dot dot-red"></div>
+                            <div class="code-dot dot-yellow"></div>
+                            <div class="code-dot dot-green"></div>
+                        </div>
+                        <span class="code-lang">python</span>
+                    </div>
+                    <button class="copy-btn">Copy</button>
+                    <div class="code-block">
+                        <pre><span class="cm"># Saturated unit weight (kN/m3)</span>
+<span class="var">gamma_sat</span> = sp.<span class="fn">saturated_unit_weight</span>(Gs=<span class="num">2.65</span>, e=<span class="num">0.68</span>, unit_weight_water=<span class="num">9.81</span>)
+<span class="fn">print</span>(<span class="str">f"Saturated Unit Weight: </span><span class="str">{gamma_sat:.2f}</span><span class="str"> kN/m3"</span>)</pre>
+                    </div>
+                </div>
+            </section>
+
+            <section id="atterberg">
+                <h2>Atterberg Limits</h2>
+                <p>Atterberg limits define the critical water contents of a fine-grained soil. GeoEq calculates the Plasticity Index (PI) and Liquidity Index (LI) used for soil classification.</p>
+                
+                <div class="code-container">
+                    <div class="code-header">
+                        <div class="code-dots">
+                            <div class="code-dot dot-red"></div>
+                            <div class="code-dot dot-yellow"></div>
+                            <div class="code-dot dot-green"></div>
+                        </div>
+                        <span class="code-lang">python</span>
+                    </div>
+                    <button class="copy-btn">Copy</button>
+                    <div class="code-block">
+                        <pre><span class="cm"># Calculate Plasticity Index</span>
+<span class="var">pi</span> = sp.<span class="fn">plasticity_index</span>(LL=<span class="num">45</span>, PL=<span class="num">20</span>)
+
+<span class="cm"># Calculate Liquidity Index</span>
+<span class="var">li</span> = sp.<span class="fn">liquidity_index</span>(w=<span class="num">32</span>, PL=<span class="num">20</span>, PI=<span class="var">pi</span>)</pre>
+                    </div>
+                </div>
+            </section>
+
+            <section id="formulas">
+                <h2>Behind the Code</h2>
+                <p>GeoEq isn't just a library; it's an engineering tool. We believe in transparency. Below is a summary of the core equations implemented in the current version.</p>
+                <p><strong>Dry Unit Weight:</strong> &gamma;<sub>d</sub> = (G<sub>s</sub> &gamma;<sub>w</sub>) / (1 + e)</p>
+                <p><strong>Porosity to Void Ratio:</strong> e = n / (1 - n)</p>
+            </section>
+        </main>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-left">
+                <svg viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg"
+                    style="width: 28px; height: 28px;">
+                    <rect id="background" x="0" y="0" width="512" height="512" rx="91" ry="91" fill="#1e4d8f" />
+                    <path id="letter-G"
+                        d="M 307,108 C 230,108  131,182  131,273 C 131,364  230,438  307,438 C 352,438  381,420  381,420 L 381,296"
+                        fill="none" stroke="#ffffff" stroke-width="23" stroke-linecap="round" stroke-linejoin="round" />
+                    <line id="equals-top" x1="307" y1="256" x2="420" y2="256" stroke="#ffffff" stroke-width="16"
+                        stroke-linecap="round" />
+                    <line id="equals-bottom" x1="307" y1="307" x2="420" y2="307" stroke="#ffffff" stroke-width="16"
+                        stroke-linecap="round" />
+                </svg>
+                <span class="footer-text">GeoEq &copy; 2026 Ripon Chandra Malo. MIT License.</span>
+            </div>
+            <ul class="footer-links">
+                <li><a href="https://pypi.org/project/geoeq/" target="_blank">PyPI</a></li>
+                <li><a href="https://github.com/geoeq/geoeq" target="_blank">GitHub</a></li>
+                <li><a href="https://github.com/geoeq/geoeq/blob/main/CHANGELOG.md" target="_blank">Changelog</a></li>
+                <li><a href="https://github.com/geoeq/geoeq/blob/main/LICENSE" target="_blank">License</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <script src="assets/js/common.js"></script>
+    <script>
+        // Sidebar active link on scroll
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.sidebar-links a');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
