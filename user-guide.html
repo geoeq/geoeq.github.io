@@ -93,21 +93,30 @@
             </div>
             
             <div class="sidebar-section">
-                <h3 class="sidebar-title">User Guide</h3>
+                <h3 class="sidebar-title">Ch. 2 — Particle Size</h3>
                 <ul class="sidebar-links">
-                    <li><a href="#soil-props">Soil Properties</a></li>
+                    <li><a href="#grain-size">Sieve &amp; Hydrometer</a></li>
+                    <li><a href="#grain-plots">Advanced Plotting</a></li>
+                    <li><a href="#param-extract">Parameter Extraction</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Ch. 3 — Soil Properties</h3>
+                <ul class="sidebar-links">
+                    <li><a href="#soil-props">Void Ratio &amp; Porosity</a></li>
+                    <li><a href="#unit-weights">Unit Weight &amp; Density</a></li>
                     <li><a href="#atterberg">Atterberg Limits</a></li>
-                    <li><a href="#unit-weights">Unit Weights</a></li>
                     <li><a href="#relative-density">Relative Density</a></li>
                     <li><a href="#phase-relations">Phase Relations</a></li>
                 </ul>
             </div>
 
             <div class="sidebar-section">
-                <h3 class="sidebar-title">Advanced</h3>
+                <h3 class="sidebar-title">Reference</h3>
                 <ul class="sidebar-links">
+                    <li><a href="#api-ref">API Quick Reference</a></li>
                     <li><a href="#formulas">Formula Reference</a></li>
-                    <li><a href="#best-practices">Best Practices</a></li>
                 </ul>
             </div>
         </aside>
@@ -122,87 +131,486 @@
 
             <section id="intro">
                 <h1>User Guide</h1>
-                <p>The User Guide covers all aspects of GeoEq, from basic soil property calculations to advanced geotechnical modeling. Each section introduces a topic (such as "unit weight calculations") and discusses how GeoEq approaches the problem, complete with code examples.</p>
-                <p>GeoEq is designed to be lightweight, traceable, and reliable. Every formula used in this library is cross-referenced with standard geotechnical textbooks like Das, Holtz, and Craig.</p>
+                <p>The User Guide covers all aspects of GeoEq, from basic soil property calculations to advanced particle size analysis and professional publication-ready plots. Each section documents every function argument, lists all output dictionary keys, and provides working code examples you can copy directly into your own notebooks or scripts.</p>
+                <p>GeoEq is designed to be lightweight, traceable, and reliable. Every formula is cross-referenced with standard geotechnical textbooks: <strong>Das (2018)</strong>, <strong>Holtz &amp; Kovacs</strong>, and <strong>ASTM / BS / IS standards</strong>.</p>
+                <p>The guide follows the same chapter structure as <em>Principles of Geotechnical Engineering</em> by Braja Das: <strong>Chapter 2</strong> covers Particle Size Analysis, and <strong>Chapter 3</strong> covers Soil Properties and Classification.</p>
+            </section>
+
+            <section id="grain-size">
+                <h2>Particle Size Analysis</h2>
+                <p>GeoEq includes a complete, laboratory-grade particle size analysis suite. It covers two distinct test methods — <strong>Sieve Analysis</strong> for coarse-grained soils and <strong>Hydrometer Analysis</strong> for fine-grained soils — and is designed so that results from both can be combined into a single, continuous grain size distribution curve.</p>
+
+                <h3>1. Sieve Analysis — <code>sp.sieve_ana()</code></h3>
+                <p>This function accepts two lists — the sieve sizes and the mass retained on each sieve — and automatically converts them to a percent-finer-by-mass distribution using one of three internationally recognised standards.</p>
+
+                <h4>Function Signature</h4>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre>sp.<span class="fn">sieve_ana</span>(
+    opening,           <span class="cm"># list of sieve sizes (designations OR mm floats)</span>
+    mass_retained,     <span class="cm"># list of masses in grams retained on each sieve</span>
+    standard=<span class="str">"ASTM"</span>,  <span class="cm"># standard: "ASTM", "BS", or "IS"</span>
+    total_mass=<span class="imp">None</span>    <span class="cm"># total specimen mass (g). If None, sum of retained masses is used</span>
+)</pre></div>
+                </div>
+
+                <h4>Sieve Designation Formats</h4>
+                <p>You can mix and match designation styles and GeoEq will resolve them correctly. All of the following are valid inputs:</p>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre><span class="cm"># ASTM designations (number sieves and inch fractions)</span>
+opening = [<span class="str">"3/4\""</span>, <span class="str">"3/8\""</span>, <span class="str">"#4"</span>, <span class="str">"#10"</span>, <span class="str">"#40"</span>, <span class="str">"#100"</span>, <span class="str">"#200"</span>]
+
+<span class="cm"># BS sieve designations (sizes in mm)</span>
+opening = [<span class="str">"20mm"</span>, <span class="str">"10mm"</span>, <span class="str">"5mm"</span>, <span class="str">"2mm"</span>, <span class="str">"600um"</span>, <span class="str">"212um"</span>, <span class="str">"75um"</span>]
+
+<span class="cm"># Raw mm values (any standard)</span>
+opening = [<span class="num">19.0</span>, <span class="num">9.5</span>, <span class="num">4.75</span>, <span class="num">2.0</span>, <span class="num">0.425</span>, <span class="num">0.075</span>]</pre></div>
+                </div>
+
+                <h4>Return Value (Dictionary)</h4>
+                <p>The function returns a Python dictionary with the following keys, all as NumPy arrays:</p>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre>res = sp.<span class="fn">sieve_ana</span>([<span class="str">"#4"</span>, <span class="str">"#10"</span>, <span class="str">"#40"</span>, <span class="str">"#200"</span>], [<span class="num">10</span>, <span class="num">25</span>, <span class="num">40</span>, <span class="num">15</span>], total_mass=<span class="num">100</span>)
+
+res[<span class="str">"diameter"</span>]          <span class="cm"># Nominal opening in mm  → [4.75, 2.0, 0.425, 0.075]</span>
+res[<span class="str">"opening"</span>]           <span class="cm"># Alias for diameter (same values)</span>
+res[<span class="str">"mass_retained"</span>]     <span class="cm"># Mass on each sieve (g)</span>
+res[<span class="str">"percent_retained"</span>]  <span class="cm"># % of total mass on each sieve</span>
+res[<span class="str">"cumulative_retained"</span>]<span class="cm"># Cumulative % retained</span>
+res[<span class="str">"percent_finer"</span>]     <span class="cm"># % passing (finer) — this is your Y-axis data</span>
+res[<span class="str">"total_mass"</span>]        <span class="cm"># Total specimen mass used for calculations</span></pre></div>
+                </div>
+
+                <h3>2. Hydrometer Analysis — <code>sp.hydro_ana()</code></h3>
+                <p>Implements the full <strong>ASTM D7928</strong> sedimentation analysis. Raw readings from a standard 152H hydrometer are corrected for meniscus, temperature, and dispersing agent, then converted to equivalent particle diameters using Stokes' Law.</p>
+
+                <h4>Function Signature</h4>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre>sp.<span class="fn">hydro_ana</span>(
+    reading,          <span class="cm"># list of raw hydrometer readings (top of meniscus)</span>
+    time,             <span class="cm"># list of elapsed times in minutes</span>
+    T,                <span class="cm"># temperature of suspension (°C)</span>
+    Gs=<span class="num">2.65</span>,         <span class="cm"># specific gravity of soil solids (default: 2.65)</span>
+    Ws=<span class="num">50.0</span>,         <span class="cm"># dry mass of soil specimen in grams (default: 50g)</span>
+    Fm=<span class="num">1.0</span>,          <span class="cm"># meniscus correction (default: 1.0 for 152H)</span>
+    Fz=<span class="num">0.0</span>,          <span class="cm"># zero correction (dispersing agent correction)</span>
+)</pre></div>
+                </div>
+
+                <h4>Return Value (Dictionary)</h4>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre>h_res = sp.<span class="fn">hydro_ana</span>([<span class="num">52</span>, <span class="num">45</span>, <span class="num">38</span>, <span class="num">28</span>], [<span class="num">1</span>, <span class="num">15</span>, <span class="num">60</span>, <span class="num">1440</span>], T=<span class="num">22.0</span>, Ws=<span class="num">50.0</span>)
+
+h_res[<span class="str">"diameter"</span>]       <span class="cm"># Equivalent particle diameter D (mm) via Stokes' Law</span>
+h_res[<span class="str">"percent_finer"</span>]  <span class="cm"># Percent finer (%) — corrected P value</span>
+h_res[<span class="str">"reading"</span>]        <span class="cm"># Corrected hydrometer readings (R_c)</span>
+h_res[<span class="str">"depth"</span>]          <span class="cm"># Effective depth L (cm) for each reading</span>
+h_res[<span class="str">"time"</span>]           <span class="cm"># Elapsed time (minutes)</span></pre></div>
+                </div>
+
+                <h3>3. Combining Sieve + Hydrometer</h3>
+                <p>Once you have results from both tests, simply pass them as a dictionary to the plotting function. GeoEq automatically merges the datasets and calculates parameters across the full range.</p>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre><span class="cm"># Run both tests</span>
+s_res = sp.<span class="fn">sieve_ana</span>([<span class="str">"#4"</span>, <span class="str">"#10"</span>, <span class="str">"#40"</span>, <span class="str">"#200"</span>], [<span class="num">10</span>, <span class="num">25</span>, <span class="num">40</span>, <span class="num">15</span>])
+h_res = sp.<span class="fn">hydro_ana</span>([<span class="num">50</span>, <span class="num">42</span>, <span class="num">30</span>, <span class="num">18</span>], [<span class="num">1</span>, <span class="num">15</span>, <span class="num">60</span>, <span class="num">1440</span>], T=<span class="num">22.0</span>)
+
+<span class="cm"># Pass both to plot — they are stitched into one continuous curve</span>
+sp.<span class="fn">grain_size_plot</span>({<span class="str">"Sieve"</span>: s_res, <span class="str">"Hydrometer"</span>: h_res}, smooth=<span class="imp">True</span>)</pre></div>
+                </div>
+            </section>
+
+            <section id="grain-plots">
+                <h2>Advanced Plotting — <code>sp.grain_size_plot()</code></h2>
+                <p>This is the most feature-rich function in the package. It generates a fully professional, publication-quality, semi-logarithmic grain size distribution curve. Internally it wraps Matplotlib, so <strong>every Matplotlib line keyword argument works</strong> — colour, linewidth, linestyle, markersize, alpha, and more.</p>
+
+                <h4>Full Function Signature</h4>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre>sp.<span class="fn">grain_size_plot</span>(
+    data,              <span class="cm"># dict with keys 'diameter' & 'percent_finer'  — OR —</span>
+                       <span class="cm"># dict of named datasets: {"Sieve": s_res, "Hydro": h_res}</span>
+    smooth=<span class="imp">False</span>,     <span class="cm"># bool — enables high-res PCHIP smooth curve (1000 points)</span>
+    annotation=<span class="imp">False</span>, <span class="cm"># bool — show a legend labelling each data source</span>
+    D_para=<span class="imp">True</span>,      <span class="cm"># bool — draw red dotted projection lines for D10/D30/D60</span>
+    Cu_para=<span class="imp">True</span>,     <span class="cm"># bool — show Uniformity Coefficient Cᵤ in the parameter box</span>
+    Cc_para=<span class="imp">True</span>,     <span class="cm"># bool — show Coefficient of Curvature Cᶜ in the parameter box</span>
+    param_pos=<span class="str">"top right"</span>, <span class="cm"># str or (x, y) — position of the parameter info box</span>
+    save_as=<span class="imp">None</span>,     <span class="cm"># str — filename to save: 'plot.png', 'report.pdf', 'figure.svg'</span>
+    ax=<span class="imp">None</span>,          <span class="cm"># matplotlib Axes — embed into an existing figure</span>
+    **kwargs           <span class="cm"># any Matplotlib line2D keyword (see table below)</span>
+)</pre></div>
+                </div>
+
+                <h4>Matplotlib Pass-Through Arguments (<code>**kwargs</code>)</h4>
+                <p>Because GeoEq uses Matplotlib internally, <strong>all standard line styling arguments are accepted</strong>. This is the same as calling <code>ax.plot()</code> directly. Common examples:</p>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre>sp.<span class="fn">grain_size_plot</span>(
+    data,
+    smooth=<span class="imp">True</span>,
+    <span class="cm"># --- Line Style ---</span>
+    color=<span class="str">'#1e4d8f'</span>,   <span class="cm"># any hex, name, or rgb tuple</span>
+    linewidth=<span class="num">1.8</span>,      <span class="cm"># line thickness</span>
+    linestyle=<span class="str">'--'</span>,    <span class="cm"># '-', '--', ':', '-.'</span>
+    alpha=<span class="num">0.85</span>,         <span class="cm"># transparency (0.0–1.0)</span>
+    <span class="cm"># --- Markers ---</span>
+    marker=<span class="str">'o'</span>,        <span class="cm"># 'o', 's', '^', '*', 'D', 'v', 'none', ...</span>
+    markersize=<span class="num">6</span>,      <span class="cm"># size of each marker</span>
+    markerfacecolor=<span class="str">'white'</span>,  <span class="cm"># fill color of marker</span>
+    markeredgecolor=<span class="str">'blue'</span>,   <span class="cm"># border color of marker</span>
+    markeredgewidth=<span class="num">1.2</span>,      <span class="cm"># border thickness</span>
+    <span class="cm"># --- Save ---</span>
+    save_as=<span class="str">'report.pdf'</span>  <span class="cm"># .png, .pdf, .svg, .eps — all formats supported</span>
+)</pre></div>
+                </div>
+
+                <h4>Parameter Box Position (<code>param_pos</code>)</h4>
+                <p>The box that shows D₁₀, D₃₀, D₆₀, Cᵤ, and Cᶜ can be placed anywhere. Use a keyword string or a precise (x, y) position in axes-fraction coordinates (0.0 = left/bottom, 1.0 = right/top):</p>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre><span class="cm"># Keyword positions</span>
+param_pos=<span class="str">"top right"</span>    <span class="cm"># default — upper right corner</span>
+param_pos=<span class="str">"top left"</span>     <span class="cm"># upper left corner</span>
+param_pos=<span class="str">"bottom right"</span> <span class="cm"># lower right corner</span>
+param_pos=<span class="str">"bottom left"</span>  <span class="cm"># lower left corner</span>
+
+<span class="cm"># Precise (x, y) control in axes-fraction coordinates</span>
+param_pos=(<span class="num">0.5</span>, <span class="num">0.8</span>)  <span class="cm"># centre of the plot, 80% up</span></pre></div>
+                </div>
+
+                <h4>Embedding in Your Own Figure</h4>
+                <p>Because <code>grain_size_plot()</code> accepts an <code>ax</code> argument and returns the <code>fig</code> object, you can embed it into multi-panel scientific figures or add custom annotations after the fact:</p>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre><span class="kw">import</span> matplotlib.pyplot <span class="kw">as</span> plt
+<span class="kw">import</span> geoeq <span class="kw">as</span> sp
+
+<span class="cm"># Create your own figure with multiple panels</span>
+fig, (ax1, ax2) = plt.<span class="fn">subplots</span>(<span class="num">1</span>, <span class="num">2</span>, figsize=(<span class="num">18</span>, <span class="num">7</span>))
+
+<span class="cm"># Embed GeoEq plot in the left panel</span>
+sp.<span class="fn">grain_size_plot</span>(s_res, ax=ax1, smooth=<span class="imp">True</span>, color=<span class="str">'blue'</span>)
+
+<span class="cm"># Add your own plot in the right panel</span>
+ax2.<span class="fn">plot</span>(depth, settlement)
+ax2.<span class="fn">set_title</span>(<span class="str">"Settlement Curve"</span>)
+
+<span class="cm"># Add a custom annotation to the grain size plot after the fact</span>
+ax1.<span class="fn">axhline</span>(<span class="num">50</span>, color=<span class="str">'purple'</span>, linestyle=<span class="str">'--'</span>, label=<span class="str">'D₅₀'</span>)
+
+plt.<span class="fn">savefig</span>(<span class="str">'combined_report.pdf'</span>, bbox_inches=<span class="str">'tight'</span>, dpi=<span class="num">300</span>)</pre></div>
+                </div>
+
+                <h4>Saving to Publication Formats</h4>
+                <p>The <code>save_as</code> argument routes directly to Matplotlib's <code>savefig()</code>, so all formats are supported. GeoEq always saves at <strong>300 DPI</strong> with a tight bounding box — ideal for journals and reports.</p>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre>sp.<span class="fn">grain_size_plot</span>(data, save_as=<span class="str">"figure.png"</span>)  <span class="cm"># raster, 300 DPI</span>
+sp.<span class="fn">grain_size_plot</span>(data, save_as=<span class="str">"figure.svg"</span>)  <span class="cm"># vector — scalable</span>
+sp.<span class="fn">grain_size_plot</span>(data, save_as=<span class="str">"figure.pdf"</span>)  <span class="cm"># vector — best for LaTeX</span>
+sp.<span class="fn">grain_size_plot</span>(data, save_as=<span class="str">"figure.eps"</span>)  <span class="cm"># vector — legacy journals</span></pre></div>
+                </div>
+            </section>
+
+            <section id="param-extract">
+                <h2>Parameter Extraction</h2>
+                <p>You can extract geotechnical parameters from any result dictionary — from sieve data, hydrometer data, or a merged combined dataset. All five functions use log-linear interpolation, which is the industry standard for grain size parameter calculations.</p>
+
+                <h4>Available Functions</h4>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre><span class="cm"># Diameter at which N% of soil is finer (mm)</span>
+<span class="var">d10</span> = sp.<span class="fn">grain_d10</span>(res)  <span class="cm"># effective size</span>
+<span class="var">d30</span> = sp.<span class="fn">grain_d30</span>(res)  <span class="cm"># used for Cc calculation</span>
+<span class="var">d60</span> = sp.<span class="fn">grain_d60</span>(res)  <span class="cm"># controlling size</span>
+
+<span class="cm"># Uniformity Coefficient — Cᵤ = D₆₀ / D₁₀</span>
+<span class="cm"># Well-graded if Cᵤ ≥ 4 (gravels) or Cᵤ ≥ 6 (sands)</span>
+<span class="var">cu</span> = sp.<span class="fn">grain_Cu</span>(res)
+
+<span class="cm"># Coefficient of Curvature — Cᶜ = D₃₀² / (D₁₀ × D₆₀)</span>
+<span class="cm"># Well-graded if 1 ≤ Cᶜ ≤ 3</span>
+<span class="var">cc</span> = sp.<span class="fn">grain_Cc</span>(res)
+
+<span class="fn">print</span>(<span class="str">f"D10={d10:.3f} mm,  D30={d30:.3f} mm,  D60={d60:.3f} mm"</span>)
+<span class="fn">print</span>(<span class="str">f"Cᵤ = {cu:.2f}  →  {'Well-graded' if cu >= 6 else 'Poorly-graded'}"</span>)
+<span class="fn">print</span>(<span class="str">f"Cᶜ = {cc:.2f}  →  {'Within range' if 1 <= cc <= 3 else 'Outside range'}"</span>)</pre></div>
+                </div>
             </section>
 
             <section id="soil-props">
-                <h2>Soil Properties</h2>
-                <p>Soil properties form the foundation of geotechnical engineering. GeoEq provides a comprehensive set of functions to calculate these properties from basic laboratory data.</p>
-                
-                <div class="code-container">
-                    <div class="code-header">
-                        <div class="code-dots">
-                            <div class="code-dot dot-red"></div>
-                            <div class="code-dot dot-yellow"></div>
-                            <div class="code-dot dot-green"></div>
-                        </div>
-                        <span class="code-lang">python</span>
-                    </div>
-                    <button class="copy-btn">Copy</button>
-                    <div class="code-block">
-                        <pre><span class="imp">from</span> geoeq.soil <span class="imp">import</span> properties <span class="imp">as</span> sp
+                <h2>Chapter 3 — Void Ratio &amp; Porosity</h2>
+                <p>Void ratio (<em>e</em>) and porosity (<em>n</em>) describe the relative volume of voids in a soil. GeoEq provides two symmetrical functions — <code>sp.void_ratio()</code> and <code>sp.porosity()</code> — that accept different input combinations and automatically resolve the correct path.</p>
 
-<span class="cm"># Calculate void ratio from porosity</span>
-<span class="var">void_ratio</span> = sp.<span class="fn">void_ratio_from_porosity</span>(n=<span class="num">0.42</span>)
-<span class="fn">print</span>(<span class="str">f"Void Ratio: </span><span class="str">{void_ratio:.3f}</span><span class="str">"</span>)</pre>
-                    </div>
+                <h3>1. Void Ratio — <code>sp.void_ratio()</code></h3>
+                <p>Computes void ratio from any physically meaningful input combination. All inputs are validated to be within geotechnically possible ranges.</p>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre>sp.<span class="fn">void_ratio</span>(
+    n=<span class="imp">None</span>,        <span class="cm"># porosity (0 &lt; n &lt; 1)</span>
+    Vv=<span class="imp">None</span>,       <span class="cm"># volume of voids (m³ or any consistent unit)</span>
+    Vs=<span class="imp">None</span>,       <span class="cm"># volume of solids</span>
+    Vt=<span class="imp">None</span>,       <span class="cm"># total volume (Vt = Vv + Vs)</span>
+)
+
+<span class="cm"># From porosity: e = n / (1 - n)</span>
+e = sp.<span class="fn">void_ratio</span>(n=<span class="num">0.42</span>)
+<span class="fn">print</span>(<span class="str">f"e = {e:.3f}"</span>)  <span class="cm"># → e = 0.724</span>
+
+<span class="cm"># From volumes: e = Vv / Vs</span>
+e2 = sp.<span class="fn">void_ratio</span>(Vv=<span class="num">0.30</span>, Vs=<span class="num">0.70</span>)
+<span class="fn">print</span>(<span class="str">f"e = {e2:.3f}"</span>)  <span class="cm"># → e = 0.429</span></pre></div>
                 </div>
 
-                <p>All property functions validate that input values fall within physically possible ranges (e.g., porosity cannot be greater than 1 or less than 0).</p>
+                <h3>2. Porosity — <code>sp.porosity()</code></h3>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre>sp.<span class="fn">porosity</span>(
+    e=<span class="imp">None</span>,        <span class="cm"># void ratio (e &gt; 0)</span>
+    Vv=<span class="imp">None</span>,       <span class="cm"># volume of voids</span>
+    Vt=<span class="imp">None</span>,       <span class="cm"># total volume</span>
+)
+
+<span class="cm"># From void ratio: n = e / (1 + e)</span>
+n = sp.<span class="fn">porosity</span>(e=<span class="num">0.72</span>)
+<span class="fn">print</span>(<span class="str">f"n = {n:.3f}"</span>)  <span class="cm"># → n = 0.419</span>
+
+<span class="cm"># From volumes: n = Vv / Vt</span>
+n2 = sp.<span class="fn">porosity</span>(Vv=<span class="num">0.28</span>, Vt=<span class="num">1.0</span>)
+<span class="fn">print</span>(<span class="str">f"n = {n2:.3f}"</span>)  <span class="cm"># → n = 0.280</span></pre></div>
+                </div>
             </section>
 
             <section id="unit-weights">
-                <h2>Unit Weight Calculations</h2>
-                <p>Calculating the dry, saturated, and submerged unit weights of soil is a frequent task. GeoEq implements these using specific gravity (Gs), void ratio (e), and moisture content (w).</p>
-                
+                <h2>Unit Weight &amp; Density — <code>sp.density()</code></h2>
+                <p>Computing dry, saturated, bulk, and submerged unit weights is one of the most common tasks in geotechnical practice. GeoEq unifies all of these into a single smart function with a <code>kind</code> argument. It also supports multiple output unit systems — so you can request <code>kN/m³</code> for European standards or <code>pcf</code> for American practice with no manual conversion.</p>
+
+                <h4>Function Signature</h4>
                 <div class="code-container">
-                    <div class="code-header">
-                        <div class="code-dots">
-                            <div class="code-dot dot-red"></div>
-                            <div class="code-dot dot-yellow"></div>
-                            <div class="code-dot dot-green"></div>
-                        </div>
-                        <span class="code-lang">python</span>
-                    </div>
-                    <button class="copy-btn">Copy</button>
-                    <div class="code-block">
-                        <pre><span class="cm"># Saturated unit weight (kN/m3)</span>
-<span class="var">gamma_sat</span> = sp.<span class="fn">saturated_unit_weight</span>(Gs=<span class="num">2.65</span>, e=<span class="num">0.68</span>, unit_weight_water=<span class="num">9.81</span>)
-<span class="fn">print</span>(<span class="str">f"Saturated Unit Weight: </span><span class="str">{gamma_sat:.2f}</span><span class="str"> kN/m3"</span>)</pre>
-                    </div>
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre>sp.<span class="fn">density</span>(
+    Gs=<span class="imp">None</span>,       <span class="cm"># specific gravity of solids (dimensionless, typically 2.60–2.80)</span>
+    e=<span class="imp">None</span>,        <span class="cm"># void ratio</span>
+    w=<span class="imp">None</span>,        <span class="cm"># water content (decimal, e.g. 0.18 for 18%)</span>
+    S=<span class="imp">None</span>,        <span class="cm"># degree of saturation (0.0–1.0)</span>
+    mass=<span class="imp">None</span>,     <span class="cm"># total mass of sample (kg or g)</span>
+    volume=<span class="imp">None</span>,   <span class="cm"># total volume of sample</span>
+    kind=<span class="str">"bulk"</span>,   <span class="cm"># "bulk", "dry", "saturated", or "submerged"</span>
+    unit=<span class="str">"kN/m3"</span>, <span class="cm"># output unit: "kN/m3", "kPa/m", "kg/m3", "g/cm3", "pcf"</span>
+)</pre></div>
+                </div>
+
+                <h4>All Four Density Types</h4>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre><span class="cm"># Dry unit weight: γd = (Gs × γw) / (1 + e)</span>
+gamma_d   = sp.<span class="fn">density</span>(Gs=<span class="num">2.65</span>, e=<span class="num">0.72</span>, kind=<span class="str">"dry"</span>,       unit=<span class="str">"kN/m3"</span>)
+
+<span class="cm"># Saturated unit weight: γsat = (Gs + e) × γw / (1 + e)</span>
+gamma_sat = sp.<span class="fn">density</span>(Gs=<span class="num">2.65</span>, e=<span class="num">0.72</span>, kind=<span class="str">"saturated"</span>,  unit=<span class="str">"kN/m3"</span>)
+
+<span class="cm"># Submerged / buoyant unit weight: γ' = γsat - γw</span>
+gamma_sub = sp.<span class="fn">density</span>(Gs=<span class="num">2.65</span>, e=<span class="num">0.72</span>, kind=<span class="str">"submerged"</span>, unit=<span class="str">"kN/m3"</span>)
+
+<span class="cm"># Bulk unit weight: γ = (Gs + S×e) × γw / (1 + e)</span>
+gamma_b   = sp.<span class="fn">density</span>(Gs=<span class="num">2.65</span>, e=<span class="num">0.72</span>, S=<span class="num">0.80</span>, kind=<span class="str">"bulk"</span>,       unit=<span class="str">"kN/m3"</span>)
+
+<span class="fn">print</span>(<span class="str">f"γd={gamma_d:.2f}  γsat={gamma_sat:.2f}  γ'={gamma_sub:.2f}  γ={gamma_b:.2f} kN/m³"</span>)
+
+<span class="cm"># Direct from mass and volume (any unit system)</span>
+gamma_pcf = sp.<span class="fn">density</span>(mass=<span class="num">50</span>, volume=<span class="num">0.028</span>, unit=<span class="str">"pcf"</span>)
+<span class="fn">print</span>(<span class="str">f"Bulk density = {gamma_pcf:.1f} pcf"</span>)</pre></div>
+                </div>
+
+                <h4>Unit Conversion Quick Reference</h4>
+                <p>The <code>unit</code> argument accepts any of the following strings. GeoEq automatically applies the correct water unit weight (9.81 kN/m³ or 62.4 pcf) in its calculations:</p>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre><span class="cm"># SI units</span>
+unit=<span class="str">"kN/m3"</span>   <span class="cm"># kilonewtons per cubic metre  (most common in geotechnical practice)</span>
+unit=<span class="str">"kPa/m"</span>   <span class="cm"># same magnitude, different notation (useful for stress gradients)</span>
+unit=<span class="str">"kg/m3"</span>   <span class="cm"># kilograms per cubic metre</span>
+unit=<span class="str">"g/cm3"</span>   <span class="cm"># grams per cubic centimetre (same as specific gravity scale)</span>
+
+<span class="cm"># Imperial units</span>
+unit=<span class="str">"pcf"</span>     <span class="cm"># pounds per cubic foot (lbf/ft³)</span></pre></div>
                 </div>
             </section>
 
             <section id="atterberg">
-                <h2>Atterberg Limits</h2>
-                <p>Atterberg limits define the critical water contents of a fine-grained soil. GeoEq calculates the Plasticity Index (PI) and Liquidity Index (LI) used for soil classification.</p>
-                
-                <div class="code-container">
-                    <div class="code-header">
-                        <div class="code-dots">
-                            <div class="code-dot dot-red"></div>
-                            <div class="code-dot dot-yellow"></div>
-                            <div class="code-dot dot-green"></div>
-                        </div>
-                        <span class="code-lang">python</span>
-                    </div>
-                    <button class="copy-btn">Copy</button>
-                    <div class="code-block">
-                        <pre><span class="cm"># Calculate Plasticity Index</span>
-<span class="var">pi</span> = sp.<span class="fn">plasticity_index</span>(LL=<span class="num">45</span>, PL=<span class="num">20</span>)
+                <h2>Atterberg Limits — <code>sp.atterberg()</code></h2>
+                <p>Atterberg limits define the water content boundaries at which fine-grained soil transitions between solid, semi-solid, plastic, and liquid states. GeoEq computes the Plasticity Index (PI), Liquidity Index (LI), and Consistency Index (CI) from a single unified function using the <code>kind</code> argument.</p>
 
-<span class="cm"># Calculate Liquidity Index</span>
-<span class="var">li</span> = sp.<span class="fn">liquidity_index</span>(w=<span class="num">32</span>, PL=<span class="num">20</span>, PI=<span class="var">pi</span>)</pre>
-                    </div>
+                <h4>Function Signature</h4>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre>sp.<span class="fn">atterberg</span>(
+    LL,            <span class="cm"># Liquid Limit (%)</span>
+    PL,            <span class="cm"># Plastic Limit (%)</span>
+    w=<span class="imp">None</span>,        <span class="cm"># current water content (%) — required for LI and CI</span>
+    kind=<span class="str">"PI"</span>,    <span class="cm"># "PI", "LI", "CI", or "all"</span>
+)</pre></div>
                 </div>
+
+                <h4>Usage — All Return Modes</h4>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre><span class="cm"># Plasticity Index: PI = LL - PL</span>
+PI = sp.<span class="fn">atterberg</span>(LL=<span class="num">48</span>, PL=<span class="num">22</span>, kind=<span class="str">"PI"</span>)
+<span class="fn">print</span>(<span class="str">f"PI = {PI}"</span>)   <span class="cm"># → PI = 26</span>
+
+<span class="cm"># Liquidity Index: LI = (w - PL) / (LL - PL)</span>
+<span class="cm"># LI < 0 → Solid, 0–1 → Plastic, > 1 → Liquid</span>
+LI = sp.<span class="fn">atterberg</span>(LL=<span class="num">48</span>, PL=<span class="num">22</span>, w=<span class="num">35</span>, kind=<span class="str">"LI"</span>)
+<span class="fn">print</span>(<span class="str">f"LI = {LI:.2f}"</span>)  <span class="cm"># → LI = 0.50</span>
+
+<span class="cm"># Consistency Index: CI = (LL - w) / (LL - PL) = 1 - LI</span>
+CI = sp.<span class="fn">atterberg</span>(LL=<span class="num">48</span>, PL=<span class="num">22</span>, w=<span class="num">35</span>, kind=<span class="str">"CI"</span>)
+<span class="fn">print</span>(<span class="str">f"CI = {CI:.2f}"</span>)  <span class="cm"># → CI = 0.50</span>
+
+<span class="cm"># All at once — returns a dictionary</span>
+result = sp.<span class="fn">atterberg</span>(LL=<span class="num">48</span>, PL=<span class="num">22</span>, w=<span class="num">35</span>, kind=<span class="str">"all"</span>)
+result[<span class="str">"PI"</span>]  <span class="cm"># → 26</span>
+result[<span class="str">"LI"</span>]  <span class="cm"># → 0.50</span>
+result[<span class="str">"CI"</span>]  <span class="cm"># → 0.50</span></pre></div>
+                </div>
+            </section>
+
+            <section id="relative-density">
+                <h2>Relative Density — <code>sp.relative_density()</code></h2>
+                <p>Relative density (Dr) measures how densely packed a granular soil is relative to its loosest and densest states. GeoEq supports two calculation paths via the <code>kind</code> argument — one based on void ratio limits and one based on dry density limits.</p>
+
+                <h4>Function Signature</h4>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre>sp.<span class="fn">relative_density</span>(
+    e=<span class="imp">None</span>,        <span class="cm"># current void ratio (used when kind='void')</span>
+    e_max=<span class="imp">None</span>,    <span class="cm"># void ratio at loosest state (maximum voids)</span>
+    e_min=<span class="imp">None</span>,    <span class="cm"># void ratio at densest state (minimum voids)</span>
+    rho=<span class="imp">None</span>,      <span class="cm"># current dry density (used when kind='density')</span>
+    rho_max=<span class="imp">None</span>,  <span class="cm"># maximum dry density (densest state)</span>
+    rho_min=<span class="imp">None</span>,  <span class="cm"># minimum dry density (loosest state)</span>
+    kind=<span class="str">"void"</span>,  <span class="cm"># "void" or "density"</span>
+)</pre></div>
+                </div>
+
+                <h4>Usage</h4>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre><span class="cm"># From void ratio: Dr = (e_max - e) / (e_max - e_min)</span>
+Dr_e = sp.<span class="fn">relative_density</span>(e=<span class="num">0.60</span>, e_max=<span class="num">0.85</span>, e_min=<span class="num">0.45</span>, kind=<span class="str">"void"</span>)
+<span class="fn">print</span>(<span class="str">f"Dr = {Dr_e:.1%}"</span>)  <span class="cm"># → Dr = 62.5%  (Medium dense)</span>
+
+<span class="cm"># From dry density: Dr = (ρd,max/ρd,min) × (ρd - ρd,min) / (ρd,max - ρd,min) × 1/ρd</span>
+Dr_rho = sp.<span class="fn">relative_density</span>(rho=<span class="num">1560</span>, rho_max=<span class="num">1720</span>, rho_min=<span class="num">1380</span>, kind=<span class="str">"density"</span>)
+<span class="fn">print</span>(<span class="str">f"Dr = {Dr_rho:.1%}"</span>)  <span class="cm"># → Dr = 51.1%  (Medium dense)</span>
+
+<span class="cm"># Interpretation of Dr values (Das, 2018):</span>
+<span class="cm"># Dr < 15%   → Very Loose</span>
+<span class="cm"># 15–50%     → Loose</span>
+<span class="cm"># 50–70%     → Medium Dense</span>
+<span class="cm"># 70–85%     → Dense</span>
+<span class="cm"># Dr > 85%   → Very Dense</span></pre></div>
+                </div>
+            </section>
+
+            <section id="phase-relations">
+                <h2>Phase Relations — <code>sp.saturation()</code> &amp; <code>sp.water_content()</code></h2>
+                <p>These functions compute the degree of saturation and water content from various combinations of phase variables. GeoEq uses lazy resolution — you only need to provide the inputs you have measured in the lab, and it finds the correct formula automatically.</p>
+
+                <h3>1. Degree of Saturation — <code>sp.saturation()</code></h3>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre>sp.<span class="fn">saturation</span>(
+    w=<span class="imp">None</span>,    <span class="cm"># water content (decimal)</span>
+    Gs=<span class="imp">None</span>,   <span class="cm"># specific gravity of solids</span>
+    e=<span class="imp">None</span>,    <span class="cm"># void ratio</span>
+    Vw=<span class="imp">None</span>,   <span class="cm"># volume of water</span>
+    Vv=<span class="imp">None</span>,   <span class="cm"># volume of voids</span>
+)
+
+<span class="cm"># From phase parameters: S = (w × Gs) / e</span>
+S = sp.<span class="fn">saturation</span>(w=<span class="num">0.18</span>, Gs=<span class="num">2.65</span>, e=<span class="num">0.72</span>)
+<span class="fn">print</span>(<span class="str">f"S = {S:.1%}"</span>)   <span class="cm"># → S = 66.3%</span>
+
+<span class="cm"># From volumes: S = Vw / Vv</span>
+S2 = sp.<span class="fn">saturation</span>(Vw=<span class="num">0.25</span>, Vv=<span class="num">0.40</span>)
+<span class="fn">print</span>(<span class="str">f"S = {S2:.1%}"</span>)  <span class="cm"># → S = 62.5%</span>
+
+<span class="cm"># Typical interpretation:</span>
+<span class="cm"># S = 0%   → Completely dry</span>
+<span class="cm"># S = 100% → Fully saturated (all voids filled with water)</span></pre></div>
+                </div>
+
+                <h3>2. Water Content — <code>sp.water_content()</code></h3>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre>sp.<span class="fn">water_content</span>(
+    Mw=<span class="imp">None</span>,   <span class="cm"># mass of water (g or kg)</span>
+    Ms=<span class="imp">None</span>,   <span class="cm"># mass of dry solids</span>
+    S=<span class="imp">None</span>,    <span class="cm"># degree of saturation (0–1)</span>
+    Gs=<span class="imp">None</span>,   <span class="cm"># specific gravity</span>
+    e=<span class="imp">None</span>,    <span class="cm"># void ratio</span>
+)
+
+<span class="cm"># From lab measurements: w = Mw / Ms</span>
+w = sp.<span class="fn">water_content</span>(Mw=<span class="num">18.5</span>, Ms=<span class="num">102.0</span>)
+<span class="fn">print</span>(<span class="str">f"w = {w:.1%}"</span>)   <span class="cm"># → w = 18.1%</span>
+
+<span class="cm"># From phase parameters: w = (S × e) / Gs</span>
+w2 = sp.<span class="fn">water_content</span>(S=<span class="num">0.80</span>, e=<span class="num">0.72</span>, Gs=<span class="num">2.65</span>)
+<span class="fn">print</span>(<span class="str">f"w = {w2:.1%}"</span>)  <span class="cm"># → w = 21.7%</span></pre></div>
+                </div>
+            </section>
+
+            <section id="api-ref">
+                <h2>API Quick Reference</h2>
+                <p>Complete list of all functions available at the top-level <code>import geoeq as sp</code> namespace.</p>
+                <table style="width:100%; border-collapse:collapse; font-size:0.9rem;">
+                    <thead style="background:#f0f6fc;">
+                        <tr>
+                            <th style="text-align:left; padding:10px 14px; border-bottom:2px solid #d8dde6;">Function</th>
+                            <th style="text-align:left; padding:10px 14px; border-bottom:2px solid #d8dde6;">Category</th>
+                            <th style="text-align:left; padding:10px 14px; border-bottom:2px solid #d8dde6;">Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>sp.sieve_ana()</code></td><td style="padding:9px 14px;">Grain Size</td><td style="padding:9px 14px;">Sieve analysis. ASTM / BS / IS. Returns percent finer distribution.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>sp.hydro_ana()</code></td><td style="padding:9px 14px;">Grain Size</td><td style="padding:9px 14px;">Hydrometer analysis per ASTM D7928. Returns particle diameters and percent finer.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>sp.grain_size_plot()</code></td><td style="padding:9px 14px;">Visualization</td><td style="padding:9px 14px;">Publication-ready grain size distribution plot. Full Matplotlib pass-through.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>sp.grain_d10()</code></td><td style="padding:9px 14px;">Parameters</td><td style="padding:9px 14px;">Interpolated D₁₀ (effective size) in mm.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>sp.grain_d30()</code></td><td style="padding:9px 14px;">Parameters</td><td style="padding:9px 14px;">Interpolated D₃₀ in mm.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>sp.grain_d60()</code></td><td style="padding:9px 14px;">Parameters</td><td style="padding:9px 14px;">Interpolated D₆₀ (controlling size) in mm.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>sp.grain_Cu()</code></td><td style="padding:9px 14px;">Parameters</td><td style="padding:9px 14px;">Uniformity Coefficient Cᵤ = D₆₀ / D₁₀.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>sp.grain_Cc()</code></td><td style="padding:9px 14px;">Parameters</td><td style="padding:9px 14px;">Coefficient of Curvature Cᶜ = D₃₀² / (D₁₀ × D₆₀).</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>sp.density()</code></td><td style="padding:9px 14px;">Soil Props</td><td style="padding:9px 14px;">Dry, saturated, bulk, or submerged unit weight. Multiple unit systems.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>sp.void_ratio()</code></td><td style="padding:9px 14px;">Soil Props</td><td style="padding:9px 14px;">Void ratio from porosity, masses, or volumes.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>sp.saturation()</code></td><td style="padding:9px 14px;">Soil Props</td><td style="padding:9px 14px;">Degree of saturation (S) from various input combinations.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>sp.water_content()</code></td><td style="padding:9px 14px;">Soil Props</td><td style="padding:9px 14px;">Water content (w) from masses or phase parameters.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>sp.relative_density()</code></td><td style="padding:9px 14px;">Soil Props</td><td style="padding:9px 14px;">Dr from void ratio limits or dry density limits.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>sp.atterberg()</code></td><td style="padding:9px 14px;">Atterberg</td><td style="padding:9px 14px;">Plasticity Index (PI), Liquidity Index (LI), and Consistency Index (CI).</td></tr>
+                    </tbody>
+                </table>
             </section>
 
             <section id="formulas">
                 <h2>Behind the Code</h2>
-                <p>GeoEq isn't just a library; it's an engineering tool. We believe in transparency. Below is a summary of the core equations implemented in the current version.</p>
-                <p><strong>Dry Unit Weight:</strong> &gamma;<sub>d</sub> = (G<sub>s</sub> &gamma;<sub>w</sub>) / (1 + e)</p>
-                <p><strong>Porosity to Void Ratio:</strong> e = n / (1 - n)</p>
+                <p>GeoEq is fully traceable to published standards and textbooks. Every formula is cross-referenced with Das (2018), Holtz &amp; Kovacs, and ASTM standards.</p>
+                <h4>Grain Size Formulas</h4>
+                <p><strong>Equivalent Particle Diameter (Stokes' Law):</strong><br>D = √(18 η L / ((Gs − Gw) γw t)) </p>
+                <p><strong>Percent Finer (Hydrometer):</strong><br>P = (a × Rc) / Ws × 100 ,  where a = Gs / (Gs − 1)</p>
+                <p><strong>Uniformity Coefficient:</strong><br>Cᵤ = D₆₀ / D₁₀</p>
+                <p><strong>Coefficient of Curvature:</strong><br>Cᶜ = D₃₀² / (D₁₀ × D₆₀)</p>
+                <h4>Soil Phase Formulas</h4>
+                <p><strong>Dry Unit Weight:</strong> γ<sub>d</sub> = (Gs γ<sub>w</sub>) / (1 + e)</p>
+                <p><strong>Porosity to Void Ratio:</strong> e = n / (1 − n)</p>
+                <p><strong>Degree of Saturation:</strong> S = (w × Gs) / e</p>
             </section>
         </main>
     </div>

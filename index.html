@@ -951,13 +951,22 @@
                     <div class="feature-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                             stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                        </svg>
+                    </div>
+                    <h3>Grain Size Analysis</h3>
+                    <p>Standardized sieve (ASTM/BS/IS) and hydrometer (ASTM D7928) modules with professional plotting.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
                             <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
                             <polyline points="22 4 12 14.01 9 11.01" />
                         </svg>
                     </div>
                     <h3>Tested formulas</h3>
-                    <p>43 tests against hand-calculated values and textbook examples. Every function verified before
-                        release.</p>
+                    <p>Verified against geotechnical textbooks (Das, Holtz) with high-resolution smooth plotting.</p>
                 </div>
                 <div class="feature-card fade-in">
                     <div class="feature-icon">
@@ -968,9 +977,8 @@
                             <line x1="9" y1="21" x2="9" y2="9" />
                         </svg>
                     </div>
-                    <h3>Clean API</h3>
-                    <p>Readable function names, consistent parameters, dataclass results. Designed to feel natural in
-                        your workflow.</p>
+                    <h3>Publication Ready</h3>
+                    <p>Generate high-resolution PNG/SVG/PDF plots with automated $D_{10}$, $C_u$, and $C_c$ markers.</p>
                 </div>
             </div>
         </div>
@@ -986,8 +994,7 @@
                     <p class="section-desc">Install from PyPI and start computing soil properties immediately. No
                         configuration, no setup files, no boilerplate.</p>
                     <p style="font-size:0.9rem; color:var(--gray-500); line-height:1.7;">
-                        v0.0.1 includes 16 soil phase-relationship functions covering void ratio, porosity, saturation,
-                        unit weights, density, relative density, and Atterberg limit indices.
+                        v0.0.4 includes professional **Particle Size Distribution** analysis (Sieve & Hydrometer) with automated smooth curves and parameter extraction.
                     </p>
                 </div>
                 <div class="code-block fade-in">
@@ -998,23 +1005,19 @@
                         <span>example.py</span>
                     </div>
                     <pre
-                        class="code-body"><span class="kw">import</span> geoeq <span class="kw">as</span> ge
-<span class="kw">from</span> geoeq.soil <span class="kw">import</span> properties <span class="kw">as</span> sp
-
-<span class="cm"># Unit weights from Gs and void ratio</span>
-<span class="var">gamma_d</span>   <span class="op">=</span> sp.<span class="fn">dry_unit_weight</span>(Gs=<span class="num">2.65</span>, e=<span class="num">0.72</span>)
-<span class="var">gamma_sat</span> <span class="op">=</span> sp.<span class="fn">saturated_unit_weight</span>(Gs=<span class="num">2.65</span>, e=<span class="num">0.72</span>)
-<span class="var">gamma_sub</span> <span class="op">=</span> sp.<span class="fn">submerged_unit_weight</span>(Gs=<span class="num">2.65</span>, e=<span class="num">0.72</span>)
-
-<span class="cm"># Phase relations</span>
-<span class="var">S</span>  <span class="op">=</span> sp.<span class="fn">degree_of_saturation</span>(w=<span class="num">0.18</span>, Gs=<span class="num">2.65</span>, e=<span class="num">0.72</span>)
-<span class="var">Dr</span> <span class="op">=</span> sp.<span class="fn">relative_density</span>(e=<span class="num">0.60</span>, e_max=<span class="num">0.85</span>, e_min=<span class="num">0.45</span>)
-
-<span class="cm"># Atterberg limits</span>
-<span class="var">PI</span> <span class="op">=</span> sp.<span class="fn">plasticity_index</span>(LL=<span class="num">48</span>, PL=<span class="num">22</span>)
-<span class="var">LI</span> <span class="op">=</span> sp.<span class="fn">liquidity_index</span>(w=<span class="num">35</span>, PL=<span class="num">22</span>, PI=<span class="num">26</span>)
-
-<span class="fn">print</span>(<span class="str">f"Dry: </span><span class="str">{gamma_d:.2f}</span> <span class="str">kN/m3"</span>)</pre>
+                        class="code-body"><span class="kw">import</span> geoeq <span class="kw">as</span> sp
+ 
+<span class="cm"># 1. Sieve Analysis</span>
+<span class="var">res</span> = sp.<span class="fn">sieve_ana</span>(opening=[<span class="str">"#4"</span>, <span class="str">"#200"</span>], mass_retained=[<span class="num">10</span>, <span class="num">85</span>])
+ 
+<span class="cm"># 2. Extract D10, Cu, Cc parameters</span>
+<span class="var">d10</span> = sp.<span class="fn">grain_d10</span>(res)
+<span class="var">cu</span>  = sp.<span class="fn">grain_Cu</span>(res)
+ 
+<span class="cm"># 3. Professional Academic Plotting</span>
+sp.<span class="fn">grain_size_plot</span>(res, smooth=<span class="imp">True</span>, save_as=<span class="str">"plot.png"</span>)
+ 
+<span class="fn">print</span>(<span class="str">f"Uniformity Coefficient (Cu): </span><span class="str">{cu:.2f}</span><span class="str">"</span>)</pre>
                 </div>
             </div>
         </div>
@@ -1029,9 +1032,9 @@
                 is what is planned.</p>
             <div class="roadmap-grid">
                 <div class="roadmap-card active">
-                    <div class="roadmap-version">v0.0.1 -- current</div>
-                    <h4>Soil Properties</h4>
-                    <p>Phase relations, unit weights, density, relative density, Atterberg limits.</p>
+                    <div class="roadmap-version">v0.0.4 -- current</div>
+                    <h4>Grain Size Analysis</h4>
+                    <p>Sieve & Hydrometer suite, professional academic plotting, and parameter extraction.</p>
                 </div>
                 <div class="roadmap-card">
                     <div class="roadmap-version">v0.1.x</div>
