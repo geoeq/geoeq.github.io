@@ -828,7 +828,7 @@
     <!-- HERO -->
     <section class="hero">
         <div class="hero-inner">
-            <div class="hero-badge"><span class="dot"></span> v0.0.2 Released</div>
+            <div class="hero-badge"><span class="dot"></span> v0.1.1 Released</div>
             <h1>Geotechnical equations,<br><span>solved in Python.</span></h1>
             <p class="hero-sub">GeoEq is an open-source Python library that brings validated geotechnical formulas into
                 one clean, consistent, and well-documented package.</p>
@@ -868,15 +868,15 @@
     <div class="stats-bar">
         <div class="stats-inner">
             <div class="stat-item">
-                <div class="stat-value">16</div>
+                <div class="stat-value">92+</div>
                 <div class="stat-label">Functions</div>
             </div>
             <div class="stat-item">
-                <div class="stat-value">43</div>
+                <div class="stat-value">404</div>
                 <div class="stat-label">Tests</div>
             </div>
             <div class="stat-item">
-                <div class="stat-value">0</div>
+                <div class="stat-value">3</div>
                 <div class="stat-label">Dependencies</div>
             </div>
             <div class="stat-item">
@@ -943,9 +943,8 @@
                             <polyline points="8 6 2 12 8 18" />
                         </svg>
                     </div>
-                    <h3>Zero dependencies</h3>
-                    <p>Pure Python standard library. Install it anywhere -- no numpy, no scipy, no heavy packages
-                        required.</p>
+                    <h3>Soil Classification</h3>
+                    <p>USCS (ASTM D2487) and AASHTO (M145) classification with Casagrande plasticity chart plotting.</p>
                 </div>
                 <div class="feature-card fade-in">
                     <div class="feature-icon">
@@ -965,8 +964,8 @@
                             <polyline points="22 4 12 14.01 9 11.01" />
                         </svg>
                     </div>
-                    <h3>Tested formulas</h3>
-                    <p>Verified against geotechnical textbooks (Das, Holtz) with high-resolution smooth plotting.</p>
+                    <h3>Shear Strength Tests</h3>
+                    <p>Direct shear, triaxial (UU/CU/CD), unconfined compression, and Mohr circle plotting with automatic failure envelope fitting.</p>
                 </div>
                 <div class="feature-card fade-in">
                     <div class="feature-icon">
@@ -977,8 +976,31 @@
                             <line x1="9" y1="21" x2="9" y2="9" />
                         </svg>
                     </div>
-                    <h3>Publication Ready</h3>
-                    <p>Generate high-resolution PNG/SVG/PDF plots with automated $D_{10}$, $C_u$, and $C_c$ markers.</p>
+                    <h3>Compaction &amp; Consolidation</h3>
+                    <p>Proctor test with ZAV &amp; saturation curves, oedometer e-log(p) with Casagrande preconsolidation, cv extraction, and CBR.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                            <path d="M2 17l10 5 10-5" />
+                            <path d="M2 12l10 5 10-5" />
+                        </svg>
+                    </div>
+                    <h3>Site Investigation</h3>
+                    <p>SPT corrections &amp; correlations, CPT with Robertson SBT chart, field vane, pressuremeter, plate load test, and pile load tests.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="2" x2="12" y2="22" />
+                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                        </svg>
+                    </div>
+                    <h3>Pile Load Testing</h3>
+                    <p>Static methods (Davisson, Chin, De Beer, Hansen 80%, FHWA 5%) and dynamic formulas (Case, Hiley, Danish, ENR).</p>
                 </div>
             </div>
         </div>
@@ -994,7 +1016,7 @@
                     <p class="section-desc">Install from PyPI and start computing soil properties immediately. No
                         configuration, no setup files, no boilerplate.</p>
                     <p style="font-size:0.9rem; color:var(--gray-500); line-height:1.7;">
-                        v0.0.4 includes professional **Particle Size Distribution** analysis (Sieve & Hydrometer) with automated smooth curves and parameter extraction.
+                        v0.1.1 ships the complete onshore geotechnical workflow under one flat namespace: <strong>170+ functions</strong> across nine modules — soil properties &amp; classification, lab testing, site investigation, layered ground modelling, engineering design (Boussinesq, bearing capacity, settlement, earth pressure, retaining walls, pile design, slope stability, seepage), soil dynamics &amp; liquefaction (Seed-Idriss, NCEER, Idriss-Boulanger), and data I/O (CSV, AGS4, GEF). 563 tests, all passing.
                     </p>
                 </div>
                 <div class="code-block fade-in">
@@ -1005,61 +1027,78 @@
                         <span>example.py</span>
                     </div>
                     <pre
-                        class="code-body"><span class="kw">import</span> geoeq <span class="kw">as</span> sp
- 
-<span class="cm"># 1. Sieve Analysis</span>
-<span class="var">res</span> = sp.<span class="fn">sieve_ana</span>(opening=[<span class="str">"#4"</span>, <span class="str">"#200"</span>], mass_retained=[<span class="num">10</span>, <span class="num">85</span>])
- 
-<span class="cm"># 2. Extract D10, Cu, Cc parameters</span>
-<span class="var">d10</span> = sp.<span class="fn">grain_d10</span>(res)
-<span class="var">cu</span>  = sp.<span class="fn">grain_Cu</span>(res)
- 
-<span class="cm"># 3. Professional Academic Plotting</span>
-sp.<span class="fn">grain_size_plot</span>(res, smooth=<span class="imp">True</span>, save_as=<span class="str">"plot.png"</span>)
- 
-<span class="fn">print</span>(<span class="str">f"Uniformity Coefficient (Cu): </span><span class="str">{cu:.2f}</span><span class="str">"</span>)</pre>
+                        class="code-body"><span class="kw">import</span> geoeq <span class="kw">as</span> ge
+
+<span class="cm"># 1. Build a layered profile with a water table</span>
+<span class="var">p</span> = ge.<span class="fn">SoilProfile</span>([
+    (<span class="num">0</span>, <span class="num">2</span>,  ge.<span class="fn">Soil</span>(<span class="str">"Fill"</span>,       gamma=<span class="num">18</span>)),
+    (<span class="num">2</span>, <span class="num">8</span>,  ge.<span class="fn">Soil</span>(<span class="str">"Soft Clay"</span>,  gamma=<span class="num">17</span>, gamma_sat=<span class="num">18.5</span>,
+                              phi=<span class="num">0</span>, c=<span class="num">25</span>, Cc=<span class="num">0.27</span>, e=<span class="num">0.92</span>)),
+    (<span class="num">8</span>, <span class="num">20</span>, ge.<span class="fn">Soil</span>(<span class="str">"Dense Sand"</span>, gamma=<span class="num">19</span>, gamma_sat=<span class="num">20.5</span>, phi=<span class="num">35</span>)),
+], water_table=<span class="num">2.0</span>)
+p.<span class="fn">stress_at</span>(<span class="num">10</span>)        <span class="cm"># {'sigma': 188.0, 'u': 78.5, 'sigma_eff': 109.5}</span>
+
+<span class="cm"># 2. Bearing capacity — 3 m square footing (Meyerhof)</span>
+<span class="var">bc</span> = ge.<span class="fn">bearing_capacity</span>(c=<span class="num">25</span>, gamma=<span class="num">8.7</span>, Df=<span class="num">2</span>, B=<span class="num">3</span>, L=<span class="num">3</span>,
+                          phi=<span class="num">0</span>, method=<span class="str">"meyerhof"</span>)
+
+<span class="cm"># 3. Liquefaction triggering — NCEER simplified procedure</span>
+<span class="var">csr</span> = ge.<span class="fn">liquefaction_csr</span>(amax=<span class="num">0.25</span>, sigma_v=<span class="num">120</span>,
+                          sigma_v_eff=<span class="num">70</span>, z=<span class="num">6</span>, Mw=<span class="num">7.0</span>)
+<span class="var">crr</span> = ge.<span class="fn">liquefaction_crr</span>(N160cs=<span class="num">12</span>, method=<span class="str">"youd_2001"</span>)
+ge.<span class="fn">liquefaction_fos</span>(csr[<span class="str">"CSR"</span>], crr[<span class="str">"CRR"</span>], Mw=<span class="num">7.0</span>)
+<span class="cm"># -> {'FS': 0.58, 'liquefies': True, 'MSF': 1.19}</span></pre>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ROADMAP -->
-    <section class="section roadmap-section" id="roadmap">
+    <!-- WHAT IS INSIDE -->
+    <section class="section roadmap-section" id="capabilities">
         <div class="section-inner">
-            <div class="section-label">Roadmap</div>
-            <h2 class="section-title">Growing into a full engineering toolkit.</h2>
-            <p class="section-desc">GeoEq starts with fundamentals and expands into advanced geotechnical methods. Here
-                is what is planned.</p>
+            <div class="section-label">What is inside</div>
+            <h2 class="section-title">A complete onshore geotechnical workflow.</h2>
+            <p class="section-desc">170+ validated functions across nine modules, under one flat namespace. Each module covers the methods routinely used in lab characterisation, ground investigation, foundation design, and seismic assessment.</p>
             <div class="roadmap-grid">
-                <div class="roadmap-card active">
-                    <div class="roadmap-version">v0.0.4 -- current</div>
-                    <h4>Grain Size Analysis</h4>
-                    <p>Sieve & Hydrometer suite, professional academic plotting, and parameter extraction.</p>
+                <div class="roadmap-card">
+                    <div class="roadmap-version" style="color:#34c759;">ge.soil</div>
+                    <h4>Soil Properties &amp; Classification</h4>
+                    <p>Phase relations, Atterberg, index properties, USCS, AASHTO, plasticity chart.</p>
                 </div>
                 <div class="roadmap-card">
-                    <div class="roadmap-version">v0.1.x</div>
-                    <h4>Stress &amp; Seepage</h4>
-                    <p>Effective stress, pore pressure, hydraulic gradient, quick condition.</p>
+                    <div class="roadmap-version" style="color:#34c759;">ge.lab</div>
+                    <h4>Laboratory Testing</h4>
+                    <p>Particle size (sieve + hydrometer), direct shear, triaxial, oedometer, Proctor, permeability, CBR.</p>
                 </div>
                 <div class="roadmap-card">
-                    <div class="roadmap-version">v0.2.x</div>
-                    <h4>Foundations</h4>
-                    <p>Bearing capacity, settlement, Schmertmann method, eccentric loading.</p>
-                </div>
-                <div class="roadmap-card">
-                    <div class="roadmap-version">v0.3.x</div>
+                    <div class="roadmap-version" style="color:#34c759;">ge.site</div>
                     <h4>Site Investigation</h4>
-                    <p>SPT/CPT correlations, USCS classification, soil profile objects.</p>
+                    <p>SPT, CPT, field vane, pressuremeter, plate load test, pile load tests, field permeability, DCP–CBR.</p>
                 </div>
                 <div class="roadmap-card">
-                    <div class="roadmap-version">v0.4.x</div>
-                    <h4>Earth Pressure</h4>
-                    <p>Rankine, Coulomb, retaining wall stability, consolidation.</p>
+                    <div class="roadmap-version" style="color:#34c759;">ge.profile</div>
+                    <h4>Layered Ground Model</h4>
+                    <p>SoilProfile object with total / pore / effective stress, plotting, DataFrame export.</p>
+                </div>
+                <div class="roadmap-card active">
+                    <div class="roadmap-version">ge.design</div>
+                    <h4>Engineering Design</h4>
+                    <p>Effective stress, Boussinesq family, bearing capacity (4 methods), settlement, earth pressure, retaining walls, pile design, slope stability, seepage.</p>
                 </div>
                 <div class="roadmap-card">
-                    <div class="roadmap-version">v0.5.x</div>
-                    <h4>Advanced Methods</h4>
-                    <p>Pile capacity, slope stability, liquefaction, seismic assessment.</p>
+                    <div class="roadmap-version" style="color:#34c759;">ge.dynamics</div>
+                    <h4>Soil Dynamics &amp; Liquefaction</h4>
+                    <p>Small-strain modulus, Darendeli G/Gmax + damping, Seed-Idriss / NCEER / Idriss-Boulanger triggering analysis.</p>
+                </div>
+                <div class="roadmap-card">
+                    <div class="roadmap-version" style="color:#34c759;">ge.io</div>
+                    <h4>Data I/O</h4>
+                    <p>CSV, AGS4 (UK), GEF-CPT (Netherlands), CPT container class.</p>
+                </div>
+                <div class="roadmap-card">
+                    <div class="roadmap-version" style="color:#34c759;">ge.viz</div>
+                    <h4>Publication-quality Plots</h4>
+                    <p>Grain size, Proctor, Mohr, consolidation, SBT, bearing chart, isobars, Taylor chart, G/Gmax curves, liquefaction chart.</p>
                 </div>
             </div>
         </div>

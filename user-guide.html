@@ -105,10 +105,101 @@
                 <h3 class="sidebar-title">Ch. 3 — Soil Properties</h3>
                 <ul class="sidebar-links">
                     <li><a href="#soil-props">Void Ratio &amp; Porosity</a></li>
+                    <li><a href="#specific-gravity">Specific Gravity</a></li>
                     <li><a href="#unit-weights">Unit Weight &amp; Density</a></li>
                     <li><a href="#atterberg">Atterberg Limits</a></li>
+                    <li><a href="#index-props">Index Properties</a></li>
                     <li><a href="#relative-density">Relative Density</a></li>
                     <li><a href="#phase-relations">Phase Relations</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Ch. 4 — Classification</h3>
+                <ul class="sidebar-links">
+                    <li><a href="#uscs">USCS Classification</a></li>
+                    <li><a href="#aashto">AASHTO Classification</a></li>
+                    <li><a href="#plasticity-chart">Plasticity Chart</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Lab Testing</h3>
+                <ul class="sidebar-links">
+                    <li><a href="#lab-shear">Shear Strength</a></li>
+                    <li><a href="#lab-consolidation">Consolidation</a></li>
+                    <li><a href="#lab-compaction">Compaction</a></li>
+                    <li><a href="#lab-permeability">Permeability</a></li>
+                    <li><a href="#lab-atterberg">Liquid Limit Test</a></li>
+                    <li><a href="#lab-cbr">CBR</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Site Investigation</h3>
+                <ul class="sidebar-links">
+                    <li><a href="#site-spt">SPT</a></li>
+                    <li><a href="#site-cpt">CPT</a></li>
+                    <li><a href="#site-vane">Vane Shear</a></li>
+                    <li><a href="#site-pmt">Pressuremeter</a></li>
+                    <li><a href="#site-plt">Plate Load Test</a></li>
+                    <li><a href="#site-pile">Pile Load Tests</a></li>
+                    <li><a href="#site-perm">Field Permeability</a></li>
+                    <li><a href="#site-cbr">Field CBR / DCP</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Layered Ground Model</h3>
+                <ul class="sidebar-links">
+                    <li><a href="#profile-soil">Soil layer object</a></li>
+                    <li><a href="#profile-stack">SoilProfile</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Design — Stress</h3>
+                <ul class="sidebar-links">
+                    <li><a href="#design-effective">Effective stress</a></li>
+                    <li><a href="#design-seepage">Seepage &amp; flow</a></li>
+                    <li><a href="#design-boussinesq">Stress distribution</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Design — Foundations</h3>
+                <ul class="sidebar-links">
+                    <li><a href="#design-bearing">Bearing capacity</a></li>
+                    <li><a href="#design-settlement">Settlement</a></li>
+                    <li><a href="#design-piles">Pile design</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Design — Earthworks</h3>
+                <ul class="sidebar-links">
+                    <li><a href="#design-earth">Earth pressure</a></li>
+                    <li><a href="#design-walls">Retaining walls</a></li>
+                    <li><a href="#design-slopes">Slope stability</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Soil Dynamics</h3>
+                <ul class="sidebar-links">
+                    <li><a href="#dyn-gmax">Gmax &amp; G/Gmax</a></li>
+                    <li><a href="#dyn-damping">Damping</a></li>
+                    <li><a href="#dyn-liq">Liquefaction triggering</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Data I/O</h3>
+                <ul class="sidebar-links">
+                    <li><a href="#io-csv">CSV reader</a></li>
+                    <li><a href="#io-ags">AGS4 reader</a></li>
+                    <li><a href="#io-gef">GEF-CPT reader</a></li>
+                    <li><a href="#io-cpt">CPT container</a></li>
                 </ul>
             </div>
 
@@ -140,13 +231,13 @@
                 <h2>Particle Size Analysis</h2>
                 <p>GeoEq includes a complete, laboratory-grade particle size analysis suite. It covers two distinct test methods — <strong>Sieve Analysis</strong> for coarse-grained soils and <strong>Hydrometer Analysis</strong> for fine-grained soils — and is designed so that results from both can be combined into a single, continuous grain size distribution curve.</p>
 
-                <h3>1. Sieve Analysis — <code>sp.sieve_ana()</code></h3>
+                <h3>1. Sieve Analysis — <code>ge.sieve_ana()</code></h3>
                 <p>This function accepts two lists — the sieve sizes and the mass retained on each sieve — and automatically converts them to a percent-finer-by-mass distribution using one of three internationally recognised standards.</p>
 
                 <h4>Function Signature</h4>
                 <div class="code-container">
                     <div class="code-header"><span class="code-lang">python</span></div>
-                    <div class="code-block"><pre>sp.<span class="fn">sieve_ana</span>(
+                    <div class="code-block"><pre>ge.<span class="fn">sieve_ana</span>(
     opening,           <span class="cm"># list of sieve sizes (designations OR mm floats)</span>
     mass_retained,     <span class="cm"># list of masses in grams retained on each sieve</span>
     standard=<span class="str">"ASTM"</span>,  <span class="cm"># standard: "ASTM", "BS", or "IS"</span>
@@ -172,7 +263,7 @@ opening = [<span class="num">19.0</span>, <span class="num">9.5</span>, <span cl
                 <p>The function returns a Python dictionary with the following keys, all as NumPy arrays:</p>
                 <div class="code-container">
                     <div class="code-header"><span class="code-lang">python</span></div>
-                    <div class="code-block"><pre>res = sp.<span class="fn">sieve_ana</span>([<span class="str">"#4"</span>, <span class="str">"#10"</span>, <span class="str">"#40"</span>, <span class="str">"#200"</span>], [<span class="num">10</span>, <span class="num">25</span>, <span class="num">40</span>, <span class="num">15</span>], total_mass=<span class="num">100</span>)
+                    <div class="code-block"><pre>res = ge.<span class="fn">sieve_ana</span>([<span class="str">"#4"</span>, <span class="str">"#10"</span>, <span class="str">"#40"</span>, <span class="str">"#200"</span>], [<span class="num">10</span>, <span class="num">25</span>, <span class="num">40</span>, <span class="num">15</span>], total_mass=<span class="num">100</span>)
 
 res[<span class="str">"diameter"</span>]          <span class="cm"># Nominal opening in mm  → [4.75, 2.0, 0.425, 0.075]</span>
 res[<span class="str">"opening"</span>]           <span class="cm"># Alias for diameter (same values)</span>
@@ -183,13 +274,13 @@ res[<span class="str">"percent_finer"</span>]     <span class="cm"># % passing (
 res[<span class="str">"total_mass"</span>]        <span class="cm"># Total specimen mass used for calculations</span></pre></div>
                 </div>
 
-                <h3>2. Hydrometer Analysis — <code>sp.hydro_ana()</code></h3>
+                <h3>2. Hydrometer Analysis — <code>ge.hydro_ana()</code></h3>
                 <p>Implements the full <strong>ASTM D7928</strong> sedimentation analysis. Raw readings from a standard 152H hydrometer are corrected for meniscus, temperature, and dispersing agent, then converted to equivalent particle diameters using Stokes' Law.</p>
 
                 <h4>Function Signature</h4>
                 <div class="code-container">
                     <div class="code-header"><span class="code-lang">python</span></div>
-                    <div class="code-block"><pre>sp.<span class="fn">hydro_ana</span>(
+                    <div class="code-block"><pre>ge.<span class="fn">hydro_ana</span>(
     reading,          <span class="cm"># list of raw hydrometer readings (top of meniscus)</span>
     time,             <span class="cm"># list of elapsed times in minutes</span>
     T,                <span class="cm"># temperature of suspension (°C)</span>
@@ -203,7 +294,7 @@ res[<span class="str">"total_mass"</span>]        <span class="cm"># Total speci
                 <h4>Return Value (Dictionary)</h4>
                 <div class="code-container">
                     <div class="code-header"><span class="code-lang">python</span></div>
-                    <div class="code-block"><pre>h_res = sp.<span class="fn">hydro_ana</span>([<span class="num">52</span>, <span class="num">45</span>, <span class="num">38</span>, <span class="num">28</span>], [<span class="num">1</span>, <span class="num">15</span>, <span class="num">60</span>, <span class="num">1440</span>], T=<span class="num">22.0</span>, Ws=<span class="num">50.0</span>)
+                    <div class="code-block"><pre>h_res = ge.<span class="fn">hydro_ana</span>([<span class="num">52</span>, <span class="num">45</span>, <span class="num">38</span>, <span class="num">28</span>], [<span class="num">1</span>, <span class="num">15</span>, <span class="num">60</span>, <span class="num">1440</span>], T=<span class="num">22.0</span>, Ws=<span class="num">50.0</span>)
 
 h_res[<span class="str">"diameter"</span>]       <span class="cm"># Equivalent particle diameter D (mm) via Stokes' Law</span>
 h_res[<span class="str">"percent_finer"</span>]  <span class="cm"># Percent finer (%) — corrected P value</span>
@@ -217,22 +308,22 @@ h_res[<span class="str">"time"</span>]           <span class="cm"># Elapsed time
                 <div class="code-container">
                     <div class="code-header"><span class="code-lang">python</span></div>
                     <div class="code-block"><pre><span class="cm"># Run both tests</span>
-s_res = sp.<span class="fn">sieve_ana</span>([<span class="str">"#4"</span>, <span class="str">"#10"</span>, <span class="str">"#40"</span>, <span class="str">"#200"</span>], [<span class="num">10</span>, <span class="num">25</span>, <span class="num">40</span>, <span class="num">15</span>])
-h_res = sp.<span class="fn">hydro_ana</span>([<span class="num">50</span>, <span class="num">42</span>, <span class="num">30</span>, <span class="num">18</span>], [<span class="num">1</span>, <span class="num">15</span>, <span class="num">60</span>, <span class="num">1440</span>], T=<span class="num">22.0</span>)
+s_res = ge.<span class="fn">sieve_ana</span>([<span class="str">"#4"</span>, <span class="str">"#10"</span>, <span class="str">"#40"</span>, <span class="str">"#200"</span>], [<span class="num">10</span>, <span class="num">25</span>, <span class="num">40</span>, <span class="num">15</span>])
+h_res = ge.<span class="fn">hydro_ana</span>([<span class="num">50</span>, <span class="num">42</span>, <span class="num">30</span>, <span class="num">18</span>], [<span class="num">1</span>, <span class="num">15</span>, <span class="num">60</span>, <span class="num">1440</span>], T=<span class="num">22.0</span>)
 
 <span class="cm"># Pass both to plot — they are stitched into one continuous curve</span>
-sp.<span class="fn">grain_size_plot</span>({<span class="str">"Sieve"</span>: s_res, <span class="str">"Hydrometer"</span>: h_res}, smooth=<span class="imp">True</span>)</pre></div>
+ge.<span class="fn">grain_size_plot</span>({<span class="str">"Sieve"</span>: s_res, <span class="str">"Hydrometer"</span>: h_res}, smooth=<span class="imp">True</span>)</pre></div>
                 </div>
             </section>
 
             <section id="grain-plots">
-                <h2>Advanced Plotting — <code>sp.grain_size_plot()</code></h2>
+                <h2>Advanced Plotting — <code>ge.grain_size_plot()</code></h2>
                 <p>This is the most feature-rich function in the package. It generates a fully professional, publication-quality, semi-logarithmic grain size distribution curve. Internally it wraps Matplotlib, so <strong>every Matplotlib line keyword argument works</strong> — colour, linewidth, linestyle, markersize, alpha, and more.</p>
 
                 <h4>Full Function Signature</h4>
                 <div class="code-container">
                     <div class="code-header"><span class="code-lang">python</span></div>
-                    <div class="code-block"><pre>sp.<span class="fn">grain_size_plot</span>(
+                    <div class="code-block"><pre>ge.<span class="fn">grain_size_plot</span>(
     data,              <span class="cm"># dict with keys 'diameter' & 'percent_finer'  — OR —</span>
                        <span class="cm"># dict of named datasets: {"Sieve": s_res, "Hydro": h_res}</span>
     smooth=<span class="imp">False</span>,     <span class="cm"># bool — enables high-res PCHIP smooth curve (1000 points)</span>
@@ -251,7 +342,7 @@ sp.<span class="fn">grain_size_plot</span>({<span class="str">"Sieve"</span>: s_
                 <p>Because GeoEq uses Matplotlib internally, <strong>all standard line styling arguments are accepted</strong>. This is the same as calling <code>ax.plot()</code> directly. Common examples:</p>
                 <div class="code-container">
                     <div class="code-header"><span class="code-lang">python</span></div>
-                    <div class="code-block"><pre>sp.<span class="fn">grain_size_plot</span>(
+                    <div class="code-block"><pre>ge.<span class="fn">grain_size_plot</span>(
     data,
     smooth=<span class="imp">True</span>,
     <span class="cm"># --- Line Style ---</span>
@@ -289,13 +380,13 @@ param_pos=(<span class="num">0.5</span>, <span class="num">0.8</span>)  <span cl
                 <div class="code-container">
                     <div class="code-header"><span class="code-lang">python</span></div>
                     <div class="code-block"><pre><span class="kw">import</span> matplotlib.pyplot <span class="kw">as</span> plt
-<span class="kw">import</span> geoeq <span class="kw">as</span> sp
+<span class="kw">import</span> geoeq <span class="kw">as</span> ge
 
 <span class="cm"># Create your own figure with multiple panels</span>
 fig, (ax1, ax2) = plt.<span class="fn">subplots</span>(<span class="num">1</span>, <span class="num">2</span>, figsize=(<span class="num">18</span>, <span class="num">7</span>))
 
 <span class="cm"># Embed GeoEq plot in the left panel</span>
-sp.<span class="fn">grain_size_plot</span>(s_res, ax=ax1, smooth=<span class="imp">True</span>, color=<span class="str">'blue'</span>)
+ge.<span class="fn">grain_size_plot</span>(s_res, ax=ax1, smooth=<span class="imp">True</span>, color=<span class="str">'blue'</span>)
 
 <span class="cm"># Add your own plot in the right panel</span>
 ax2.<span class="fn">plot</span>(depth, settlement)
@@ -311,10 +402,10 @@ plt.<span class="fn">savefig</span>(<span class="str">'combined_report.pdf'</spa
                 <p>The <code>save_as</code> argument routes directly to Matplotlib's <code>savefig()</code>, so all formats are supported. GeoEq always saves at <strong>300 DPI</strong> with a tight bounding box — ideal for journals and reports.</p>
                 <div class="code-container">
                     <div class="code-header"><span class="code-lang">python</span></div>
-                    <div class="code-block"><pre>sp.<span class="fn">grain_size_plot</span>(data, save_as=<span class="str">"figure.png"</span>)  <span class="cm"># raster, 300 DPI</span>
-sp.<span class="fn">grain_size_plot</span>(data, save_as=<span class="str">"figure.svg"</span>)  <span class="cm"># vector — scalable</span>
-sp.<span class="fn">grain_size_plot</span>(data, save_as=<span class="str">"figure.pdf"</span>)  <span class="cm"># vector — best for LaTeX</span>
-sp.<span class="fn">grain_size_plot</span>(data, save_as=<span class="str">"figure.eps"</span>)  <span class="cm"># vector — legacy journals</span></pre></div>
+                    <div class="code-block"><pre>ge.<span class="fn">grain_size_plot</span>(data, save_as=<span class="str">"figure.png"</span>)  <span class="cm"># raster, 300 DPI</span>
+ge.<span class="fn">grain_size_plot</span>(data, save_as=<span class="str">"figure.svg"</span>)  <span class="cm"># vector — scalable</span>
+ge.<span class="fn">grain_size_plot</span>(data, save_as=<span class="str">"figure.pdf"</span>)  <span class="cm"># vector — best for LaTeX</span>
+ge.<span class="fn">grain_size_plot</span>(data, save_as=<span class="str">"figure.eps"</span>)  <span class="cm"># vector — legacy journals</span></pre></div>
                 </div>
             </section>
 
@@ -326,17 +417,17 @@ sp.<span class="fn">grain_size_plot</span>(data, save_as=<span class="str">"figu
                 <div class="code-container">
                     <div class="code-header"><span class="code-lang">python</span></div>
                     <div class="code-block"><pre><span class="cm"># Diameter at which N% of soil is finer (mm)</span>
-<span class="var">d10</span> = sp.<span class="fn">grain_d10</span>(res)  <span class="cm"># effective size</span>
-<span class="var">d30</span> = sp.<span class="fn">grain_d30</span>(res)  <span class="cm"># used for Cc calculation</span>
-<span class="var">d60</span> = sp.<span class="fn">grain_d60</span>(res)  <span class="cm"># controlling size</span>
+<span class="var">d10</span> = ge.<span class="fn">grain_d10</span>(res)  <span class="cm"># effective size</span>
+<span class="var">d30</span> = ge.<span class="fn">grain_d30</span>(res)  <span class="cm"># used for Cc calculation</span>
+<span class="var">d60</span> = ge.<span class="fn">grain_d60</span>(res)  <span class="cm"># controlling size</span>
 
 <span class="cm"># Uniformity Coefficient — Cᵤ = D₆₀ / D₁₀</span>
 <span class="cm"># Well-graded if Cᵤ ≥ 4 (gravels) or Cᵤ ≥ 6 (sands)</span>
-<span class="var">cu</span> = sp.<span class="fn">grain_Cu</span>(res)
+<span class="var">cu</span> = ge.<span class="fn">grain_Cu</span>(res)
 
 <span class="cm"># Coefficient of Curvature — Cᶜ = D₃₀² / (D₁₀ × D₆₀)</span>
 <span class="cm"># Well-graded if 1 ≤ Cᶜ ≤ 3</span>
-<span class="var">cc</span> = sp.<span class="fn">grain_Cc</span>(res)
+<span class="var">cc</span> = ge.<span class="fn">grain_Cc</span>(res)
 
 <span class="fn">print</span>(<span class="str">f"D10={d10:.3f} mm,  D30={d30:.3f} mm,  D60={d60:.3f} mm"</span>)
 <span class="fn">print</span>(<span class="str">f"Cᵤ = {cu:.2f}  →  {'Well-graded' if cu >= 6 else 'Poorly-graded'}"</span>)
@@ -345,14 +436,14 @@ sp.<span class="fn">grain_size_plot</span>(data, save_as=<span class="str">"figu
             </section>
 
             <section id="soil-props">
-                <h2>Chapter 3 — Void Ratio &amp; Porosity</h2>
-                <p>Void ratio (<em>e</em>) and porosity (<em>n</em>) describe the relative volume of voids in a soil. GeoEq provides two symmetrical functions — <code>sp.void_ratio()</code> and <code>sp.porosity()</code> — that accept different input combinations and automatically resolve the correct path.</p>
+                <h2>Chapter 3 — Void Ratio, Porosity &amp; Specific Gravity</h2>
+                <p>Void ratio (<em>e</em>) and porosity (<em>n</em>) describe the relative volume of voids in a soil. GeoEq provides two symmetrical functions — <code>ge.void_ratio()</code> and <code>ge.porosity()</code> — that accept different input combinations and automatically resolve the correct path.</p>
 
-                <h3>1. Void Ratio — <code>sp.void_ratio()</code></h3>
+                <h3>1. Void Ratio — <code>ge.void_ratio()</code></h3>
                 <p>Computes void ratio from any physically meaningful input combination. All inputs are validated to be within geotechnically possible ranges.</p>
                 <div class="code-container">
                     <div class="code-header"><span class="code-lang">python</span></div>
-                    <div class="code-block"><pre>sp.<span class="fn">void_ratio</span>(
+                    <div class="code-block"><pre>ge.<span class="fn">void_ratio</span>(
     n=<span class="imp">None</span>,        <span class="cm"># porosity (0 &lt; n &lt; 1)</span>
     Vv=<span class="imp">None</span>,       <span class="cm"># volume of voids (m³ or any consistent unit)</span>
     Vs=<span class="imp">None</span>,       <span class="cm"># volume of solids</span>
@@ -360,41 +451,68 @@ sp.<span class="fn">grain_size_plot</span>(data, save_as=<span class="str">"figu
 )
 
 <span class="cm"># From porosity: e = n / (1 - n)</span>
-e = sp.<span class="fn">void_ratio</span>(n=<span class="num">0.42</span>)
+e = ge.<span class="fn">void_ratio</span>(n=<span class="num">0.42</span>)
 <span class="fn">print</span>(<span class="str">f"e = {e:.3f}"</span>)  <span class="cm"># → e = 0.724</span>
 
 <span class="cm"># From volumes: e = Vv / Vs</span>
-e2 = sp.<span class="fn">void_ratio</span>(Vv=<span class="num">0.30</span>, Vs=<span class="num">0.70</span>)
+e2 = ge.<span class="fn">void_ratio</span>(Vv=<span class="num">0.30</span>, Vs=<span class="num">0.70</span>)
 <span class="fn">print</span>(<span class="str">f"e = {e2:.3f}"</span>)  <span class="cm"># → e = 0.429</span></pre></div>
                 </div>
 
-                <h3>2. Porosity — <code>sp.porosity()</code></h3>
+                <h3>2. Porosity — <code>ge.porosity()</code></h3>
                 <div class="code-container">
                     <div class="code-header"><span class="code-lang">python</span></div>
-                    <div class="code-block"><pre>sp.<span class="fn">porosity</span>(
+                    <div class="code-block"><pre>ge.<span class="fn">porosity</span>(
     e=<span class="imp">None</span>,        <span class="cm"># void ratio (e &gt; 0)</span>
     Vv=<span class="imp">None</span>,       <span class="cm"># volume of voids</span>
     Vt=<span class="imp">None</span>,       <span class="cm"># total volume</span>
 )
 
 <span class="cm"># From void ratio: n = e / (1 + e)</span>
-n = sp.<span class="fn">porosity</span>(e=<span class="num">0.72</span>)
+n = ge.<span class="fn">porosity</span>(e=<span class="num">0.72</span>)
 <span class="fn">print</span>(<span class="str">f"n = {n:.3f}"</span>)  <span class="cm"># → n = 0.419</span>
 
 <span class="cm"># From volumes: n = Vv / Vt</span>
-n2 = sp.<span class="fn">porosity</span>(Vv=<span class="num">0.28</span>, Vt=<span class="num">1.0</span>)
+n2 = ge.<span class="fn">porosity</span>(Vv=<span class="num">0.28</span>, Vt=<span class="num">1.0</span>)
 <span class="fn">print</span>(<span class="str">f"n = {n2:.3f}"</span>)  <span class="cm"># → n = 0.280</span></pre></div>
                 </div>
             </section>
 
+            <section id="specific-gravity">
+                <h2>Specific Gravity — <code>ge.specific_gravity()</code></h2>
+                <p>Computes the specific gravity of soil solids from measured mass and volume. This is the fundamental property used in most phase-relation calculations.</p>
+
+                <h4>Function Signature</h4>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre>ge.<span class="fn">specific_gravity</span>(
+    Ms,               <span class="cm"># mass of solids (grams)</span>
+    Vs,               <span class="cm"># volume of solids (cm3)</span>
+)</pre></div>
+                </div>
+
+                <h4>Usage</h4>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre><span class="cm"># Gs = Ms / (Vs * rho_w)  where rho_w = 1.0 g/cm3</span>
+<span class="var">Gs</span> = ge.<span class="fn">specific_gravity</span>(Ms=<span class="num">265.0</span>, Vs=<span class="num">100.0</span>)
+<span class="fn">print</span>(<span class="str">f"Gs = {Gs}"</span>)  <span class="cm"># --> Gs = 2.65</span>
+
+<span class="cm"># Works with numpy arrays too</span>
+<span class="kw">import</span> numpy <span class="kw">as</span> np
+<span class="var">Gs_arr</span> = ge.<span class="fn">specific_gravity</span>(Ms=np.array([<span class="num">265</span>, <span class="num">270</span>, <span class="num">275</span>]), Vs=np.array([<span class="num">100</span>, <span class="num">100</span>, <span class="num">100</span>]))
+<span class="fn">print</span>(Gs_arr)  <span class="cm"># --> [2.65, 2.70, 2.75]</span></pre></div>
+                </div>
+            </section>
+
             <section id="unit-weights">
-                <h2>Unit Weight &amp; Density — <code>sp.density()</code></h2>
+                <h2>Unit Weight &amp; Density — <code>ge.density()</code></h2>
                 <p>Computing dry, saturated, bulk, and submerged unit weights is one of the most common tasks in geotechnical practice. GeoEq unifies all of these into a single smart function with a <code>kind</code> argument. It also supports multiple output unit systems — so you can request <code>kN/m³</code> for European standards or <code>pcf</code> for American practice with no manual conversion.</p>
 
                 <h4>Function Signature</h4>
                 <div class="code-container">
                     <div class="code-header"><span class="code-lang">python</span></div>
-                    <div class="code-block"><pre>sp.<span class="fn">density</span>(
+                    <div class="code-block"><pre>ge.<span class="fn">density</span>(
     Gs=<span class="imp">None</span>,       <span class="cm"># specific gravity of solids (dimensionless, typically 2.60–2.80)</span>
     e=<span class="imp">None</span>,        <span class="cm"># void ratio</span>
     w=<span class="imp">None</span>,        <span class="cm"># water content (decimal, e.g. 0.18 for 18%)</span>
@@ -410,21 +528,21 @@ n2 = sp.<span class="fn">porosity</span>(Vv=<span class="num">0.28</span>, Vt=<s
                 <div class="code-container">
                     <div class="code-header"><span class="code-lang">python</span></div>
                     <div class="code-block"><pre><span class="cm"># Dry unit weight: γd = (Gs × γw) / (1 + e)</span>
-gamma_d   = sp.<span class="fn">density</span>(Gs=<span class="num">2.65</span>, e=<span class="num">0.72</span>, kind=<span class="str">"dry"</span>,       unit=<span class="str">"kN/m3"</span>)
+gamma_d   = ge.<span class="fn">density</span>(Gs=<span class="num">2.65</span>, e=<span class="num">0.72</span>, kind=<span class="str">"dry"</span>,       unit=<span class="str">"kN/m3"</span>)
 
 <span class="cm"># Saturated unit weight: γsat = (Gs + e) × γw / (1 + e)</span>
-gamma_sat = sp.<span class="fn">density</span>(Gs=<span class="num">2.65</span>, e=<span class="num">0.72</span>, kind=<span class="str">"saturated"</span>,  unit=<span class="str">"kN/m3"</span>)
+gamma_sat = ge.<span class="fn">density</span>(Gs=<span class="num">2.65</span>, e=<span class="num">0.72</span>, kind=<span class="str">"saturated"</span>,  unit=<span class="str">"kN/m3"</span>)
 
 <span class="cm"># Submerged / buoyant unit weight: γ' = γsat - γw</span>
-gamma_sub = sp.<span class="fn">density</span>(Gs=<span class="num">2.65</span>, e=<span class="num">0.72</span>, kind=<span class="str">"submerged"</span>, unit=<span class="str">"kN/m3"</span>)
+gamma_sub = ge.<span class="fn">density</span>(Gs=<span class="num">2.65</span>, e=<span class="num">0.72</span>, kind=<span class="str">"submerged"</span>, unit=<span class="str">"kN/m3"</span>)
 
 <span class="cm"># Bulk unit weight: γ = (Gs + S×e) × γw / (1 + e)</span>
-gamma_b   = sp.<span class="fn">density</span>(Gs=<span class="num">2.65</span>, e=<span class="num">0.72</span>, S=<span class="num">0.80</span>, kind=<span class="str">"bulk"</span>,       unit=<span class="str">"kN/m3"</span>)
+gamma_b   = ge.<span class="fn">density</span>(Gs=<span class="num">2.65</span>, e=<span class="num">0.72</span>, S=<span class="num">0.80</span>, kind=<span class="str">"bulk"</span>,       unit=<span class="str">"kN/m3"</span>)
 
 <span class="fn">print</span>(<span class="str">f"γd={gamma_d:.2f}  γsat={gamma_sat:.2f}  γ'={gamma_sub:.2f}  γ={gamma_b:.2f} kN/m³"</span>)
 
 <span class="cm"># Direct from mass and volume (any unit system)</span>
-gamma_pcf = sp.<span class="fn">density</span>(mass=<span class="num">50</span>, volume=<span class="num">0.028</span>, unit=<span class="str">"pcf"</span>)
+gamma_pcf = ge.<span class="fn">density</span>(mass=<span class="num">50</span>, volume=<span class="num">0.028</span>, unit=<span class="str">"pcf"</span>)
 <span class="fn">print</span>(<span class="str">f"Bulk density = {gamma_pcf:.1f} pcf"</span>)</pre></div>
                 </div>
 
@@ -436,7 +554,7 @@ gamma_pcf = sp.<span class="fn">density</span>(mass=<span class="num">50</span>,
 unit=<span class="str">"kN/m3"</span>   <span class="cm"># kilonewtons per cubic metre  (most common in geotechnical practice)</span>
 unit=<span class="str">"kPa/m"</span>   <span class="cm"># same magnitude, different notation (useful for stress gradients)</span>
 unit=<span class="str">"kg/m3"</span>   <span class="cm"># kilograms per cubic metre</span>
-unit=<span class="str">"g/cm3"</span>   <span class="cm"># grams per cubic centimetre (same as specific gravity scale)</span>
+unit=<span class="str">"g/cm3"</span>   <span class="cm"># grams per cubic centimetre (same as geecific gravity scale)</span>
 
 <span class="cm"># Imperial units</span>
 unit=<span class="str">"pcf"</span>     <span class="cm"># pounds per cubic foot (lbf/ft³)</span></pre></div>
@@ -444,13 +562,13 @@ unit=<span class="str">"pcf"</span>     <span class="cm"># pounds per cubic foot
             </section>
 
             <section id="atterberg">
-                <h2>Atterberg Limits — <code>sp.atterberg()</code></h2>
+                <h2>Atterberg Limits — <code>ge.atterberg()</code></h2>
                 <p>Atterberg limits define the water content boundaries at which fine-grained soil transitions between solid, semi-solid, plastic, and liquid states. GeoEq computes the Plasticity Index (PI), Liquidity Index (LI), and Consistency Index (CI) from a single unified function using the <code>kind</code> argument.</p>
 
                 <h4>Function Signature</h4>
                 <div class="code-container">
                     <div class="code-header"><span class="code-lang">python</span></div>
-                    <div class="code-block"><pre>sp.<span class="fn">atterberg</span>(
+                    <div class="code-block"><pre>ge.<span class="fn">atterberg</span>(
     LL,            <span class="cm"># Liquid Limit (%)</span>
     PL,            <span class="cm"># Plastic Limit (%)</span>
     w=<span class="imp">None</span>,        <span class="cm"># current water content (%) — required for LI and CI</span>
@@ -462,34 +580,84 @@ unit=<span class="str">"pcf"</span>     <span class="cm"># pounds per cubic foot
                 <div class="code-container">
                     <div class="code-header"><span class="code-lang">python</span></div>
                     <div class="code-block"><pre><span class="cm"># Plasticity Index: PI = LL - PL</span>
-PI = sp.<span class="fn">atterberg</span>(LL=<span class="num">48</span>, PL=<span class="num">22</span>, kind=<span class="str">"PI"</span>)
+PI = ge.<span class="fn">atterberg</span>(LL=<span class="num">48</span>, PL=<span class="num">22</span>, kind=<span class="str">"PI"</span>)
 <span class="fn">print</span>(<span class="str">f"PI = {PI}"</span>)   <span class="cm"># → PI = 26</span>
 
 <span class="cm"># Liquidity Index: LI = (w - PL) / (LL - PL)</span>
 <span class="cm"># LI < 0 → Solid, 0–1 → Plastic, > 1 → Liquid</span>
-LI = sp.<span class="fn">atterberg</span>(LL=<span class="num">48</span>, PL=<span class="num">22</span>, w=<span class="num">35</span>, kind=<span class="str">"LI"</span>)
+LI = ge.<span class="fn">atterberg</span>(LL=<span class="num">48</span>, PL=<span class="num">22</span>, w=<span class="num">35</span>, kind=<span class="str">"LI"</span>)
 <span class="fn">print</span>(<span class="str">f"LI = {LI:.2f}"</span>)  <span class="cm"># → LI = 0.50</span>
 
 <span class="cm"># Consistency Index: CI = (LL - w) / (LL - PL) = 1 - LI</span>
-CI = sp.<span class="fn">atterberg</span>(LL=<span class="num">48</span>, PL=<span class="num">22</span>, w=<span class="num">35</span>, kind=<span class="str">"CI"</span>)
+CI = ge.<span class="fn">atterberg</span>(LL=<span class="num">48</span>, PL=<span class="num">22</span>, w=<span class="num">35</span>, kind=<span class="str">"CI"</span>)
 <span class="fn">print</span>(<span class="str">f"CI = {CI:.2f}"</span>)  <span class="cm"># → CI = 0.50</span>
 
 <span class="cm"># All at once — returns a dictionary</span>
-result = sp.<span class="fn">atterberg</span>(LL=<span class="num">48</span>, PL=<span class="num">22</span>, w=<span class="num">35</span>, kind=<span class="str">"all"</span>)
+result = ge.<span class="fn">atterberg</span>(LL=<span class="num">48</span>, PL=<span class="num">22</span>, w=<span class="num">35</span>, kind=<span class="str">"all"</span>)
 result[<span class="str">"PI"</span>]  <span class="cm"># → 26</span>
 result[<span class="str">"LI"</span>]  <span class="cm"># → 0.50</span>
 result[<span class="str">"CI"</span>]  <span class="cm"># → 0.50</span></pre></div>
                 </div>
             </section>
 
+            <section id="index-props">
+                <h2>Index Properties — Activity, Sensitivity &amp; Liquidity Index</h2>
+                <p>These standalone functions compute common index properties for fine-grained soils. Each accepts scalars or numpy arrays.</p>
+
+                <h3>1. Activity — <code>ge.activity()</code></h3>
+                <p>Measures how reactive a clay is based on its plasticity relative to its clay-size fraction. Defined by Skempton (1953).</p>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre><span class="cm"># Activity = PI / clay_fraction(%)</span>
+<span class="cm"># Classification: A &lt; 0.75 Inactive, 0.75-1.25 Normal, &gt; 1.25 Active</span>
+
+<span class="var">A</span> = ge.<span class="fn">activity</span>(PI=<span class="num">30</span>, clay_fraction=<span class="num">40</span>)
+<span class="fn">print</span>(<span class="str">f"Activity = {A}"</span>)  <span class="cm"># --> 0.75 (Inactive/Normal boundary)</span>
+
+<span class="var">A2</span> = ge.<span class="fn">activity</span>(PI=<span class="num">50</span>, clay_fraction=<span class="num">20</span>)
+<span class="fn">print</span>(<span class="str">f"Activity = {A2}"</span>)  <span class="cm"># --> 2.5 (Active clay)</span></pre></div>
+                </div>
+
+                <h3>2. Sensitivity — <code>ge.sensitivity()</code></h3>
+                <p>Ratio of undisturbed to remolded undrained shear strength. Indicates how much strength a clay loses when disturbed.</p>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre><span class="cm"># St = Su(undisturbed) / Su(remolded)</span>
+<span class="cm"># Classification: 1 Insensitive, 1-4 Medium, 4-8 Sensitive, &gt;8 Quick clay</span>
+
+<span class="var">St</span> = ge.<span class="fn">sensitivity</span>(Su_undisturbed=<span class="num">100</span>, Su_remolded=<span class="num">25</span>)
+<span class="fn">print</span>(<span class="str">f"Sensitivity = {St}"</span>)  <span class="cm"># --> 4.0 (Sensitive)</span>
+
+<span class="var">St2</span> = ge.<span class="fn">sensitivity</span>(Su_undisturbed=<span class="num">80</span>, Su_remolded=<span class="num">5</span>)
+<span class="fn">print</span>(<span class="str">f"Sensitivity = {St2}"</span>)  <span class="cm"># --> 16.0 (Quick clay!)</span></pre></div>
+                </div>
+
+                <h3>3. Liquidity Index (standalone) — <code>ge.liquidity_index()</code></h3>
+                <p>Convenience function that computes LI directly without the <code>atterberg()</code> wrapper. Useful when you already know PI.</p>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre><span class="cm"># LI = (w - PL) / PI</span>
+<span class="cm"># LI &lt; 0: semi-solid  |  0-1: plastic  |  &gt; 1: liquid</span>
+
+<span class="var">LI</span> = ge.<span class="fn">liquidity_index</span>(w=<span class="num">35</span>, PL=<span class="num">22</span>, PI=<span class="num">26</span>)
+<span class="fn">print</span>(<span class="str">f"LI = {LI:.2f}"</span>)  <span class="cm"># --> 0.50 (plastic range)</span>
+
+<span class="cm"># Works with arrays for batch processing</span>
+<span class="kw">import</span> numpy <span class="kw">as</span> np
+<span class="var">w_arr</span> = np.array([<span class="num">22</span>, <span class="num">35</span>, <span class="num">48</span>])
+<span class="var">LI_arr</span> = ge.<span class="fn">liquidity_index</span>(w=w_arr, PL=<span class="num">22</span>, PI=<span class="num">26</span>)
+<span class="fn">print</span>(LI_arr)  <span class="cm"># --> [0.0, 0.5, 1.0]</span></pre></div>
+                </div>
+            </section>
+
             <section id="relative-density">
-                <h2>Relative Density — <code>sp.relative_density()</code></h2>
+                <h2>Relative Density — <code>ge.relative_density()</code></h2>
                 <p>Relative density (Dr) measures how densely packed a granular soil is relative to its loosest and densest states. GeoEq supports two calculation paths via the <code>kind</code> argument — one based on void ratio limits and one based on dry density limits.</p>
 
                 <h4>Function Signature</h4>
                 <div class="code-container">
                     <div class="code-header"><span class="code-lang">python</span></div>
-                    <div class="code-block"><pre>sp.<span class="fn">relative_density</span>(
+                    <div class="code-block"><pre>ge.<span class="fn">relative_density</span>(
     e=<span class="imp">None</span>,        <span class="cm"># current void ratio (used when kind='void')</span>
     e_max=<span class="imp">None</span>,    <span class="cm"># void ratio at loosest state (maximum voids)</span>
     e_min=<span class="imp">None</span>,    <span class="cm"># void ratio at densest state (minimum voids)</span>
@@ -504,11 +672,11 @@ result[<span class="str">"CI"</span>]  <span class="cm"># → 0.50</span></pre><
                 <div class="code-container">
                     <div class="code-header"><span class="code-lang">python</span></div>
                     <div class="code-block"><pre><span class="cm"># From void ratio: Dr = (e_max - e) / (e_max - e_min)</span>
-Dr_e = sp.<span class="fn">relative_density</span>(e=<span class="num">0.60</span>, e_max=<span class="num">0.85</span>, e_min=<span class="num">0.45</span>, kind=<span class="str">"void"</span>)
+Dr_e = ge.<span class="fn">relative_density</span>(e=<span class="num">0.60</span>, e_max=<span class="num">0.85</span>, e_min=<span class="num">0.45</span>, kind=<span class="str">"void"</span>)
 <span class="fn">print</span>(<span class="str">f"Dr = {Dr_e:.1%}"</span>)  <span class="cm"># → Dr = 62.5%  (Medium dense)</span>
 
 <span class="cm"># From dry density: Dr = (ρd,max/ρd,min) × (ρd - ρd,min) / (ρd,max - ρd,min) × 1/ρd</span>
-Dr_rho = sp.<span class="fn">relative_density</span>(rho=<span class="num">1560</span>, rho_max=<span class="num">1720</span>, rho_min=<span class="num">1380</span>, kind=<span class="str">"density"</span>)
+Dr_rho = ge.<span class="fn">relative_density</span>(rho=<span class="num">1560</span>, rho_max=<span class="num">1720</span>, rho_min=<span class="num">1380</span>, kind=<span class="str">"density"</span>)
 <span class="fn">print</span>(<span class="str">f"Dr = {Dr_rho:.1%}"</span>)  <span class="cm"># → Dr = 51.1%  (Medium dense)</span>
 
 <span class="cm"># Interpretation of Dr values (Das, 2018):</span>
@@ -521,13 +689,13 @@ Dr_rho = sp.<span class="fn">relative_density</span>(rho=<span class="num">1560<
             </section>
 
             <section id="phase-relations">
-                <h2>Phase Relations — <code>sp.saturation()</code> &amp; <code>sp.water_content()</code></h2>
+                <h2>Phase Relations — <code>ge.saturation()</code> &amp; <code>ge.water_content()</code></h2>
                 <p>These functions compute the degree of saturation and water content from various combinations of phase variables. GeoEq uses lazy resolution — you only need to provide the inputs you have measured in the lab, and it finds the correct formula automatically.</p>
 
-                <h3>1. Degree of Saturation — <code>sp.saturation()</code></h3>
+                <h3>1. Degree of Saturation — <code>ge.saturation()</code></h3>
                 <div class="code-container">
                     <div class="code-header"><span class="code-lang">python</span></div>
-                    <div class="code-block"><pre>sp.<span class="fn">saturation</span>(
+                    <div class="code-block"><pre>ge.<span class="fn">saturation</span>(
     w=<span class="imp">None</span>,    <span class="cm"># water content (decimal)</span>
     Gs=<span class="imp">None</span>,   <span class="cm"># specific gravity of solids</span>
     e=<span class="imp">None</span>,    <span class="cm"># void ratio</span>
@@ -536,11 +704,11 @@ Dr_rho = sp.<span class="fn">relative_density</span>(rho=<span class="num">1560<
 )
 
 <span class="cm"># From phase parameters: S = (w × Gs) / e</span>
-S = sp.<span class="fn">saturation</span>(w=<span class="num">0.18</span>, Gs=<span class="num">2.65</span>, e=<span class="num">0.72</span>)
+S = ge.<span class="fn">saturation</span>(w=<span class="num">0.18</span>, Gs=<span class="num">2.65</span>, e=<span class="num">0.72</span>)
 <span class="fn">print</span>(<span class="str">f"S = {S:.1%}"</span>)   <span class="cm"># → S = 66.3%</span>
 
 <span class="cm"># From volumes: S = Vw / Vv</span>
-S2 = sp.<span class="fn">saturation</span>(Vw=<span class="num">0.25</span>, Vv=<span class="num">0.40</span>)
+S2 = ge.<span class="fn">saturation</span>(Vw=<span class="num">0.25</span>, Vv=<span class="num">0.40</span>)
 <span class="fn">print</span>(<span class="str">f"S = {S2:.1%}"</span>)  <span class="cm"># → S = 62.5%</span>
 
 <span class="cm"># Typical interpretation:</span>
@@ -548,10 +716,10 @@ S2 = sp.<span class="fn">saturation</span>(Vw=<span class="num">0.25</span>, Vv=
 <span class="cm"># S = 100% → Fully saturated (all voids filled with water)</span></pre></div>
                 </div>
 
-                <h3>2. Water Content — <code>sp.water_content()</code></h3>
+                <h3>2. Water Content — <code>ge.water_content()</code></h3>
                 <div class="code-container">
                     <div class="code-header"><span class="code-lang">python</span></div>
-                    <div class="code-block"><pre>sp.<span class="fn">water_content</span>(
+                    <div class="code-block"><pre>ge.<span class="fn">water_content</span>(
     Mw=<span class="imp">None</span>,   <span class="cm"># mass of water (g or kg)</span>
     Ms=<span class="imp">None</span>,   <span class="cm"># mass of dry solids</span>
     S=<span class="imp">None</span>,    <span class="cm"># degree of saturation (0–1)</span>
@@ -560,18 +728,1013 @@ S2 = sp.<span class="fn">saturation</span>(Vw=<span class="num">0.25</span>, Vv=
 )
 
 <span class="cm"># From lab measurements: w = Mw / Ms</span>
-w = sp.<span class="fn">water_content</span>(Mw=<span class="num">18.5</span>, Ms=<span class="num">102.0</span>)
+w = ge.<span class="fn">water_content</span>(Mw=<span class="num">18.5</span>, Ms=<span class="num">102.0</span>)
 <span class="fn">print</span>(<span class="str">f"w = {w:.1%}"</span>)   <span class="cm"># → w = 18.1%</span>
 
 <span class="cm"># From phase parameters: w = (S × e) / Gs</span>
-w2 = sp.<span class="fn">water_content</span>(S=<span class="num">0.80</span>, e=<span class="num">0.72</span>, Gs=<span class="num">2.65</span>)
+w2 = ge.<span class="fn">water_content</span>(S=<span class="num">0.80</span>, e=<span class="num">0.72</span>, Gs=<span class="num">2.65</span>)
 <span class="fn">print</span>(<span class="str">f"w = {w2:.1%}"</span>)  <span class="cm"># → w = 21.7%</span></pre></div>
+                </div>
+            </section>
+
+            <section id="uscs">
+                <h2>Chapter 4 — USCS Classification</h2>
+                <p>The Unified Soil Classification System (USCS) per <strong>ASTM D2487-17</strong> classifies soils into standardized groups based on grain size distribution and Atterberg limits. GeoEq implements the full ASTM flowchart including dual symbols for the 5-12% fines transition zone.</p>
+
+                <h4>Function Signature</h4>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre>ge.<span class="fn">classify_uscs</span>(
+    LL=<span class="imp">None</span>,         <span class="cm"># Liquid Limit (%)</span>
+    PL=<span class="imp">None</span>,         <span class="cm"># Plastic Limit (%)</span>
+    gravel=<span class="num">0.0</span>,      <span class="cm"># % retained on No. 4 sieve (4.75 mm)</span>
+    sand=<span class="num">0.0</span>,        <span class="cm"># % passing No. 4, retained on No. 200</span>
+    fines=<span class="imp">None</span>,       <span class="cm"># % passing No. 200 (auto-computed if omitted)</span>
+    Cu=<span class="imp">None</span>,          <span class="cm"># Uniformity Coefficient (required when fines &lt; 12%)</span>
+    Cc=<span class="imp">None</span>,          <span class="cm"># Coefficient of Curvature (required when fines &lt; 12%)</span>
+    organic=<span class="imp">False</span>,    <span class="cm"># True if oven-dried LL &lt; 75% of non-dried LL</span>
+)
+<span class="cm"># Returns: {'symbol': 'CH', 'name': 'Fat clay'}</span></pre></div>
+                </div>
+
+                <h4>Usage Examples</h4>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre><span class="cm"># Well-graded sand (fines &lt; 5%, Cu &gt;= 6, 1 &lt;= Cc &lt;= 3)</span>
+<span class="var">cls</span> = ge.<span class="fn">classify_uscs</span>(gravel=<span class="num">4</span>, sand=<span class="num">92</span>, fines=<span class="num">4</span>, Cu=<span class="num">8</span>, Cc=<span class="num">2</span>)
+<span class="fn">print</span>(cls)  <span class="cm"># {'symbol': 'SW', 'name': 'Well-graded sand'}</span>
+
+<span class="cm"># Fat clay (LL &gt;= 50, above A-line)</span>
+<span class="var">cls</span> = ge.<span class="fn">classify_uscs</span>(LL=<span class="num">70</span>, PL=<span class="num">30</span>, fines=<span class="num">80</span>, gravel=<span class="num">5</span>, sand=<span class="num">15</span>)
+<span class="fn">print</span>(cls)  <span class="cm"># {'symbol': 'CH', 'name': 'Fat clay'}</span>
+
+<span class="cm"># Dual symbol (5-12% fines zone)</span>
+<span class="var">cls</span> = ge.<span class="fn">classify_uscs</span>(gravel=<span class="num">3</span>, sand=<span class="num">87</span>, fines=<span class="num">10</span>, Cu=<span class="num">7</span>, Cc=<span class="num">2</span>, LL=<span class="num">25</span>, PL=<span class="num">22</span>)
+<span class="fn">print</span>(cls)  <span class="cm"># {'symbol': 'SW-SM', 'name': 'Well-graded sand with silt'}</span></pre></div>
+                </div>
+            </section>
+
+            <section id="aashto">
+                <h2>AASHTO Classification</h2>
+                <p>The AASHTO system (<strong>M145</strong>) classifies soils for highway construction. GeoEq implements the left-to-right elimination procedure from Das (2021) Table 4.4, including automatic Group Index calculation.</p>
+
+                <h4>Function Signature</h4>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre>ge.<span class="fn">classify_aashto</span>(
+    LL,              <span class="cm"># Liquid Limit (%)</span>
+    PL,              <span class="cm"># Plastic Limit (%)</span>
+    gravel=<span class="num">0.0</span>,      <span class="cm"># % retained on No. 10 sieve</span>
+    sand=<span class="num">0.0</span>,        <span class="cm"># % passing No. 10, retained on No. 200</span>
+    fines=<span class="imp">None</span>,       <span class="cm"># % passing No. 200</span>
+)
+<span class="cm"># Returns: {'group': 'A-7-6', 'group_index': 13, 'description': 'Clayey soils'}</span></pre></div>
+                </div>
+
+                <h4>Usage Examples</h4>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre><span class="cm"># Clayey soil</span>
+<span class="var">aas</span> = ge.<span class="fn">classify_aashto</span>(LL=<span class="num">45</span>, PL=<span class="num">22</span>, fines=<span class="num">60</span>)
+<span class="fn">print</span>(aas)
+<span class="cm"># {'group': 'A-7-6', 'group_index': 11, 'description': 'Clayey soils'}</span>
+
+<span class="cm"># Silty soil</span>
+<span class="var">aas</span> = ge.<span class="fn">classify_aashto</span>(LL=<span class="num">30</span>, PL=<span class="num">25</span>, fines=<span class="num">60</span>)
+<span class="fn">print</span>(aas)
+<span class="cm"># {'group': 'A-4', 'group_index': ..., 'description': 'Silty soils'}</span>
+
+<span class="cm"># Group Index formula:</span>
+<span class="cm"># GI = (F-35)[0.2+0.005(LL-40)] + 0.01(F-15)(PI-10)</span></pre></div>
+                </div>
+            </section>
+
+            <section id="plasticity-chart">
+                <h2>Plasticity Chart — <code>ge.plasticity_chart()</code></h2>
+                <p>Plots the Casagrande plasticity chart with the A-line (PI = 0.73(LL-20)) and U-line (PI = 0.9(LL-8)). Optionally plots soil samples for visual USCS classification.</p>
+
+                <h4>Function Signature</h4>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre>ge.<span class="fn">plasticity_chart</span>(
+    LL=<span class="imp">None</span>,          <span class="cm"># Liquid Limit(s) for data points</span>
+    PL=<span class="imp">None</span>,          <span class="cm"># Plastic Limit(s) for data points</span>
+    labels=<span class="imp">None</span>,      <span class="cm"># Labels for each data point</span>
+    ax=<span class="imp">None</span>,          <span class="cm"># Existing matplotlib Axes</span>
+    save=<span class="imp">None</span>,        <span class="cm"># File path to save ('chart.png', 'chart.pdf')</span>
+)</pre></div>
+                </div>
+
+                <h4>Usage</h4>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre><span class="cm"># Plot chart with soil samples</span>
+ge.<span class="fn">plasticity_chart</span>(
+    LL=[<span class="num">35</span>, <span class="num">60</span>, <span class="num">28</span>],
+    PL=[<span class="num">18</span>, <span class="num">25</span>, <span class="num">22</span>],
+    labels=[<span class="str">"BH-1 @ 3m"</span>, <span class="str">"BH-1 @ 8m"</span>, <span class="str">"BH-2 @ 5m"</span>],
+    save=<span class="str">"plasticity_chart.png"</span>
+)
+
+<span class="cm"># Embed in a multi-panel figure</span>
+<span class="kw">import</span> matplotlib.pyplot <span class="kw">as</span> plt
+fig, (ax1, ax2) = plt.<span class="fn">subplots</span>(<span class="num">1</span>, <span class="num">2</span>, figsize=(<span class="num">16</span>, <span class="num">6</span>))
+ge.<span class="fn">plasticity_chart</span>(LL=[<span class="num">35</span>, <span class="num">60</span>], PL=[<span class="num">18</span>, <span class="num">25</span>], ax=ax1)
+ge.<span class="fn">grain_size_plot</span>(sieve_data, ax=ax2, smooth=<span class="imp">True</span>)
+plt.<span class="fn">savefig</span>(<span class="str">"combined_report.pdf"</span>)</pre></div>
+                </div>
+            </section>
+
+            <!-- ============================================================ -->
+            <!-- LAB TESTING                                                  -->
+            <!-- ============================================================ -->
+
+            <section id="lab-shear">
+                <h2>Shear Strength Tests</h2>
+                <p>Process direct shear, triaxial, and unconfined compression test data. All functions return shear strength parameters (c, φ) and support publication-quality plotting.</p>
+
+                <h3>1. Direct Shear — <code>ge.direct_shear()</code></h3>
+                <p>Fits the Mohr–Coulomb failure criterion by least-squares regression: <strong>τ<sub>f</sub> = c + σ' tan φ</strong> &nbsp;[Das Eq. 8.3]</p>
+                <h4>Function Signature</h4>
+                <div class="code-block"><pre>ge.<span class="fn">direct_shear</span>(normal_stress, shear_stress)
+<span class="cm"># Returns: {'c': float, 'phi': float, 'r_squared': float}</span></pre></div>
+                <h4>Usage</h4>
+                <div class="code-block"><pre><span class="kw">import</span> geoeq <span class="kw">as</span> ge
+
+<span class="cm"># Three specimens at different normal stresses</span>
+<span class="var">res</span> = ge.<span class="fn">direct_shear</span>(
+    normal_stress=[<span class="num">50</span>, <span class="num">100</span>, <span class="num">150</span>],  <span class="cm"># kPa</span>
+    shear_stress=[<span class="num">38</span>, <span class="num">62</span>, <span class="num">86</span>]       <span class="cm"># kPa</span>
+)
+<span class="fn">print</span>(res[<span class="str">"phi"</span>])  <span class="cm"># 25.6° — friction angle</span>
+<span class="fn">print</span>(res[<span class="str">"c"</span>])    <span class="cm"># 14.0 kPa — cohesion</span>
+
+<span class="cm"># Plot with failure envelope</span>
+ge.<span class="fn">direct_shear_plot</span>([<span class="num">50</span>, <span class="num">100</span>, <span class="num">150</span>], [<span class="num">38</span>, <span class="num">62</span>, <span class="num">86</span>])</pre></div>
+
+                <h3>2. Triaxial Test — <code>ge.triaxial()</code></h3>
+                <p>Process UU, CU, or CD triaxial test data. UU tests return undrained shear strength; CU/CD tests fit the Mohr–Coulomb envelope in p–q space.</p>
+                <h4>Function Signature</h4>
+                <div class="code-block"><pre>ge.<span class="fn">triaxial</span>(sigma3, delta_sigma, kind=<span class="str">"CD"</span>)
+<span class="cm"># kind: "UU" | "CU" | "CD"</span>
+<span class="cm"># Returns: {'c': float, 'phi': float, 'sigma1': ndarray, 'sigma3': ndarray}</span>
+<span class="cm"># UU also returns: 'Su' — average undrained shear strength</span></pre></div>
+                <h4>Usage</h4>
+                <div class="code-block"><pre><span class="cm"># CD Triaxial — 3 specimens</span>
+<span class="var">cd</span> = ge.<span class="fn">triaxial</span>(
+    sigma3=[<span class="num">100</span>, <span class="num">200</span>, <span class="num">300</span>],       <span class="cm"># confining pressure (kPa)</span>
+    delta_sigma=[<span class="num">220</span>, <span class="num">380</span>, <span class="num">540</span>],  <span class="cm"># deviator stress at failure (kPa)</span>
+    kind=<span class="str">"CD"</span>
+)
+<span class="fn">print</span>(cd[<span class="str">"phi"</span>])  <span class="cm"># ≈ 26.4°</span>
+
+<span class="cm"># UU Triaxial — undrained shear strength</span>
+<span class="var">uu</span> = ge.<span class="fn">triaxial</span>([<span class="num">100</span>, <span class="num">200</span>, <span class="num">300</span>], [<span class="num">80</span>, <span class="num">82</span>, <span class="num">78</span>], kind=<span class="str">"UU"</span>)
+<span class="fn">print</span>(uu[<span class="str">"Su"</span>])   <span class="cm"># ≈ 40 kPa (φ = 0)</span></pre></div>
+
+                <h3>3. Unconfined Compression — <code>ge.unconfined()</code></h3>
+                <p><strong>S<sub>u</sub> = q<sub>u</sub> / 2</strong> &nbsp;[Das Eq. 8.9]. Also classifies clay consistency (Very soft → Hard).</p>
+                <div class="code-block"><pre><span class="var">res</span> = ge.<span class="fn">unconfined</span>(<span class="num">120</span>)  <span class="cm"># qu = 120 kPa</span>
+<span class="fn">print</span>(res[<span class="str">"Su"</span>])           <span class="cm"># 60.0 kPa</span>
+<span class="fn">print</span>(res[<span class="str">"consistency"</span>])   <span class="cm"># "Stiff"</span></pre></div>
+
+                <h3>4. Mohr Circle — <code>ge.mohr_circle()</code></h3>
+                <p>Draw Mohr circles and fit a failure envelope (c, φ) when ≥ 3 circles are provided.</p>
+                <div class="code-block"><pre><span class="cm"># Draw 3 Mohr circles + failure envelope</span>
+<span class="var">res</span> = ge.<span class="fn">mohr_circle</span>(
+    sigma1=[<span class="num">320</span>, <span class="num">580</span>, <span class="num">840</span>],  <span class="cm"># major principal stress (kPa)</span>
+    sigma3=[<span class="num">100</span>, <span class="num">200</span>, <span class="num">300</span>]   <span class="cm"># confining pressure (kPa)</span>
+)
+<span class="fn">print</span>(res[<span class="str">"phi"</span>])  <span class="cm"># ≈ 26.6°</span>
+<span class="fn">print</span>(res[<span class="str">"c"</span>])    <span class="cm"># cohesion intercept (kPa)</span></pre></div>
+            </section>
+
+            <section id="lab-consolidation">
+                <h2>Consolidation Tests</h2>
+                <p>Process oedometer data, extract compression parameters, determine preconsolidation pressure, and compute coefficient of consolidation.</p>
+
+                <h3>1. Oedometer — <code>ge.oedometer()</code></h3>
+                <p>Extract compression index C<sub>c</sub> and recompression index C<sub>r</sub> from e–log(σ') data. &nbsp;<strong>C<sub>c</sub> = (e₁ − e₂) / log(σ'₂/σ'₁)</strong> &nbsp;[Das Eq. 7.9]</p>
+                <h4>Function Signature</h4>
+                <div class="code-block"><pre>ge.<span class="fn">oedometer</span>(stress, void_ratio)
+<span class="cm"># Returns: {'stress': ndarray, 'void_ratio': ndarray, 'Cc': float, 'Cr': float}</span></pre></div>
+                <h4>Usage</h4>
+                <div class="code-block"><pre><span class="var">oed</span> = ge.<span class="fn">oedometer</span>(
+    stress=[<span class="num">25</span>, <span class="num">50</span>, <span class="num">100</span>, <span class="num">200</span>, <span class="num">400</span>, <span class="num">800</span>],  <span class="cm"># kPa</span>
+    void_ratio=[<span class="num">0.88</span>, <span class="num">0.86</span>, <span class="num">0.82</span>, <span class="num">0.74</span>, <span class="num">0.62</span>, <span class="num">0.48</span>]
+)
+<span class="fn">print</span>(oed[<span class="str">"Cc"</span>])  <span class="cm"># 0.465</span>
+<span class="fn">print</span>(oed[<span class="str">"Cr"</span>])  <span class="cm"># 0.066</span>
+
+<span class="cm"># Plot e–log(σ') with pc marker</span>
+ge.<span class="fn">oedometer_plot</span>(
+    [<span class="num">25</span>, <span class="num">50</span>, <span class="num">100</span>, <span class="num">200</span>, <span class="num">400</span>, <span class="num">800</span>],
+    [<span class="num">0.88</span>, <span class="num">0.86</span>, <span class="num">0.82</span>, <span class="num">0.74</span>, <span class="num">0.62</span>, <span class="num">0.48</span>]
+)</pre></div>
+
+                <h3>2. Preconsolidation Pressure — <code>ge.preconsolidation()</code></h3>
+                <p>Casagrande graphical method: find the point of maximum curvature on the e–log(p) curve, bisect the angle between the horizontal and tangent, and intersect with the virgin compression line.</p>
+                <div class="code-block"><pre><span class="var">pc</span> = ge.<span class="fn">preconsolidation</span>(
+    stress=[<span class="num">25</span>, <span class="num">50</span>, <span class="num">100</span>, <span class="num">200</span>, <span class="num">400</span>, <span class="num">800</span>],
+    void_ratio=[<span class="num">0.88</span>, <span class="num">0.86</span>, <span class="num">0.82</span>, <span class="num">0.74</span>, <span class="num">0.62</span>, <span class="num">0.48</span>],
+    method=<span class="str">"casagrande"</span>
+)
+<span class="fn">print</span>(pc[<span class="str">"pc"</span>])  <span class="cm"># preconsolidation pressure (kPa)</span></pre></div>
+
+                <h3>3. Compression Index — <code>ge.compression_index()</code></h3>
+                <p>Six empirical correlations for estimating C<sub>c</sub> from Das (2021) Table 7.3:</p>
+                <table style="width:100%; border-collapse:collapse; font-size:0.88rem; margin:12px 0;">
+                    <thead style="background:#f0f6fc;">
+                        <tr>
+                            <th style="text-align:left; padding:8px 12px; border-bottom:2px solid #d8dde6;">Method</th>
+                            <th style="text-align:left; padding:8px 12px; border-bottom:2px solid #d8dde6;">Formula</th>
+                            <th style="text-align:left; padding:8px 12px; border-bottom:2px solid #d8dde6;">Required</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:7px 12px;"><code>"terzaghi"</code></td><td style="padding:7px 12px;">C<sub>c</sub> = 0.009 (LL − 10)</td><td style="padding:7px 12px;">LL</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:7px 12px;"><code>"skempton"</code></td><td style="padding:7px 12px;">C<sub>c</sub> = 0.007 (LL − 7)</td><td style="padding:7px 12px;">LL</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:7px 12px;"><code>"rendon"</code></td><td style="padding:7px 12px;">C<sub>c</sub> = 0.01 w<sub>n</sub></td><td style="padding:7px 12px;">wn</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:7px 12px;"><code>"nishida"</code></td><td style="padding:7px 12px;">C<sub>c</sub> = 1.15 (e₀ − 0.35)</td><td style="padding:7px 12px;">e0</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:7px 12px;"><code>"nagaraj"</code></td><td style="padding:7px 12px;">C<sub>c</sub> = 0.2343 e₀ G<sub>s</sub></td><td style="padding:7px 12px;">e0, Gs</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:7px 12px;"><code>"hough"</code></td><td style="padding:7px 12px;">C<sub>c</sub> = 0.29 (e₀ − 0.27)</td><td style="padding:7px 12px;">e0</td></tr>
+                    </tbody>
+                </table>
+                <div class="code-block"><pre><span class="var">Cc</span> = ge.<span class="fn">compression_index</span>(<span class="str">"terzaghi"</span>, LL=<span class="num">50</span>)  <span class="cm"># 0.36</span></pre></div>
+
+                <h3>4. Coefficient of Consolidation — <code>ge.cv()</code></h3>
+                <p>Determine c<sub>v</sub> from time–deformation data using log-time (Casagrande, T₅₀ = 0.197) or root-time (Taylor, T₉₀ = 0.848) methods. &nbsp;[Das Eq. 7.22]</p>
+                <div class="code-block"><pre><span class="var">t</span> = [<span class="num">0.1</span>, <span class="num">0.25</span>, <span class="num">0.5</span>, <span class="num">1</span>, <span class="num">2</span>, <span class="num">4</span>, <span class="num">8</span>, <span class="num">15</span>, <span class="num">30</span>, <span class="num">60</span>, <span class="num">120</span>, <span class="num">240</span>, <span class="num">480</span>, <span class="num">1440</span>]
+<span class="var">d</span> = [<span class="num">0.0</span>, <span class="num">0.05</span>, <span class="num">0.12</span>, <span class="num">0.22</span>, <span class="num">0.35</span>, <span class="num">0.50</span>, <span class="num">0.65</span>, <span class="num">0.78</span>, <span class="num">0.88</span>, <span class="num">0.95</span>, <span class="num">0.99</span>, <span class="num">1.02</span>, <span class="num">1.04</span>, <span class="num">1.06</span>]
+
+<span class="var">res</span> = ge.<span class="fn">cv</span>(t, d, method=<span class="str">"log"</span>, H_dr=<span class="num">1.0</span>)
+<span class="fn">print</span>(res[<span class="str">"cv"</span>])   <span class="cm"># cm²/min</span>
+<span class="fn">print</span>(res[<span class="str">"t50"</span>])  <span class="cm"># time for 50% consolidation (min)</span>
+
+<span class="cm"># Plot with cv extraction</span>
+ge.<span class="fn">cv_plot</span>(t, d, method=<span class="str">"log"</span>, H_dr=<span class="num">1.0</span>)</pre></div>
+            </section>
+
+            <section id="lab-compaction">
+                <h2>Compaction Tests</h2>
+                <p>Process Proctor compaction test data to determine optimum moisture content and maximum dry unit weight, with zero air voids and saturation contour overlays.</p>
+
+                <h3>1. Proctor Test — <code>ge.proctor()</code></h3>
+                <p>Fits a parabolic curve to (w, γ<sub>d</sub>) data to locate the optimum. Supports Standard (ASTM D698) and Modified (ASTM D1557) Proctor data.</p>
+                <h4>Function Signature</h4>
+                <div class="code-block"><pre>ge.<span class="fn">proctor</span>(water_content, dry_density)
+<span class="cm"># Returns: {'w_opt': float, 'gamma_d_max': float, 'coeffs': ndarray}</span></pre></div>
+                <h4>Usage</h4>
+                <div class="code-block"><pre><span class="var">w</span> = [<span class="num">8</span>, <span class="num">10</span>, <span class="num">12</span>, <span class="num">14</span>, <span class="num">16</span>, <span class="num">18</span>]      <span class="cm"># water content (%)</span>
+<span class="var">gd</span> = [<span class="num">17.5</span>, <span class="num">18.2</span>, <span class="num">18.8</span>, <span class="num">19.0</span>, <span class="num">18.7</span>, <span class="num">18.1</span>]  <span class="cm"># dry unit weight (kN/m³)</span>
+
+<span class="var">res</span> = ge.<span class="fn">proctor</span>(w, gd)
+<span class="fn">print</span>(res[<span class="str">"w_opt"</span>])        <span class="cm"># ≈ 13.7% optimum moisture content</span>
+<span class="fn">print</span>(res[<span class="str">"gamma_d_max"</span>])  <span class="cm"># ≈ 18.93 kN/m³ maximum dry unit weight</span></pre></div>
+
+                <h3>2. Zero Air Voids Line — <code>ge.zav_line()</code></h3>
+                <p><strong>γ<sub>d</sub> = G<sub>s</sub> γ<sub>w</sub> / (1 + w G<sub>s</sub>)</strong> &nbsp;[Das Eq. 5.12]. The theoretical maximum dry unit weight at S = 100%.</p>
+                <div class="code-block"><pre><span class="var">zav</span> = ge.<span class="fn">zav_line</span>(Gs=<span class="num">2.70</span>)
+<span class="cm"># zav['water_content'] — array of w values (%)</span>
+<span class="cm"># zav['dry_density']   — corresponding γ_d (kN/m³)</span>
+
+<span class="cm"># Or a constant-S contour (e.g., S = 80%)</span>
+<span class="var">s80</span> = ge.<span class="fn">saturation_line</span>(Gs=<span class="num">2.70</span>, S=<span class="num">0.8</span>)</pre></div>
+
+                <h3>3. Proctor Plot — <code>ge.proctor_plot()</code></h3>
+                <p>Full compaction curve visualization with ZAV line, S = 60%/80% contours, and optimum point annotation.</p>
+                <div class="code-block"><pre>ge.<span class="fn">proctor_plot</span>(
+    [<span class="num">8</span>, <span class="num">10</span>, <span class="num">12</span>, <span class="num">14</span>, <span class="num">16</span>, <span class="num">18</span>],
+    [<span class="num">17.5</span>, <span class="num">18.2</span>, <span class="num">18.8</span>, <span class="num">19.0</span>, <span class="num">18.7</span>, <span class="num">18.1</span>],
+    Gs=<span class="num">2.70</span>,
+    show_zav=<span class="imp">True</span>,
+    show_sat_lines=<span class="imp">True</span>,
+    save_as=<span class="str">"proctor.png"</span>
+)</pre></div>
+
+                <h3>4. Relative Compaction — <code>ge.relative_compaction()</code></h3>
+                <p><strong>RC (%) = γ<sub>d</sub> / γ<sub>d,max</sub> × 100</strong></p>
+                <div class="code-block"><pre>ge.<span class="fn">relative_compaction</span>(<span class="num">17.5</span>, <span class="num">19.0</span>)  <span class="cm"># 92.1%</span></pre></div>
+            </section>
+
+            <section id="lab-permeability">
+                <h2>Permeability Tests</h2>
+                <p>Compute hydraulic conductivity from constant-head or falling-head laboratory tests.</p>
+
+                <h3>1. Constant-Head — <code>ge.constant_head()</code></h3>
+                <p><strong>k = Q L / (A h t)</strong> &nbsp;[Das Eq. 5.11, ASTM D2434]</p>
+                <div class="code-block"><pre><span class="var">k</span> = ge.<span class="fn">constant_head</span>(
+    Q=<span class="num">500</span>,    <span class="cm"># volume collected (cm³)</span>
+    L=<span class="num">15</span>,     <span class="cm"># specimen length (cm)</span>
+    A=<span class="num">30</span>,     <span class="cm"># cross-sectional area (cm²)</span>
+    h=<span class="num">50</span>,     <span class="cm"># head difference (cm)</span>
+    t=<span class="num">120</span>     <span class="cm"># time (s)</span>
+)
+<span class="fn">print</span>(k)  <span class="cm"># 0.0417 cm/s</span></pre></div>
+
+                <h3>2. Falling-Head — <code>ge.falling_head()</code></h3>
+                <p><strong>k = (a L / A t) ln(h₁/h₂)</strong> &nbsp;[Das Eq. 5.13, ASTM D5084]</p>
+                <div class="code-block"><pre><span class="var">k</span> = ge.<span class="fn">falling_head</span>(
+    a=<span class="num">1.0</span>,     <span class="cm"># standpipe area (cm²)</span>
+    L=<span class="num">15</span>,      <span class="cm"># specimen length (cm)</span>
+    A=<span class="num">30</span>,      <span class="cm"># specimen area (cm²)</span>
+    h1=<span class="num">100</span>,    <span class="cm"># initial head (cm)</span>
+    h2=<span class="num">50</span>,     <span class="cm"># final head (cm)</span>
+    t=<span class="num">600</span>      <span class="cm"># time (s)</span>
+)
+<span class="fn">print</span>(k)  <span class="cm"># 5.78e-04 cm/s</span></pre></div>
+
+                <h3>3. Permeability Plot — <code>ge.permeability_plot()</code></h3>
+                <div class="code-block"><pre><span class="cm"># Constant-head: Q vs hydraulic gradient</span>
+ge.<span class="fn">permeability_plot</span>(Q_values=[<span class="num">10</span>,<span class="num">20</span>,<span class="num">30</span>], head_gradient=[<span class="num">1</span>,<span class="num">2</span>,<span class="num">3</span>], test_type=<span class="str">"constant"</span>)
+
+<span class="cm"># Falling-head: ln(h) vs time</span>
+ge.<span class="fn">permeability_plot</span>(time_values=[<span class="num">0</span>,<span class="num">60</span>,<span class="num">120</span>,<span class="num">180</span>], head_values=[<span class="num">100</span>,<span class="num">85</span>,<span class="num">72</span>,<span class="num">62</span>], test_type=<span class="str">"falling"</span>)</pre></div>
+            </section>
+
+            <section id="lab-atterberg">
+                <h2>Liquid Limit Test — Flow Curve</h2>
+                <p>Process Casagrande cup data to determine the liquid limit from the semi-logarithmic flow curve at N = 25 blows. &nbsp;[ASTM D4318]</p>
+
+                <h3><code>ge.liquid_limit_test()</code></h3>
+                <div class="code-block"><pre><span class="var">res</span> = ge.<span class="fn">liquid_limit_test</span>(
+    blow_count=[<span class="num">15</span>, <span class="num">20</span>, <span class="num">28</span>, <span class="num">34</span>],
+    water_content=[<span class="num">42.1</span>, <span class="num">40.8</span>, <span class="num">38.5</span>, <span class="num">36.9</span>]
+)
+<span class="fn">print</span>(res[<span class="str">"LL"</span>])     <span class="cm"># ≈ 39.1% — liquid limit at N = 25</span>
+<span class="fn">print</span>(res[<span class="str">"slope"</span>])  <span class="cm"># flow index I_f</span>
+
+<span class="cm"># Plot the flow curve</span>
+ge.<span class="fn">flow_curve_plot</span>([<span class="num">15</span>, <span class="num">20</span>, <span class="num">28</span>, <span class="num">34</span>], [<span class="num">42.1</span>, <span class="num">40.8</span>, <span class="num">38.5</span>, <span class="num">36.9</span>])</pre></div>
+            </section>
+
+            <section id="lab-cbr">
+                <h2>CBR Test</h2>
+                <p>Compute California Bearing Ratio from load–penetration data. CBR is the ratio of test load to standard crushed-rock load at 2.54 mm and 5.08 mm penetration. &nbsp;[ASTM D1883]</p>
+
+                <h3><code>ge.cbr_test()</code></h3>
+                <div class="code-block"><pre><span class="var">pen</span> = [<span class="num">0</span>, <span class="num">0.64</span>, <span class="num">1.27</span>, <span class="num">2.54</span>, <span class="num">3.81</span>, <span class="num">5.08</span>, <span class="num">7.62</span>, <span class="num">10.16</span>, <span class="num">12.70</span>]  <span class="cm"># mm</span>
+<span class="var">load</span> = [<span class="num">0</span>, <span class="num">0.8</span>, <span class="num">1.9</span>, <span class="num">4.2</span>, <span class="num">6.1</span>, <span class="num">7.8</span>, <span class="num">10.5</span>, <span class="num">12.1</span>, <span class="num">13.2</span>]        <span class="cm"># kN</span>
+
+<span class="var">res</span> = ge.<span class="fn">cbr_test</span>(pen, load)
+<span class="fn">print</span>(res[<span class="str">"CBR"</span>])       <span class="cm"># max of CBR at 2.54mm and 5.08mm</span>
+<span class="fn">print</span>(res[<span class="str">"CBR_2_54"</span>])  <span class="cm"># CBR at 2.54mm penetration (%)</span>
+<span class="fn">print</span>(res[<span class="str">"CBR_5_08"</span>])  <span class="cm"># CBR at 5.08mm penetration (%)</span>
+
+<span class="cm"># Plot with standard reference markers</span>
+ge.<span class="fn">cbr_plot</span>(pen, load, save_as=<span class="str">"cbr.png"</span>)</pre></div>
+            </section>
+
+            <!-- ===== SITE INVESTIGATION ===== -->
+
+            <section id="site-spt">
+                <h2>Standard Penetration Test (SPT)</h2>
+                <p>Energy, overburden, and fines-content corrections plus empirical correlations for φ', Su, Dr, and Es. &nbsp;References: Skempton (1986), Liao &amp; Whitman (1986), Hatanaka &amp; Uchida (1996), Bowles (1996).</p>
+
+                <h3><code>ge.spt_n60()</code> — Energy correction</h3>
+                <div class="code-block"><pre><span class="var">N60</span> = ge.<span class="fn">spt_n60</span>(<span class="num">30</span>, ER=<span class="num">72</span>, Cb=<span class="num">1.05</span>, Cs=<span class="num">1.0</span>, Cr=<span class="num">0.95</span>)  <span class="cm"># 34.2</span></pre></div>
+
+                <h3><code>ge.spt_n160()</code> — Overburden correction</h3>
+                <div class="code-block"><pre><span class="var">N1_60</span> = ge.<span class="fn">spt_n160</span>(N60, sigma_v=<span class="num">80</span>, method=<span class="str">"liao_whitman"</span>)
+<span class="cm"># Also: "skempton", "peck"</span></pre></div>
+
+                <h3><code>ge.spt_friction_angle()</code></h3>
+                <div class="code-block"><pre><span class="var">phi</span> = ge.<span class="fn">spt_friction_angle</span>(<span class="num">20</span>, method=<span class="str">"hatanaka"</span>)  <span class="cm"># 40°</span>
+<span class="cm"># Also: "kulhawy", "peck"</span></pre></div>
+
+                <h3><code>ge.spt_su()</code>, <code>ge.spt_dr()</code>, <code>ge.spt_modulus()</code></h3>
+                <div class="code-block"><pre><span class="var">Su</span> = ge.<span class="fn">spt_su</span>(<span class="num">10</span>, method=<span class="str">"hara"</span>)       <span class="cm"># 152 kPa</span>
+<span class="var">Dr</span> = ge.<span class="fn">spt_dr</span>(<span class="num">20</span>, method=<span class="str">"meyerhof"</span>)   <span class="cm"># 70%</span>
+<span class="var">Es</span> = ge.<span class="fn">spt_modulus</span>(<span class="num">20</span>, soil_type=<span class="str">"sand"</span>)  <span class="cm"># 17500 kPa</span></pre></div>
+            </section>
+
+            <section id="site-cpt">
+                <h2>Cone Penetration Test (CPT)</h2>
+                <p>Robertson (2009) normalized parameters, Soil Behaviour Type classification, and correlations for φ', Su, Dr, and modulus.</p>
+
+                <h3><code>ge.cpt_normalize()</code> &amp; <code>ge.cpt_sbt()</code></h3>
+                <div class="code-block"><pre><span class="var">norm</span> = ge.<span class="fn">cpt_normalize</span>(qt=<span class="num">5000</span>, fs=<span class="num">50</span>, sigma_v=<span class="num">100</span>, sigma_v_eff=<span class="num">60</span>)
+<span class="var">sbt</span> = ge.<span class="fn">cpt_sbt</span>(norm[<span class="str">"Qt"</span>], norm[<span class="str">"Fr"</span>])
+<span class="fn">print</span>(sbt[<span class="str">"zone"</span>], sbt[<span class="str">"description"</span>])  <span class="cm"># 6, "Sands — clean sand..."</span></pre></div>
+
+                <h3><code>ge.cpt_friction_angle()</code> &amp; <code>ge.cpt_su()</code></h3>
+                <div class="code-block"><pre><span class="var">phi</span> = ge.<span class="fn">cpt_friction_angle</span>(qt=<span class="num">5000</span>, sigma_v_eff=<span class="num">60</span>)  <span class="cm"># 35°</span>
+<span class="var">Su</span> = ge.<span class="fn">cpt_su</span>(qt=<span class="num">1000</span>, sigma_v=<span class="num">100</span>, Nkt=<span class="num">14</span>)   <span class="cm"># 64 kPa</span></pre></div>
+
+                <h3><code>ge.cpt_sbt_plot()</code></h3>
+                <div class="code-block"><pre>ge.<span class="fn">cpt_sbt_plot</span>(Qt=[<span class="num">80</span>, <span class="num">20</span>, <span class="num">5</span>], Fr=[<span class="num">1.0</span>, <span class="num">3.0</span>, <span class="num">5.0</span>], save_as=<span class="str">"sbt.png"</span>)</pre></div>
+            </section>
+
+            <section id="site-vane">
+                <h2>Field Vane Shear Test</h2>
+                <p>Undrained shear strength from measured torque (ASTM D2573) with Bjerrum (1972) correction and sensitivity classification.</p>
+
+                <div class="code-block"><pre><span class="var">Su</span> = ge.<span class="fn">vane_su</span>(T=<span class="num">0.012</span>, D=<span class="num">0.065</span>, H=<span class="num">0.130</span>)  <span class="cm"># kPa</span>
+<span class="var">Su_design</span> = ge.<span class="fn">vane_correction</span>(Su, PI=<span class="num">40</span>)  <span class="cm"># Bjerrum correction</span>
+
+<span class="cm"># Sensitivity from peak and remolded torques</span>
+<span class="var">res</span> = ge.<span class="fn">vane_remolded</span>(T_peak=<span class="num">0.015</span>, T_remolded=<span class="num">0.003</span>, D=<span class="num">0.065</span>, H=<span class="num">0.130</span>)
+<span class="fn">print</span>(res[<span class="str">"sensitivity"</span>], res[<span class="str">"classification"</span>])  <span class="cm"># 5.0, "Medium sensitivity"</span></pre></div>
+            </section>
+
+            <section id="site-pmt">
+                <h2>Pressuremeter Test (PMT)</h2>
+                <p>Ménard pressuremeter interpretation: modulus E<sub>m</sub>, limit pressure p<sub>L</sub>, bearing capacity, settlement, and K₀.</p>
+
+                <div class="code-block"><pre><span class="cm"># Extract parameters from pressure–volume curve</span>
+<span class="var">res</span> = ge.<span class="fn">pmt_parameters</span>(pressure, volume)
+<span class="fn">print</span>(res[<span class="str">"Em"</span>], res[<span class="str">"pL"</span>])
+
+<span class="cm"># Bearing capacity (Ménard method)</span>
+<span class="var">bc</span> = ge.<span class="fn">pmt_bearing</span>(pL=<span class="num">800</span>, p0=<span class="num">100</span>, sigma_v=<span class="num">50</span>, shape=<span class="str">"square"</span>)
+
+<span class="cm"># Settlement estimate</span>
+<span class="var">s</span> = ge.<span class="fn">pmt_settlement</span>(q=<span class="num">150</span>, B=<span class="num">2.0</span>, Em=<span class="num">15000</span>)  <span class="cm"># meters</span></pre></div>
+            </section>
+
+            <section id="site-plt">
+                <h2>Plate Load Test</h2>
+                <p>Bearing capacity interpretation (log-log, tangent, or settlement criterion), subgrade modulus k<sub>s</sub>, and Terzaghi &amp; Peck (1967) size correction for sand.</p>
+
+                <div class="code-block"><pre><span class="var">res</span> = ge.<span class="fn">plt_bearing</span>(pressure, settlement, failure_criterion=<span class="str">"log_log"</span>)
+<span class="var">ks</span> = ge.<span class="fn">plt_subgrade_modulus</span>(pressure=<span class="num">200</span>, settlement=<span class="num">5.0</span>)  <span class="cm"># kN/m³</span>
+
+<span class="cm"># Scale from plate (0.3 m) to foundation (2.0 m) in sand</span>
+<span class="var">s_f</span> = ge.<span class="fn">plt_settlement_correction</span>(s_plate=<span class="num">5.0</span>, B_plate=<span class="num">0.3</span>,
+    B_foundation=<span class="num">2.0</span>, soil_type=<span class="str">"sand"</span>)  <span class="cm"># 17.7 mm</span></pre></div>
+            </section>
+
+            <section id="site-pile">
+                <h2>Pile Load Tests</h2>
+                <p>Static and dynamic pile load test interpretation. Static: Davisson (1972), Chin (1970), De Beer (1967), Hansen 80% (1963), FHWA 5%. Dynamic: Case method, Hiley, Danish, ENR.</p>
+
+                <h3>Static Pile Load Tests</h3>
+                <div class="code-block"><pre><span class="var">Q</span> = [<span class="num">0</span>, <span class="num">200</span>, <span class="num">400</span>, <span class="num">600</span>, <span class="num">800</span>, <span class="num">1000</span>, <span class="num">1200</span>, <span class="num">1400</span>]  <span class="cm"># kN</span>
+<span class="var">s</span> = [<span class="num">0</span>, <span class="num">1.0</span>, <span class="num">2.5</span>, <span class="num">5.0</span>, <span class="num">8.5</span>, <span class="num">14</span>, <span class="num">22</span>, <span class="num">35</span>]       <span class="cm"># mm</span>
+
+<span class="var">dav</span> = ge.<span class="fn">davisson</span>(Q, s, diameter=<span class="num">300</span>, length=<span class="num">12000</span>,
+    area=<span class="num">70686</span>, elastic_modulus=<span class="num">30</span>)
+<span class="var">ch</span> = ge.<span class="fn">chin</span>(Q, s)
+<span class="var">han</span> = ge.<span class="fn">hansen_80</span>(Q, s)</pre></div>
+
+                <h3>Dynamic Pile Testing</h3>
+                <div class="code-block"><pre><span class="cm"># Case Method (PDA)</span>
+<span class="var">res</span> = ge.<span class="fn">case_method</span>(F1=<span class="num">2500</span>, F2=<span class="num">800</span>, v1=<span class="num">3.0</span>, v2=<span class="num">0.5</span>,
+    impedance=<span class="num">4000</span>, Jc=<span class="num">0.4</span>)
+
+<span class="cm"># Hiley Driving Formula</span>
+<span class="var">res</span> = ge.<span class="fn">hiley</span>(hammer_weight=<span class="num">50</span>, drop_height=<span class="num">1.5</span>,
+    efficiency=<span class="num">0.85</span>, set_per_blow=<span class="num">0.010</span>, elastic_compression=<span class="num">0.005</span>)</pre></div>
+            </section>
+
+            <section id="site-perm">
+                <h2>Field Permeability Tests</h2>
+                <p>Slug test (Hvorslev 1951) and pumping tests (Thiem 1906) for confined and unconfined aquifers.</p>
+
+                <div class="code-block"><pre><span class="cm"># Slug test — Hvorslev method</span>
+<span class="var">k</span> = ge.<span class="fn">slug_test</span>(r=<span class="num">0.025</span>, R=<span class="num">0.05</span>, Le=<span class="num">1.5</span>, T0=<span class="num">300</span>)
+
+<span class="cm"># Pumping test — confined aquifer (Thiem)</span>
+<span class="var">res</span> = ge.<span class="fn">pumping_test_confined</span>(Q=<span class="num">0.004</span>, h1=<span class="num">18</span>, h2=<span class="num">19.5</span>,
+    r1=<span class="num">10</span>, r2=<span class="num">50</span>, H=<span class="num">20</span>)
+<span class="fn">print</span>(res[<span class="str">"k"</span>], res[<span class="str">"T"</span>])  <span class="cm"># k (m/s), T (m²/s)</span></pre></div>
+            </section>
+
+            <section id="site-cbr">
+                <h2>Field CBR / DCP</h2>
+                <p>Dynamic Cone Penetrometer (DCPI) to CBR correlations: Webster (USACE), TRL, and Kleyn. Plus in-situ CBR from load–penetration.</p>
+
+                <div class="code-block"><pre><span class="cm"># DCP to CBR (3 methods)</span>
+<span class="var">cbr</span> = ge.<span class="fn">dcp_cbr</span>(dcpi=<span class="num">10</span>, method=<span class="str">"webster"</span>)  <span class="cm"># 5.4%</span>
+<span class="var">cbr</span> = ge.<span class="fn">dcp_cbr</span>(dcpi=<span class="num">10</span>, method=<span class="str">"trl"</span>)      <span class="cm"># 26.5%</span>
+
+<span class="cm"># In-situ CBR from field test</span>
+<span class="var">res</span> = ge.<span class="fn">field_cbr_test</span>(penetration, load)</pre></div>
+            </section>
+
+            <!-- =================================================== -->
+            <!--  v0.1.0 — LAYERED GROUND MODEL                       -->
+            <!-- =================================================== -->
+            <section id="profile-soil">
+                <h2>Layered Ground Model</h2>
+                <p>The <code>ge.profile</code> module ties lab data, site investigation, and design calculations together. A <code>Soil</code> dataclass holds one layer's engineering properties; a <code>SoilProfile</code> stacks them and integrates unit weights downward to produce total, pore, and effective stress at any depth.</p>
+
+                <h3>1. The <code>Soil</code> layer — <code>ge.Soil()</code></h3>
+                <p>Plain dataclass — only <code>name</code> is required. Sensible defaults for everything else.</p>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre>ge.<span class="fn">Soil</span>(
+    name=<span class="str">"Soil"</span>,
+    gamma=<span class="num">18.0</span>,       <span class="cm"># bulk unit weight above WT (kN/m³)</span>
+    gamma_sat=<span class="imp">None</span>,    <span class="cm"># saturated unit weight (defaults to gamma + 1.5)</span>
+    phi=<span class="num">30</span>,            <span class="cm"># effective friction angle (°)</span>
+    c=<span class="num">0</span>,               <span class="cm"># effective cohesion (kPa)</span>
+    e=<span class="imp">None</span>, Gs=<span class="num">2.70</span>,   <span class="cm"># void ratio, specific gravity</span>
+    k=<span class="imp">None</span>,            <span class="cm"># hydraulic conductivity (m/s)</span>
+    Es=<span class="imp">None</span>, mu=<span class="num">0.30</span>,   <span class="cm"># elastic modulus, Poisson's ratio</span>
+    Cc=<span class="imp">None</span>, Cr=<span class="imp">None</span>, OCR=<span class="num">1.0</span>,
+    Su=<span class="imp">None</span>
+)</pre></div>
+                </div>
+                <p>Method <code>.gamma_effective()</code> returns the submerged unit weight γ′ = γ<sub>sat</sub> − γ<sub>w</sub>.</p>
+            </section>
+
+            <section id="profile-stack">
+                <h3>2. The <code>SoilProfile</code> — <code>ge.SoilProfile()</code></h3>
+                <p>An ordered list of <code>(top, bot, Soil)</code> tuples plus an optional water table depth. Layers must be contiguous (no gaps, no overlaps) and ordered top-to-bottom (positive z = downward).</p>
+
+                <h4>Stress at depth — Das Eq. 5.1–5.5</h4>
+                <p>For a depth z, the profile integrates unit weights downward using γ above the water table and γ<sub>sat</sub> below it. Pore pressure is hydrostatic: <code>u = γ<sub>w</sub>·max(0, z − z<sub>w</sub>)</code>. Effective stress is Terzaghi's principle: <code>σ′ = σ − u</code>.</p>
+
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre>clay = ge.<span class="fn">Soil</span>(<span class="str">"Soft Clay"</span>, gamma=<span class="num">17</span>, gamma_sat=<span class="num">18.5</span>,
+               phi=<span class="num">0</span>, c=<span class="num">25</span>, e=<span class="num">0.9</span>, Cc=<span class="num">0.27</span>)
+sand = ge.<span class="fn">Soil</span>(<span class="str">"Dense Sand"</span>, gamma=<span class="num">19</span>, gamma_sat=<span class="num">20.5</span>, phi=<span class="num">35</span>)
+
+p = ge.<span class="fn">SoilProfile</span>([
+    (<span class="num">0</span>, <span class="num">2</span>,  ge.<span class="fn">Soil</span>(<span class="str">"Fill"</span>, gamma=<span class="num">18</span>)),
+    (<span class="num">2</span>, <span class="num">8</span>,  clay),
+    (<span class="num">8</span>, <span class="num">20</span>, sand),
+], water_table=<span class="num">1.5</span>)
+
+p.<span class="fn">stress_at</span>(<span class="num">10</span>)
+<span class="cm"># → {'sigma': 188.0, 'u': 78.48, 'sigma_eff': 109.52}</span>
+
+p.<span class="fn">total_stress</span>([<span class="num">2</span>, <span class="num">5</span>, <span class="num">10</span>])      <span class="cm"># vectorised — accepts arrays</span>
+p.<span class="fn">layer_at</span>(<span class="num">5</span>).name             <span class="cm"># → 'Soft Clay'</span>
+p.<span class="fn">to_dataframe</span>()                <span class="cm"># pandas DataFrame export</span>
+p.<span class="fn">plot</span>(dz=<span class="num">0.1</span>, save_as=<span class="str">"stress.pdf"</span>)  <span class="cm"># σ, u, σ' vs depth</span></pre></div>
+                </div>
+
+                <h4>Iteration &amp; helpers</h4>
+                <p><code>ge.mesh(profile, dz=0.5)</code> returns a depth grid; <code>ge.log_plot({label: profile})</code> renders a multi-borehole log plot. The profile object is iterable: <code>for top, bot, soil in p</code>.</p>
+            </section>
+
+            <!-- =================================================== -->
+            <!--  v0.1.0 — EFFECTIVE STRESS &amp; SEEPAGE              -->
+            <!-- =================================================== -->
+            <section id="design-effective">
+                <h2>Engineering Design</h2>
+                <p>The <code>ge.design</code> module covers nine families of geotechnical analysis. Every function takes plain scalars/arrays, returns a plain dict, and cites its textbook source in the docstring.</p>
+
+                <h3>1. Effective stress &amp; pore pressure</h3>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre>ge.<span class="fn">total_stress</span>(gamma, depth)          <span class="cm"># σ = Σ γᵢHᵢ — accepts scalar or layer lists</span>
+ge.<span class="fn">pore_pressure</span>(z, z_w=<span class="num">0</span>)            <span class="cm"># u = γw·max(0, z − z_w)</span>
+ge.<span class="fn">effective_stress</span>(sigma, u)         <span class="cm"># σ′ = σ − u</span>
+ge.<span class="fn">capillary_rise</span>(D10, e, C=<span class="num">0.2</span>)     <span class="cm"># Hazen estimate, returns metres</span>
+ge.<span class="fn">stress_plot</span>(profile)               <span class="cm"># delegates to SoilProfile.plot()</span></pre></div>
+                </div>
+                <p><strong>Reference:</strong> Terzaghi (1943); Das (2010) Ch. 5.</p>
+            </section>
+
+            <section id="design-seepage">
+                <h3>2. Seepage &amp; flow</h3>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre>ge.<span class="fn">darcy_flow</span>(k, i, A)                <span class="cm"># Q = k·i·A   (m³/s)</span>
+ge.<span class="fn">hydraulic_gradient</span>(dh, L)          <span class="cm"># i = Δh / L</span>
+ge.<span class="fn">critical_gradient</span>(Gs, e)           <span class="cm"># i_cr = (Gs − 1) / (1 + e)</span>
+ge.<span class="fn">equivalent_k</span>(k_layers, H_layers,
+                direction=<span class="str">"horizontal"</span>)   <span class="cm"># parallel or series</span>
+ge.<span class="fn">flow_net</span>(Nf, Nd, k, dh, L=<span class="num">1</span>)      <span class="cm"># Q = k·Δh·(Nf/Nd)·L</span></pre></div>
+                </div>
+                <p><strong>Reference:</strong> Darcy (1856); Das (2010) Eqs. 5.10–5.20.</p>
+            </section>
+
+            <!-- =================================================== -->
+            <!--  v0.1.0 — STRESS DISTRIBUTION                       -->
+            <!-- =================================================== -->
+            <section id="design-boussinesq">
+                <h3>3. Stress distribution under loads</h3>
+                <p>The classical elastic solutions for stress beneath surface loads. All return <code>Δσ_z</code> in kPa at the query point.</p>
+
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre>ge.<span class="fn">boussinesq_point</span>(P, z, r=<span class="num">0</span>)         <span class="cm"># point load (kN)</span>
+ge.<span class="fn">boussinesq_line</span>(q, z, x=<span class="num">0</span>)          <span class="cm"># infinite line load (kN/m)</span>
+ge.<span class="fn">boussinesq_strip</span>(q, B, z, x=<span class="num">0</span>)     <span class="cm"># uniform strip of width B</span>
+ge.<span class="fn">boussinesq_circular</span>(q, R, z)        <span class="cm"># centreline under a disk</span>
+ge.<span class="fn">boussinesq_rect</span>(q, B, L, z,
+                  position=<span class="str">"corner"</span>)       <span class="cm"># "corner" | "centre" | "edge"</span>
+ge.<span class="fn">newmark_influence</span>(m, n)             <span class="cm"># Fadum's I(m=B/z, n=L/z)</span>
+ge.<span class="fn">westergaard_point</span>(P, z, r=<span class="num">0</span>, mu=<span class="num">0</span>)  <span class="cm"># stratified medium</span>
+ge.<span class="fn">stress_2to1</span>(q, B, L, z)             <span class="cm"># 2:1 empirical spread</span>
+ge.<span class="fn">stress_bulb</span>(P, z_range, r_range)    <span class="cm"># mesh for contourf</span></pre></div>
+                </div>
+
+                <p><strong>Cross-checked values:</strong> Boussinesq circular at z=R: Δσ/q = 0.6465 ✓ (Das Tab. 6.6). Fadum I(1,1) = 0.1752 ✓. Westergaard at r=0, μ=0: 2P/(πz²) ✓ (Das Eq. 6.13).</p>
+                <p><strong>Reference:</strong> Boussinesq (1885); Westergaard (1938); Newmark (1935); Fadum (1948).</p>
+            </section>
+
+            <!-- =================================================== -->
+            <!--  v0.1.0 — BEARING CAPACITY                           -->
+            <!-- =================================================== -->
+            <section id="design-bearing">
+                <h3>4. Bearing capacity — 4 methods in one function</h3>
+                <p>Implements the general bearing-capacity equation q<sub>u</sub> = cN<sub>c</sub>s<sub>c</sub>d<sub>c</sub>i<sub>c</sub> + qN<sub>q</sub>s<sub>q</sub>d<sub>q</sub>i<sub>q</sub> + ½γBN<sub>γ</sub>s<sub>γ</sub>d<sub>γ</sub>i<sub>γ</sub> with method selectable per call.</p>
+
+                <h4>The N-factors</h4>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre>f = ge.<span class="fn">bearing_factors</span>(phi=<span class="num">30</span>, method=<span class="str">"meyerhof"</span>)
+<span class="cm"># → {'Nc': 30.14, 'Nq': 18.40, 'Ngamma': 15.67}</span>
+
+<span class="cm"># Methods: "terzaghi" | "meyerhof" | "hansen" | "vesic"</span>
+ge.<span class="fn">bearing_factors</span>(<span class="num">30</span>, <span class="str">"hansen"</span>)[<span class="str">"Ngamma"</span>]   <span class="cm"># → 14.39</span>
+ge.<span class="fn">bearing_factors</span>(<span class="num">30</span>, <span class="str">"vesic"</span>)[<span class="str">"Ngamma"</span>]    <span class="cm"># → 22.40</span></pre></div>
+                </div>
+
+                <h4>Full capacity workflow</h4>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre>res = ge.<span class="fn">bearing_capacity</span>(
+    c=<span class="num">10</span>, gamma=<span class="num">18</span>, Df=<span class="num">1.0</span>, B=<span class="num">2.0</span>, phi=<span class="num">30</span>,
+    L=<span class="num">2.0</span>,                       <span class="cm"># None or huge → strip</span>
+    method=<span class="str">"meyerhof"</span>,
+    shape=<span class="kw">True</span>, depth=<span class="kw">True</span>,
+    inclination=<span class="num">0</span>,             <span class="cm"># load angle from vertical (°)</span>
+    water_table=<span class="str">"deep"</span>           <span class="cm"># "deep" | "at_base" | "above_base"</span>
+)
+print(res[<span class="str">"q_u"</span>])              <span class="cm"># ultimate (kPa)</span>
+ge.<span class="fn">bearing_allowable</span>(res[<span class="str">"q_u"</span>], FS=<span class="num">3.0</span>)   <span class="cm"># q_all = q_u / FS</span></pre></div>
+                </div>
+                <p>The shape, depth and inclination factor helpers are independently callable: <code>ge.bearing_shape_factors</code>, <code>ge.bearing_depth_factors</code>, <code>ge.bearing_inclination_factors</code>.</p>
+                <p><strong>Reference:</strong> Terzaghi (1943); Meyerhof (1963); Hansen (1970); Vesic (1973); Das (2014) Ch. 4.</p>
+            </section>
+
+            <!-- =================================================== -->
+            <!--  v0.1.0 — SETTLEMENT                                 -->
+            <!-- =================================================== -->
+            <section id="design-settlement">
+                <h3>5. Settlement — immediate, primary, secondary, Schmertmann</h3>
+
+                <h4>Immediate / elastic (Janbu-Steinbrenner)</h4>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre>S_i = ge.<span class="fn">settlement_immediate</span>(
+    q=<span class="num">200</span>, B=<span class="num">2</span>, Es=<span class="num">10000</span>,
+    mu=<span class="num">0.3</span>,
+    shape=<span class="str">"rigid_square"</span>     <span class="cm"># or rigid_circle/flexible_centre/flexible_corner/rigid_strip</span>
+)
+<span class="cm"># S_i = q·B·(1−μ²)/Es · Ip — Ip from shape (0.88 for rigid square)</span></pre></div>
+                </div>
+
+                <h4>Primary consolidation — NC / OC / crossing pc</h4>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre>S = ge.<span class="fn">settlement_primary</span>(
+    Cc=<span class="num">0.27</span>, e0=<span class="num">0.92</span>, H=<span class="num">3.66</span>,
+    sigma0=<span class="num">80</span>, delta_sigma=<span class="num">15</span>,
+    Cr=<span class="num">0.05</span>,                   <span class="cm"># required for OC cases</span>
+    sigma_pc=<span class="num">100</span>,               <span class="cm"># preconsolidation pressure</span>
+    kind=<span class="str">"auto"</span>                  <span class="cm"># auto picks NC / OC_below / OC_cross</span>
+)</pre></div>
+                </div>
+
+                <h4>Secondary compression</h4>
+                <p><code>ge.settlement_secondary(C_alpha, H, t1, t2, e_p=None)</code> — strain form or void-ratio form (auto-converted).</p>
+
+                <h4>Schmertmann strain-influence (sands)</h4>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre>res = ge.<span class="fn">settlement_schmertmann</span>(
+    q_net=<span class="num">100</span>, B=<span class="num">2</span>,
+    Es=[<span class="num">10000</span>, <span class="num">30000</span>],         <span class="cm"># scalar or list (matching layers)</span>
+    layers=[(<span class="num">0</span>, <span class="num">2</span>), (<span class="num">2</span>, <span class="num">4</span>)],
+    Df=<span class="num">1</span>, t_years=<span class="num">10</span>,
+    shape=<span class="str">"square"</span>              <span class="cm"># "square" | "circle" | "strip"</span>
+)
+res[<span class="str">"S"</span>], res[<span class="str">"C1"</span>], res[<span class="str">"C2"</span>], res[<span class="str">"Iz_peak"</span>], res[<span class="str">"layers"</span>]</pre></div>
+                </div>
+
+                <h4>Time rate of consolidation</h4>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre>ge.<span class="fn">time_factor</span>(U=<span class="num">0.5</span>)                  <span class="cm"># → 0.196</span>
+ge.<span class="fn">consolidation_degree</span>(Tv=<span class="num">0.197</span>)      <span class="cm"># → 0.501</span>
+ge.<span class="fn">consolidation_time</span>(U=<span class="num">0.9</span>, Hdr=<span class="num">2</span>, cv=<span class="num">1e-7</span>)</pre></div>
+                </div>
+                <p><strong>Reference:</strong> Terzaghi (1925); Janbu (1956); Schmertmann (1970, 1978); Mesri &amp; Godlewski (1977).</p>
+            </section>
+
+            <!-- =================================================== -->
+            <!--  v0.1.0 — EARTH PRESSURE                             -->
+            <!-- =================================================== -->
+            <section id="design-earth">
+                <h3>6. Earth pressure — Rankine + Coulomb + Jaky</h3>
+
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre><span class="cm"># At-rest</span>
+ge.<span class="fn">K0</span>(phi=<span class="num">30</span>)                          <span class="cm"># Jaky: 1 − sin(φ) = 0.500</span>
+ge.<span class="fn">K0</span>(phi=<span class="num">30</span>, OCR=<span class="num">4</span>, method=<span class="str">"mayne"</span>)    <span class="cm"># Mayne-Kulhawy (1982)</span>
+
+<span class="cm"># Active / passive — Rankine (smooth wall, horizontal backfill)</span>
+ge.<span class="fn">Ka</span>(phi=<span class="num">30</span>)                          <span class="cm"># tan²(45 − φ/2) = 1/3</span>
+ge.<span class="fn">Kp</span>(phi=<span class="num">30</span>)                          <span class="cm"># tan²(45 + φ/2) = 3</span>
+
+<span class="cm"># Sloping backfill (Rankine)</span>
+ge.<span class="fn">Ka</span>(phi=<span class="num">30</span>, beta=<span class="num">10</span>)                 <span class="cm"># backfill slope 10°</span>
+
+<span class="cm"># Coulomb — general (wall friction δ, wall inclination α, backfill slope β)</span>
+ge.<span class="fn">Ka</span>(phi=<span class="num">30</span>, delta=<span class="num">20</span>, alpha=<span class="num">0</span>, beta=<span class="num">5</span>,
+       method=<span class="str">"coulomb"</span>)
+
+<span class="cm"># Full distribution + resultant</span>
+res = ge.<span class="fn">earth_pressure</span>(
+    gamma=<span class="num">18</span>, H=<span class="num">5</span>, phi=<span class="num">30</span>, c=<span class="num">0</span>,
+    kind=<span class="str">"active"</span>,            <span class="cm"># active | passive | at_rest</span>
+    surcharge=<span class="num">10</span>,             <span class="cm"># uniform q at surface (kPa)</span>
+    water_table=<span class="num">2</span>              <span class="cm"># adds hydrostatic component</span>
+)
+res[<span class="str">"K"</span>], res[<span class="str">"P_soil"</span>], res[<span class="str">"P_water"</span>], res[<span class="str">"P_total"</span>], res[<span class="str">"h_point"</span>]
+
+<span class="cm"># Tension crack depth in cohesive soil</span>
+ge.<span class="fn">tension_crack_depth</span>(c=<span class="num">20</span>, gamma=<span class="num">18</span>, phi=<span class="num">30</span>)   <span class="cm"># 2c/(γ·√Ka)</span></pre></div>
+                </div>
+                <p><strong>Reference:</strong> Rankine (1857); Coulomb (1776); Jaky (1944); Mayne &amp; Kulhawy (1982).</p>
+            </section>
+
+            <!-- =================================================== -->
+            <!--  v0.1.0 — RETAINING WALLS                            -->
+            <!-- =================================================== -->
+            <section id="design-walls">
+                <h3>7. Retaining walls &amp; sheet piles</h3>
+                <p>Three independent stability checks plus a sheet-pile embedment helper.</p>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre>ge.<span class="fn">wall_overturning</span>(
+    resisting_moments=[<span class="num">300</span>, <span class="num">150</span>],
+    driving_moments=[<span class="num">100</span>])
+<span class="cm"># → {'M_resisting': 450, 'M_driving': 100, 'FS': 4.5}</span>
+
+ge.<span class="fn">wall_sliding</span>(
+    horizontal_forces=[<span class="num">80</span>], vertical_forces=[<span class="num">200</span>],
+    mu=<span class="num">0.6</span>,                  <span class="cm"># or pass delta (°)</span>
+    c_base=<span class="num">10</span>, B=<span class="num">3.0</span>,         <span class="cm"># cohesion contribution</span>
+    Pp=<span class="num">15</span>                     <span class="cm"># passive resistance at toe</span>
+)
+
+<span class="cm"># Eccentric loading on the base — automatic kern check</span>
+ge.<span class="fn">wall_bearing</span>(V=<span class="num">400</span>, M_net=<span class="num">200</span>, B=<span class="num">4</span>, q_ult=<span class="num">600</span>)
+<span class="cm"># → {'e': 0.5, 'q_max': ..., 'q_min': ..., 'within_kern': True, 'FS': ...}</span>
+
+<span class="cm"># Cantilever sheet pile (Blum's simplified method)</span>
+ge.<span class="fn">sheet_pile</span>(gamma=<span class="num">18</span>, H=<span class="num">4</span>, phi=<span class="num">30</span>)
+<span class="cm"># → {'Ka': 0.333, 'Kp': 3.0, 'D_theory': ..., 'D_design': 1.3·D_theory}</span></pre></div>
+                </div>
+            </section>
+
+            <!-- =================================================== -->
+            <!--  v0.1.0 — PILE DESIGN                                -->
+            <!-- =================================================== -->
+            <section id="design-piles">
+                <h3>8. Pile design — α / β / λ methods</h3>
+                <p>Predict axial capacity from soil properties. The complementary <em>interpretation</em> of measured pile-load-test curves (Davisson, Chin, etc.) lives in <a href="#site-pile">Site Investigation → Pile Load Tests</a>.</p>
+
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre><span class="cm"># Tip resistance — sand (Meyerhof/Vesic) or clay (Skempton)</span>
+ge.<span class="fn">pile_end_bearing</span>(phi=<span class="num">35</span>, sigma_v_eff=<span class="num">100</span>, method=<span class="str">"meyerhof"</span>)
+ge.<span class="fn">pile_end_bearing</span>(Su=<span class="num">100</span>)                  <span class="cm"># clay: q_p = 9·Su</span>
+
+<span class="cm"># Skin friction</span>
+ge.<span class="fn">pile_skin_friction</span>(Su=<span class="num">50</span>, method=<span class="str">"alpha"</span>)       <span class="cm"># Tomlinson (1957)</span>
+ge.<span class="fn">pile_skin_friction</span>(sigma_v_eff=<span class="num">100</span>,
+                       method=<span class="str">"beta"</span>, phi=<span class="num">30</span>)      <span class="cm"># Burland (1973)</span>
+ge.<span class="fn">pile_skin_friction</span>(Su=<span class="num">50</span>, sigma_v_eff=<span class="num">100</span>,
+                       method=<span class="str">"lambda"</span>)             <span class="cm"># Vijayvergiya-Focht (1972)</span>
+
+<span class="cm"># Total axial capacity</span>
+ge.<span class="fn">pile_capacity</span>(D=<span class="num">0.3</span>, L=<span class="num">10</span>, q_p=<span class="num">2000</span>, f_s=<span class="num">30</span>, FS=<span class="num">3</span>)
+<span class="cm"># → {'Q_p': 141.4, 'Q_s': 282.7, 'Q_ult': 424.1, 'Q_all': 141.4}</span>
+
+<span class="cm"># Group efficiency — 3×3 cluster</span>
+ge.<span class="fn">pile_group_efficiency</span>(n=<span class="num">3</span>, m=<span class="num">3</span>, D=<span class="num">0.3</span>, s=<span class="num">0.9</span>,
+                          method=<span class="str">"converse_labarre"</span>)
+
+<span class="cm"># Single-pile settlement (Vesic 3-component)</span>
+ge.<span class="fn">pile_settlement</span>(Q_w=<span class="num">400</span>, Q_p=<span class="num">200</span>, Q_s=<span class="num">200</span>,
+                   D=<span class="num">0.3</span>, L=<span class="num">10</span>, Es=<span class="num">20000</span>, Ep=<span class="num">25e6</span>)</pre></div>
+                </div>
+                <p><strong>Reference:</strong> Meyerhof (1976); Tomlinson (1957); Burland (1973); Vijayvergiya &amp; Focht (1972); Vesic (1977); Converse &amp; Labarre (1947).</p>
+            </section>
+
+            <!-- =================================================== -->
+            <!--  v0.1.0 — SLOPE STABILITY                            -->
+            <!-- =================================================== -->
+            <section id="design-slopes">
+                <h3>9. Slope stability — 4 methods</h3>
+
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre><span class="cm"># Infinite slope (with or without seepage parallel to slope)</span>
+ge.<span class="fn">infinite_slope</span>(phi=<span class="num">30</span>, beta=<span class="num">20</span>)
+<span class="cm"># → {'FS': 1.587, 'seepage': False}</span>
+ge.<span class="fn">infinite_slope</span>(phi=<span class="num">30</span>, beta=<span class="num">20</span>, c=<span class="num">10</span>, H=<span class="num">3</span>,
+                  gamma=<span class="num">18</span>, gamma_sat=<span class="num">20</span>, seepage=<span class="kw">True</span>)
+
+<span class="cm"># Culmann's critical height (planar failure surface)</span>
+ge.<span class="fn">culmann</span>(c=<span class="num">20</span>, phi=<span class="num">20</span>, gamma=<span class="num">18</span>, beta=<span class="num">60</span>)
+<span class="cm"># → {'H_cr': ..., 'method': 'culmann'}</span>
+
+<span class="cm"># Taylor's stability number (toe-circle chart)</span>
+ge.<span class="fn">taylor_stability</span>(phi=<span class="num">0</span>, c=<span class="num">25</span>, gamma=<span class="num">18</span>, H=<span class="num">5</span>, beta=<span class="num">45</span>)
+<span class="cm"># → {'m': 0.181, 'FS': ..., 'method': 'taylor'}</span>
+
+<span class="cm"># Bishop's simplified method (iterative; circular failure)</span>
+slices = [{<span class="str">"b"</span>: <span class="num">2</span>, <span class="str">"h"</span>: <span class="num">5</span>, <span class="str">"alpha"</span>: a,
+           <span class="str">"c"</span>: <span class="num">10</span>, <span class="str">"phi"</span>: <span class="num">25</span>,
+           <span class="str">"gamma"</span>: <span class="num">18</span>, <span class="str">"u"</span>: <span class="num">0</span>}
+          <span class="kw">for</span> a <span class="kw">in</span> (-<span class="num">5</span>, <span class="num">5</span>, <span class="num">20</span>, <span class="num">35</span>, <span class="num">50</span>)]
+ge.<span class="fn">bishop</span>(slices)
+<span class="cm"># → {'FS': 1.43, 'iterations': 4, 'converged': True}</span></pre></div>
+                </div>
+                <p><strong>Reference:</strong> Culmann (1875); Taylor (1937); Bishop (1955); Das (2010) Ch. 13.</p>
+            </section>
+
+            <!-- =================================================== -->
+            <!--  v0.1.0 — DYNAMICS                                   -->
+            <!-- =================================================== -->
+            <section id="dyn-gmax">
+                <h2>Soil Dynamics &amp; Seismic</h2>
+                <p>Small-strain modulus, modulus-reduction &amp; damping curves (Darendeli 2001), and the full simplified-procedure liquefaction triggering analysis.</p>
+
+                <h3>1. Small-strain shear modulus G<sub>max</sub></h3>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre>ge.<span class="fn">gmax</span>(Vs=<span class="num">200</span>, gamma=<span class="num">20</span>)           <span class="cm"># Gmax = ρ·Vs² (kPa)</span>
+
+ge.<span class="fn">gmax_hardin</span>(
+    e=<span class="num">0.6</span>, sigma_m_eff=<span class="num">100</span>,
+    OCR=<span class="num">2</span>, PI=<span class="num">30</span>,
+    soil_type=<span class="str">"round_grained"</span>    <span class="cm"># round_grained | angular_grained | clay</span>
+)
+<span class="cm"># Hardin & Black (1968) / Hardin & Drnevich (1972)</span></pre></div>
+                </div>
+            </section>
+
+            <section id="dyn-damping">
+                <h3>2. Modulus reduction G/G<sub>max</sub> and damping D</h3>
+                <p>Darendeli (2001) is the workhorse empirical model. Reference strain γ<sub>r</sub> is controlled by mean effective stress, plasticity index, and OCR; the curve is G/G<sub>max</sub> = 1 / (1 + (γ/γ<sub>r</sub>)<sup>a</sup>) with a ≈ 0.92.</p>
+
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre>ge.<span class="fn">modulus_reduction</span>(
+    strain=<span class="num">1e-3</span>,        <span class="cm"># shear strain (decimal, e.g. 0.1%)</span>
+    sigma_m_eff=<span class="num">100</span>,
+    PI=<span class="num">15</span>, OCR=<span class="num">1</span>,
+    method=<span class="str">"darendeli"</span>   <span class="cm"># or "vucetic_dobry"</span>
+)
+
+ge.<span class="fn">damping_ratio</span>(
+    strain=<span class="num">1e-3</span>,
+    sigma_m_eff=<span class="num">100</span>, PI=<span class="num">15</span>, OCR=<span class="num">1</span>,
+    freq_Hz=<span class="num">1.0</span>, N_cycles=<span class="num">10</span>
+)
+<span class="cm"># Returns decimal damping (e.g. 0.08 = 8%)</span>
+ge.<span class="fn">response_spectrum</span>(T, Sa, site_class=<span class="str">"D"</span>)   <span class="cm"># quick plot helper</span></pre></div>
+                </div>
+            </section>
+
+            <section id="dyn-liq">
+                <h3>3. Liquefaction triggering — Seed-Idriss &amp; NCEER</h3>
+                <p>The full simplified procedure: CSR from earthquake loading, CRR from SPT / CPT / V<sub>s</sub>, magnitude scaling factor, and the factor of safety.</p>
+
+                <h4>Step 1: depth-reduction r<sub>d</sub></h4>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre>ge.<span class="fn">depth_reduction</span>(z=<span class="num">6</span>, method=<span class="str">"idriss_1999"</span>, Mw=<span class="num">7.0</span>)
+<span class="cm"># Other methods: "liao_whitman_1986", "cetin_2004"</span></pre></div>
+                </div>
+
+                <h4>Step 2: cyclic stress ratio CSR (Seed-Idriss 1971)</h4>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre>csr = ge.<span class="fn">liquefaction_csr</span>(
+    amax=<span class="num">0.25</span>,            <span class="cm"># PGA as fraction of g</span>
+    sigma_v=<span class="num">120</span>,
+    sigma_v_eff=<span class="num">70</span>,
+    z=<span class="num">6</span>, Mw=<span class="num">7.0</span>
+)
+<span class="cm"># → {'CSR': 0.226, 'rd': 0.971, 'amax_g': 0.25}</span></pre></div>
+                </div>
+
+                <h4>Step 3: cyclic resistance ratio CRR — SPT, CPT, or V<sub>s</sub></h4>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre><span class="cm"># NCEER SPT (Youd et al. 2001) — the most widely cited</span>
+ge.<span class="fn">liquefaction_crr</span>(N160cs=<span class="num">12</span>, method=<span class="str">"youd_2001"</span>)
+
+<span class="cm"># Idriss & Boulanger (2008) — updated SPT</span>
+ge.<span class="fn">liquefaction_crr</span>(N160cs=<span class="num">15</span>, method=<span class="str">"idriss_boulanger_2008"</span>)
+
+<span class="cm"># Idriss & Boulanger (2008) — CPT</span>
+ge.<span class="fn">liquefaction_crr</span>(qc1Ncs=<span class="num">100</span>, method=<span class="str">"idriss_boulanger_2008_cpt"</span>)
+
+<span class="cm"># Andrus & Stokoe (2000) — Vs</span>
+ge.<span class="fn">liquefaction_crr</span>(Vs1=<span class="num">150</span>, FC=<span class="num">10</span>, method=<span class="str">"andrus_stokoe_2000"</span>)</pre></div>
+                </div>
+
+                <h4>Step 4: magnitude scaling factor MSF</h4>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre>ge.<span class="fn">magnitude_scaling_factor</span>(Mw=<span class="num">7.0</span>, method=<span class="str">"idriss_1999"</span>)
+<span class="cm"># Methods: "idriss_1999" | "nceer" | "boulanger_idriss_2014"</span></pre></div>
+                </div>
+
+                <h4>Step 5: factor of safety FS<sub>L</sub></h4>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre>fs = ge.<span class="fn">liquefaction_fos</span>(
+    CSR=csr[<span class="str">"CSR"</span>],
+    CRR=<span class="num">0.12</span>,
+    Mw=<span class="num">7.0</span>,
+    K_sigma=<span class="num">1.0</span>, K_alpha=<span class="num">1.0</span>
+)
+<span class="cm"># → {'FS': 0.58, 'liquefies': True, 'MSF': 1.19, ...}</span>
+<span class="cm"># FS_L = CRR · MSF · K_sigma · K_alpha / CSR</span></pre></div>
+                </div>
+                <p><strong>Reference:</strong> Seed &amp; Idriss (1971); Youd et al. (2001); Idriss &amp; Boulanger (2008); Andrus &amp; Stokoe (2000); Boulanger &amp; Idriss (2014).</p>
+            </section>
+
+            <!-- =================================================== -->
+            <!--  v0.1.0 — DATA I/O                                  -->
+            <!-- =================================================== -->
+            <section id="io-csv">
+                <h2>Data I/O</h2>
+                <p>Read the file formats commonly used in ground-investigation data exchange.</p>
+
+                <h3>1. Generic CSV — <code>ge.read_csv()</code></h3>
+                <p>Auto-detects the header row (skipping metadata lines) and optionally reads a units row. Returns a dict of NumPy arrays plus a pandas DataFrame if pandas is installed.</p>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre>res = ge.<span class="fn">read_csv</span>(
+    <span class="str">"borehole_log.csv"</span>,
+    sep=<span class="str">","</span>,                <span class="cm"># field separator</span>
+    skiprows=<span class="imp">None</span>,           <span class="cm"># auto-detect</span>
+    units_row=<span class="kw">True</span>,           <span class="cm"># treat row after header as units</span>
+    encoding=<span class="str">"utf-8"</span>
+)
+res[<span class="str">"data"</span>][<span class="str">"depth"</span>]      <span class="cm"># np.ndarray</span>
+res[<span class="str">"df"</span>]                  <span class="cm"># pandas DataFrame (or None)</span>
+res[<span class="str">"units"</span>]               <span class="cm"># {'depth': 'm', 'qc': 'MPa', ...}</span>
+res[<span class="str">"header_row"</span>], res[<span class="str">"n_rows"</span>]</pre></div>
+                </div>
+            </section>
+
+            <section id="io-ags">
+                <h3>2. AGS4 (UK / Australia / NZ) — <code>ge.read_ags()</code></h3>
+                <p>Parses the AGS4 text format used by the Association of Geotechnical &amp; Geoenvironmental Specialists. Returns a dict keyed by group name (<code>LOCA</code>, <code>GEOL</code>, <code>SCPT</code>, etc.).</p>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre>groups = ge.<span class="fn">read_ags</span>(<span class="str">"investigation.ags"</span>)
+
+groups[<span class="str">"LOCA"</span>][<span class="str">"headings"</span>]   <span class="cm"># ['LOCA_ID', 'LOCA_NATE', 'LOCA_NATN', ...]</span>
+groups[<span class="str">"LOCA"</span>][<span class="str">"units"</span>]      <span class="cm"># ['', 'm', 'm', ...]</span>
+groups[<span class="str">"LOCA"</span>][<span class="str">"data"</span>]       <span class="cm"># [{'LOCA_ID': 'BH1', ...}, ...]</span>
+groups[<span class="str">"GEOL"</span>][<span class="str">"data"</span>][<span class="num">0</span>][<span class="str">"GEOL_DESC"</span>]   <span class="cm"># 'Topsoil'</span></pre></div>
+                </div>
+            </section>
+
+            <section id="io-gef">
+                <h3>3. GEF-CPT (Netherlands) — <code>ge.read_gef()</code></h3>
+                <p>Reads the GEF (Geef Eenvoudige Formaat) header — <code>#KEY= value</code> lines terminated by <code>#EOH=</code> — and the subsequent columnar data, applying <code>#COLUMNVOID</code> placeholders as NaN.</p>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre>res = ge.<span class="fn">read_gef</span>(<span class="str">"sounding.gef"</span>)
+
+res[<span class="str">"header"</span>]            <span class="cm"># dict of #KEY metadata</span>
+res[<span class="str">"columns"</span>]           <span class="cm"># ['depth', 'qc', 'fs', ...]</span>
+res[<span class="str">"units"</span>]             <span class="cm"># ['m', 'MPa', 'MPa', ...]</span>
+res[<span class="str">"data"</span>][<span class="str">"qc"</span>]         <span class="cm"># np.ndarray, with COLUMNVOID → NaN</span></pre></div>
+                </div>
+            </section>
+
+            <section id="io-cpt">
+                <h3>4. CPT container — <code>ge.CPT()</code></h3>
+                <p>A light wrapper around (depth, q<sub>c</sub>, f<sub>s</sub>, u<sub>2</sub>) arrays with two classmethods for loading directly from file. Aliases differing column names across formats (Dutch <code>sondeerlengte</code> → <code>depth</code>, etc.).</p>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <div class="code-block"><pre><span class="cm"># Direct construction</span>
+c = ge.<span class="fn">CPT</span>(depth=z, qc=qc, fs=fs, u2=u2, title=<span class="str">"BH1-CPT-1"</span>)
+
+<span class="cm"># From file</span>
+c = ge.CPT.<span class="fn">from_gef</span>(<span class="str">"sounding.gef"</span>)
+c = ge.CPT.<span class="fn">from_ags</span>(<span class="str">"investigation.ags"</span>)
+
+<span class="cm"># Then feed into the functional API:</span>
+Qt, Fr, Bq = ge.<span class="fn">cpt_normalize</span>(c.qc, c.fs, sigma_v, sigma_v_eff, c.u2)
+zones = [ge.<span class="fn">cpt_sbt</span>(Qt[i], Fr[i]) <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="fn">len</span>(c))]</pre></div>
                 </div>
             </section>
 
             <section id="api-ref">
                 <h2>API Quick Reference</h2>
-                <p>Complete list of all functions available at the top-level <code>import geoeq as sp</code> namespace.</p>
+                <p>Complete list of all functions available at the top-level <code>import geoeq as ge</code> namespace.</p>
                 <table style="width:100%; border-collapse:collapse; font-size:0.9rem;">
                     <thead style="background:#f0f6fc;">
                         <tr>
@@ -581,20 +1744,97 @@ w2 = sp.<span class="fn">water_content</span>(S=<span class="num">0.80</span>, e
                         </tr>
                     </thead>
                     <tbody>
-                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>sp.sieve_ana()</code></td><td style="padding:9px 14px;">Grain Size</td><td style="padding:9px 14px;">Sieve analysis. ASTM / BS / IS. Returns percent finer distribution.</td></tr>
-                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>sp.hydro_ana()</code></td><td style="padding:9px 14px;">Grain Size</td><td style="padding:9px 14px;">Hydrometer analysis per ASTM D7928. Returns particle diameters and percent finer.</td></tr>
-                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>sp.grain_size_plot()</code></td><td style="padding:9px 14px;">Visualization</td><td style="padding:9px 14px;">Publication-ready grain size distribution plot. Full Matplotlib pass-through.</td></tr>
-                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>sp.grain_d10()</code></td><td style="padding:9px 14px;">Parameters</td><td style="padding:9px 14px;">Interpolated D₁₀ (effective size) in mm.</td></tr>
-                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>sp.grain_d30()</code></td><td style="padding:9px 14px;">Parameters</td><td style="padding:9px 14px;">Interpolated D₃₀ in mm.</td></tr>
-                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>sp.grain_d60()</code></td><td style="padding:9px 14px;">Parameters</td><td style="padding:9px 14px;">Interpolated D₆₀ (controlling size) in mm.</td></tr>
-                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>sp.grain_Cu()</code></td><td style="padding:9px 14px;">Parameters</td><td style="padding:9px 14px;">Uniformity Coefficient Cᵤ = D₆₀ / D₁₀.</td></tr>
-                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>sp.grain_Cc()</code></td><td style="padding:9px 14px;">Parameters</td><td style="padding:9px 14px;">Coefficient of Curvature Cᶜ = D₃₀² / (D₁₀ × D₆₀).</td></tr>
-                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>sp.density()</code></td><td style="padding:9px 14px;">Soil Props</td><td style="padding:9px 14px;">Dry, saturated, bulk, or submerged unit weight. Multiple unit systems.</td></tr>
-                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>sp.void_ratio()</code></td><td style="padding:9px 14px;">Soil Props</td><td style="padding:9px 14px;">Void ratio from porosity, masses, or volumes.</td></tr>
-                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>sp.saturation()</code></td><td style="padding:9px 14px;">Soil Props</td><td style="padding:9px 14px;">Degree of saturation (S) from various input combinations.</td></tr>
-                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>sp.water_content()</code></td><td style="padding:9px 14px;">Soil Props</td><td style="padding:9px 14px;">Water content (w) from masses or phase parameters.</td></tr>
-                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>sp.relative_density()</code></td><td style="padding:9px 14px;">Soil Props</td><td style="padding:9px 14px;">Dr from void ratio limits or dry density limits.</td></tr>
-                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>sp.atterberg()</code></td><td style="padding:9px 14px;">Atterberg</td><td style="padding:9px 14px;">Plasticity Index (PI), Liquidity Index (LI), and Consistency Index (CI).</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.sieve_ana()</code></td><td style="padding:9px 14px;">Grain Size</td><td style="padding:9px 14px;">Sieve analysis. ASTM / BS / IS. Returns percent finer distribution.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.hydro_ana()</code></td><td style="padding:9px 14px;">Grain Size</td><td style="padding:9px 14px;">Hydrometer analysis per ASTM D7928. Returns particle diameters and percent finer.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.grain_size_plot()</code></td><td style="padding:9px 14px;">Visualization</td><td style="padding:9px 14px;">Publication-ready grain size distribution plot. Full Matplotlib pass-through.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.grain_d10()</code></td><td style="padding:9px 14px;">Parameters</td><td style="padding:9px 14px;">Interpolated D₁₀ (effective size) in mm.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.grain_d30()</code></td><td style="padding:9px 14px;">Parameters</td><td style="padding:9px 14px;">Interpolated D₃₀ in mm.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.grain_d60()</code></td><td style="padding:9px 14px;">Parameters</td><td style="padding:9px 14px;">Interpolated D₆₀ (controlling size) in mm.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.grain_Cu()</code></td><td style="padding:9px 14px;">Parameters</td><td style="padding:9px 14px;">Uniformity Coefficient Cᵤ = D₆₀ / D₁₀.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.grain_Cc()</code></td><td style="padding:9px 14px;">Parameters</td><td style="padding:9px 14px;">Coefficient of Curvature Cᶜ = D₃₀² / (D₁₀ × D₆₀).</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.density()</code></td><td style="padding:9px 14px;">Soil Props</td><td style="padding:9px 14px;">Dry, saturated, bulk, or submerged unit weight. Multiple unit systems.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.void_ratio()</code></td><td style="padding:9px 14px;">Soil Props</td><td style="padding:9px 14px;">Void ratio from porosity, masses, or volumes.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.porosity()</code></td><td style="padding:9px 14px;">Soil Props</td><td style="padding:9px 14px;">Porosity from void ratio or volumes.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.saturation()</code></td><td style="padding:9px 14px;">Soil Props</td><td style="padding:9px 14px;">Degree of saturation (S) from various input combinations.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.water_content()</code></td><td style="padding:9px 14px;">Soil Props</td><td style="padding:9px 14px;">Water content (w) from masses or phase parameters.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.specific_gravity()</code></td><td style="padding:9px 14px;">Soil Props</td><td style="padding:9px 14px;">Gs from mass and volume of solids.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.relative_density()</code></td><td style="padding:9px 14px;">Soil Props</td><td style="padding:9px 14px;">Dr from void ratio limits or dry density limits.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.atterberg()</code></td><td style="padding:9px 14px;">Index Props</td><td style="padding:9px 14px;">Plasticity Index (PI), Liquidity Index (LI), and Consistency Index (CI).</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.activity()</code></td><td style="padding:9px 14px;">Index Props</td><td style="padding:9px 14px;">Activity of clay (Skempton 1953). A = PI / clay fraction.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.sensitivity()</code></td><td style="padding:9px 14px;">Index Props</td><td style="padding:9px 14px;">Sensitivity of clay. St = Su(undisturbed) / Su(remolded).</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.liquidity_index()</code></td><td style="padding:9px 14px;">Index Props</td><td style="padding:9px 14px;">Standalone LI = (w - PL) / PI.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.classify_uscs()</code></td><td style="padding:9px 14px;">Classification</td><td style="padding:9px 14px;">USCS classification per ASTM D2487. Returns symbol + name.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.classify_aashto()</code></td><td style="padding:9px 14px;">Classification</td><td style="padding:9px 14px;">AASHTO M145 classification with Group Index.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.plasticity_chart()</code></td><td style="padding:9px 14px;">Classification</td><td style="padding:9px 14px;">Casagrande plasticity chart with A-line and U-line.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.direct_shear()</code></td><td style="padding:9px 14px;">Lab — Shear</td><td style="padding:9px 14px;">Direct shear test → c, φ, R² (Mohr–Coulomb fit). ASTM D3080.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.triaxial()</code></td><td style="padding:9px 14px;">Lab — Shear</td><td style="padding:9px 14px;">Triaxial test (UU/CU/CD) → c, φ, Su. ASTM D2850/D4767.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.unconfined()</code></td><td style="padding:9px 14px;">Lab — Shear</td><td style="padding:9px 14px;">Unconfined compression → Su = qu/2 with consistency class. ASTM D2166.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.mohr_circle()</code></td><td style="padding:9px 14px;">Lab — Shear</td><td style="padding:9px 14px;">Draw Mohr circles with automatic failure envelope fitting.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.direct_shear_plot()</code></td><td style="padding:9px 14px;">Lab — Shear</td><td style="padding:9px 14px;">σ–τ failure envelope visualization.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.oedometer()</code></td><td style="padding:9px 14px;">Lab — Consol.</td><td style="padding:9px 14px;">Oedometer test → Cc, Cr from e–log(σ'). ASTM D2435.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.preconsolidation()</code></td><td style="padding:9px 14px;">Lab — Consol.</td><td style="padding:9px 14px;">Casagrande method for preconsolidation pressure pc.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.compression_index()</code></td><td style="padding:9px 14px;">Lab — Consol.</td><td style="padding:9px 14px;">Cc from 6 empirical correlations (Das Table 7.3).</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.cv()</code></td><td style="padding:9px 14px;">Lab — Consol.</td><td style="padding:9px 14px;">Coefficient of consolidation via log-time or root-time.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.oedometer_plot()</code></td><td style="padding:9px 14px;">Lab — Consol.</td><td style="padding:9px 14px;">e–log(σ') curve with Cc, Cr, pc annotation.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.cv_plot()</code></td><td style="padding:9px 14px;">Lab — Consol.</td><td style="padding:9px 14px;">Time–deformation plot with cv extraction.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.proctor()</code></td><td style="padding:9px 14px;">Lab — Compact.</td><td style="padding:9px 14px;">Proctor test → w_opt, γ_d_max. ASTM D698/D1557.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.zav_line()</code></td><td style="padding:9px 14px;">Lab — Compact.</td><td style="padding:9px 14px;">Zero Air Voids line at S = 100%. Das Eq. 5.12.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.saturation_line()</code></td><td style="padding:9px 14px;">Lab — Compact.</td><td style="padding:9px 14px;">Constant-saturation contour on compaction plot.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.relative_compaction()</code></td><td style="padding:9px 14px;">Lab — Compact.</td><td style="padding:9px 14px;">RC = γ_d / γ_d_max × 100%.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.proctor_plot()</code></td><td style="padding:9px 14px;">Lab — Compact.</td><td style="padding:9px 14px;">Compaction curve + ZAV + saturation contours.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.constant_head()</code></td><td style="padding:9px 14px;">Lab — Perm.</td><td style="padding:9px 14px;">Constant-head permeability k. Das Eq. 5.11.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.falling_head()</code></td><td style="padding:9px 14px;">Lab — Perm.</td><td style="padding:9px 14px;">Falling-head permeability k. Das Eq. 5.13.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.permeability_plot()</code></td><td style="padding:9px 14px;">Lab — Perm.</td><td style="padding:9px 14px;">Q vs i or ln(h) vs t visualization.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.liquid_limit_test()</code></td><td style="padding:9px 14px;">Lab — Atterberg</td><td style="padding:9px 14px;">Flow curve → LL at N = 25 blows. ASTM D4318.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.flow_curve_plot()</code></td><td style="padding:9px 14px;">Lab — Atterberg</td><td style="padding:9px 14px;">Semi-log flow curve with LL marker.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.cbr_test()</code></td><td style="padding:9px 14px;">Lab — CBR</td><td style="padding:9px 14px;">CBR at 2.54 mm and 5.08 mm penetration. ASTM D1883.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.cbr_plot()</code></td><td style="padding:9px 14px;">Lab — CBR</td><td style="padding:9px 14px;">Load–penetration curve with standard reference markers.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.spt_n60()</code></td><td style="padding:9px 14px;">Site — SPT</td><td style="padding:9px 14px;">Energy-corrected blow count N₆₀. Skempton (1986).</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.spt_n160()</code></td><td style="padding:9px 14px;">Site — SPT</td><td style="padding:9px 14px;">Overburden-corrected (N₁)₆₀. 3 methods.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.spt_n160cs()</code></td><td style="padding:9px 14px;">Site — SPT</td><td style="padding:9px 14px;">Fines-content correction for liquefaction. Youd et al. (2001).</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.spt_friction_angle()</code></td><td style="padding:9px 14px;">Site — SPT</td><td style="padding:9px 14px;">φ' from SPT. Hatanaka, Kulhawy, Peck.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.spt_su()</code></td><td style="padding:9px 14px;">Site — SPT</td><td style="padding:9px 14px;">Undrained shear strength from SPT. Stroud, Hara.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.spt_dr()</code></td><td style="padding:9px 14px;">Site — SPT</td><td style="padding:9px 14px;">Relative density from SPT. Meyerhof, Skempton, Kulhawy.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.spt_modulus()</code></td><td style="padding:9px 14px;">Site — SPT</td><td style="padding:9px 14px;">Elastic modulus Es. Bowles (1996), 6 soil types.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.cpt_normalize()</code></td><td style="padding:9px 14px;">Site — CPT</td><td style="padding:9px 14px;">Normalized Qt, Fr, Bq. Robertson (2009).</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.cpt_ic()</code></td><td style="padding:9px 14px;">Site — CPT</td><td style="padding:9px 14px;">Soil Behaviour Type Index Ic.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.cpt_sbt()</code></td><td style="padding:9px 14px;">Site — CPT</td><td style="padding:9px 14px;">SBT zone classification (zones 2–7).</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.cpt_friction_angle()</code></td><td style="padding:9px 14px;">Site — CPT</td><td style="padding:9px 14px;">φ' from CPT. Robertson &amp; Campanella (1983).</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.cpt_su()</code></td><td style="padding:9px 14px;">Site — CPT</td><td style="padding:9px 14px;">Undrained shear strength. Su = (qt − σv) / Nkt.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.cpt_dr()</code></td><td style="padding:9px 14px;">Site — CPT</td><td style="padding:9px 14px;">Relative density. Baldi et al. (1986).</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.cpt_modulus()</code></td><td style="padding:9px 14px;">Site — CPT</td><td style="padding:9px 14px;">Constrained modulus M. Robertson (2009).</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.cpt_sbt_plot()</code></td><td style="padding:9px 14px;">Site — CPT</td><td style="padding:9px 14px;">Robertson SBT chart visualization.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.vane_su()</code></td><td style="padding:9px 14px;">Site — Vane</td><td style="padding:9px 14px;">Su from torque. ASTM D2573.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.vane_correction()</code></td><td style="padding:9px 14px;">Site — Vane</td><td style="padding:9px 14px;">Bjerrum (1972) correction factor μ.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.vane_remolded()</code></td><td style="padding:9px 14px;">Site — Vane</td><td style="padding:9px 14px;">Sensitivity and classification.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.pmt_parameters()</code></td><td style="padding:9px 14px;">Site — PMT</td><td style="padding:9px 14px;">Extract Em and pL from p–V curve.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.pmt_modulus()</code></td><td style="padding:9px 14px;">Site — PMT</td><td style="padding:9px 14px;">Young's modulus E = Em / α.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.pmt_su()</code></td><td style="padding:9px 14px;">Site — PMT</td><td style="padding:9px 14px;">Su from limit pressure.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.pmt_bearing()</code></td><td style="padding:9px 14px;">Site — PMT</td><td style="padding:9px 14px;">Bearing capacity (Ménard method).</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.pmt_settlement()</code></td><td style="padding:9px 14px;">Site — PMT</td><td style="padding:9px 14px;">Settlement estimate from PMT data.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.pmt_ko()</code></td><td style="padding:9px 14px;">Site — PMT</td><td style="padding:9px 14px;">K₀ from in-situ horizontal stress.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.plt_bearing()</code></td><td style="padding:9px 14px;">Site — PLT</td><td style="padding:9px 14px;">Bearing capacity. 3 criteria: log-log, tangent, settlement.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.plt_subgrade_modulus()</code></td><td style="padding:9px 14px;">Site — PLT</td><td style="padding:9px 14px;">Modulus of subgrade reaction ks.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.plt_settlement_correction()</code></td><td style="padding:9px 14px;">Site — PLT</td><td style="padding:9px 14px;">Terzaghi &amp; Peck size correction.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.plt_elastic_modulus()</code></td><td style="padding:9px 14px;">Site — PLT</td><td style="padding:9px 14px;">Elastic modulus from plate load test.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.plt_plot()</code></td><td style="padding:9px 14px;">Site — PLT</td><td style="padding:9px 14px;">Pressure–settlement curve.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.davisson()</code></td><td style="padding:9px 14px;">Site — Pile</td><td style="padding:9px 14px;">Davisson's Offset Limit Method (1972).</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.chin()</code></td><td style="padding:9px 14px;">Site — Pile</td><td style="padding:9px 14px;">Chin's Hyperbolic Method (1970).</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.de_beer()</code></td><td style="padding:9px 14px;">Site — Pile</td><td style="padding:9px 14px;">De Beer's Double-Log Method (1967).</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.hansen_80()</code></td><td style="padding:9px 14px;">Site — Pile</td><td style="padding:9px 14px;">Hansen's 80% Method (1963).</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.fhwa_5_percent()</code></td><td style="padding:9px 14px;">Site — Pile</td><td style="padding:9px 14px;">FHWA 5% diameter criterion for drilled shafts.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.case_method()</code></td><td style="padding:9px 14px;">Site — Pile</td><td style="padding:9px 14px;">Case Method dynamic capacity (PDA).</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.hiley()</code></td><td style="padding:9px 14px;">Site — Pile</td><td style="padding:9px 14px;">Hiley Driving Formula.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.danish_formula()</code></td><td style="padding:9px 14px;">Site — Pile</td><td style="padding:9px 14px;">Danish Driving Formula.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.enr()</code></td><td style="padding:9px 14px;">Site — Pile</td><td style="padding:9px 14px;">Engineering News Record Formula.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.pile_impedance()</code></td><td style="padding:9px 14px;">Site — Pile</td><td style="padding:9px 14px;">Pile impedance Z = EA/c.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.beta_integrity()</code></td><td style="padding:9px 14px;">Site — Pile</td><td style="padding:9px 14px;">Pile integrity beta ratio.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.slug_test()</code></td><td style="padding:9px 14px;">Site — Perm.</td><td style="padding:9px 14px;">Hvorslev (1951) slug test method.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.pumping_test_confined()</code></td><td style="padding:9px 14px;">Site — Perm.</td><td style="padding:9px 14px;">Thiem equation — confined aquifer.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.pumping_test_unconfined()</code></td><td style="padding:9px 14px;">Site — Perm.</td><td style="padding:9px 14px;">Thiem equation — unconfined aquifer.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.lefranc_test()</code></td><td style="padding:9px 14px;">Site — Perm.</td><td style="padding:9px 14px;">Lefranc borehole permeability test.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.dcp_cbr()</code></td><td style="padding:9px 14px;">Site — CBR</td><td style="padding:9px 14px;">CBR from DCP. Webster, TRL, Kleyn.</td></tr>
+                        <tr style="border-bottom:1px solid #eef1f5;"><td style="padding:9px 14px;"><code>ge.field_cbr_test()</code></td><td style="padding:9px 14px;">Site — CBR</td><td style="padding:9px 14px;">In-situ CBR from load–penetration data.</td></tr>
                     </tbody>
                 </table>
             </section>
@@ -608,9 +1848,85 @@ w2 = sp.<span class="fn">water_content</span>(S=<span class="num">0.80</span>, e
                 <p><strong>Uniformity Coefficient:</strong><br>Cᵤ = D₆₀ / D₁₀</p>
                 <p><strong>Coefficient of Curvature:</strong><br>Cᶜ = D₃₀² / (D₁₀ × D₆₀)</p>
                 <h4>Soil Phase Formulas</h4>
-                <p><strong>Dry Unit Weight:</strong> γ<sub>d</sub> = (Gs γ<sub>w</sub>) / (1 + e)</p>
-                <p><strong>Porosity to Void Ratio:</strong> e = n / (1 − n)</p>
-                <p><strong>Degree of Saturation:</strong> S = (w × Gs) / e</p>
+                <p><strong>Dry Unit Weight:</strong> γ<sub>d</sub> = (Gs γ<sub>w</sub>) / (1 + e) &nbsp;[Das Eq. 3.13]</p>
+                <p><strong>Saturated Unit Weight:</strong> γ<sub>sat</sub> = (Gs + e) γ<sub>w</sub> / (1 + e) &nbsp;[Das Eq. 3.15]</p>
+                <p><strong>Submerged Unit Weight:</strong> γ' = γ<sub>sat</sub> − γ<sub>w</sub> &nbsp;[Das Eq. 3.16]</p>
+                <p><strong>Porosity to Void Ratio:</strong> e = n / (1 − n) &nbsp;[Das Eq. 3.5]</p>
+                <p><strong>Degree of Saturation:</strong> S = (w × Gs) / e &nbsp;[Das Eq. 3.10]</p>
+                <p><strong>Relative Density:</strong> D<sub>r</sub> = (e<sub>max</sub> − e) / (e<sub>max</sub> − e<sub>min</sub>) &nbsp;[Das Eq. 3.22]</p>
+
+                <h4>Index Properties</h4>
+                <p><strong>Activity:</strong> A = PI / CF &nbsp;[Skempton, 1953]</p>
+                <p><strong>Sensitivity:</strong> S<sub>t</sub> = S<sub>u(und)</sub> / S<sub>u(rem)</sub> &nbsp;[Das Ch. 4]</p>
+                <p><strong>Liquidity Index:</strong> LI = (w − PL) / PI &nbsp;[Das Ch. 4]</p>
+
+                <h4>Classification</h4>
+                <p><strong>A-line:</strong> PI = 0.73 (LL − 20) &nbsp;[Casagrande, Das Fig. 4.8]</p>
+                <p><strong>U-line:</strong> PI = 0.9 (LL − 8) &nbsp;[Das Fig. 4.8]</p>
+                <p><strong>AASHTO Group Index:</strong> GI = (F−35)[0.2+0.005(LL−40)] + 0.01(F−15)(PI−10) &nbsp;[AASHTO M145]</p>
+
+                <h4>Shear Strength (Das Ch. 8)</h4>
+                <p><strong>Mohr–Coulomb:</strong> τ<sub>f</sub> = c + σ' tan φ &nbsp;[Das Eq. 8.3]</p>
+                <p><strong>Unconfined Shear Strength:</strong> S<sub>u</sub> = q<sub>u</sub> / 2 &nbsp;[Das Eq. 8.9]</p>
+
+                <h4>Consolidation (Das Ch. 7)</h4>
+                <p><strong>Compression Index:</strong> C<sub>c</sub> = (e₁ − e₂) / log(σ'₂ / σ'₁) &nbsp;[Das Eq. 7.9]</p>
+                <p><strong>Terzaghi Correlation:</strong> C<sub>c</sub> = 0.009 (LL − 10) &nbsp;[Das Table 7.3]</p>
+                <p><strong>Time Factor (50%):</strong> c<sub>v</sub> = T₅₀ H<sub>dr</sub>² / t₅₀ , T₅₀ = 0.197 &nbsp;[Das Eq. 7.22]</p>
+                <p><strong>Time Factor (90%):</strong> c<sub>v</sub> = T₉₀ H<sub>dr</sub>² / t₉₀ , T₉₀ = 0.848 &nbsp;[Das Eq. 7.23]</p>
+
+                <h4>Compaction (Das Ch. 5)</h4>
+                <p><strong>Zero Air Voids:</strong> γ<sub>d</sub> = G<sub>s</sub> γ<sub>w</sub> / (1 + w G<sub>s</sub>) &nbsp;[Das Eq. 5.12]</p>
+                <p><strong>Relative Compaction:</strong> RC (%) = γ<sub>d</sub> / γ<sub>d,max</sub> × 100</p>
+
+                <h4>Permeability (Das Ch. 5)</h4>
+                <p><strong>Constant-Head:</strong> k = Q L / (A h t) &nbsp;[Das Eq. 5.11]</p>
+                <p><strong>Falling-Head:</strong> k = (a L / A t) ln(h₁ / h₂) &nbsp;[Das Eq. 5.13]</p>
+
+                <h4>CBR (Das Ch. 5)</h4>
+                <p><strong>CBR:</strong> CBR (%) = (P<sub>test</sub> / P<sub>standard</sub>) × 100 &nbsp;[ASTM D1883]</p>
+
+                <h4>SPT Corrections</h4>
+                <p><strong>Energy Correction:</strong> N₆₀ = N × (ER/60) × C<sub>b</sub> × C<sub>s</sub> × C<sub>r</sub> &nbsp;[Skempton, 1986]</p>
+                <p><strong>Overburden (Liao &amp; Whitman):</strong> C<sub>N</sub> = √(p<sub>a</sub> / σ'<sub>v</sub>) &nbsp;[1986]</p>
+                <p><strong>Hatanaka Friction Angle:</strong> φ' = √(20 N₁₆₀) + 20 &nbsp;[1996]</p>
+                <p><strong>Hara Su:</strong> S<sub>u</sub> = 29 × N₆₀<sup>0.72</sup> kPa &nbsp;[1974]</p>
+                <p><strong>Meyerhof Dr:</strong> D<sub>r</sub> (%) = √(N₁₆₀ / 41) × 100 &nbsp;[1957]</p>
+
+                <h4>CPT Correlations</h4>
+                <p><strong>Normalized Resistance:</strong> Q<sub>t</sub> = (q<sub>t</sub> − σ<sub>v0</sub>) / σ'<sub>v0</sub> &nbsp;[Robertson, 2009]</p>
+                <p><strong>SBT Index:</strong> I<sub>c</sub> = √[(3.47 − log Q<sub>t</sub>)² + (log F<sub>r</sub> + 1.22)²] &nbsp;[Robertson, 2009]</p>
+                <p><strong>Friction Angle:</strong> φ' = arctan[0.1 + 0.38 log(q<sub>t</sub>/σ'<sub>v</sub>)] &nbsp;[Robertson &amp; Campanella, 1983]</p>
+                <p><strong>Su:</strong> S<sub>u</sub> = (q<sub>t</sub> − σ<sub>v0</sub>) / N<sub>kt</sub> &nbsp;[Lunne et al., 1997]</p>
+                <p><strong>Baldi Dr:</strong> D<sub>r</sub> = (1/C₂) ln[q<sub>c</sub> / (C₀ σ'<sub>v</sub><sup>C₁</sup>)] &nbsp;[1986]</p>
+
+                <h4>Vane Shear</h4>
+                <p><strong>Su from Torque:</strong> S<sub>u</sub> = T / [π(D²H/2 + D³/6)] &nbsp;[ASTM D2573]</p>
+                <p><strong>Bjerrum Correction:</strong> μ = 1.7 − 0.54 log₁₀(PI) &nbsp;[1972]</p>
+
+                <h4>Pressuremeter</h4>
+                <p><strong>Em:</strong> E<sub>m</sub> = 2(1+ν)(V₀+V<sub>m</sub>) Δp/ΔV &nbsp;[Ménard, 1956]</p>
+                <p><strong>Bearing:</strong> q<sub>u</sub> = σ<sub>v0</sub> + k(p<sub>L</sub> − p₀) &nbsp;[Ménard, 1963]</p>
+
+                <h4>Plate Load Test</h4>
+                <p><strong>Subgrade Modulus:</strong> k<sub>s</sub> = q / δ &nbsp;[Terzaghi, 1955]</p>
+                <p><strong>Settlement (sand):</strong> S<sub>f</sub>/S<sub>p</sub> = [B<sub>f</sub>(B<sub>p</sub>+0.3) / (B<sub>p</sub>(B<sub>f</sub>+0.3))]² &nbsp;[Terzaghi &amp; Peck, 1967]</p>
+
+                <h4>Pile Load Tests</h4>
+                <p><strong>Davisson Offset:</strong> Δ<sub>offset</sub> = PL/AE + (0.15 + D/120) in. &nbsp;[1972]</p>
+                <p><strong>Chin:</strong> Q<sub>u</sub> = 1/C₁ (slope of Δ/Q vs Δ) &nbsp;[1970]</p>
+                <p><strong>Hansen 80%:</strong> Q<sub>u</sub> = 1/(2√(ab)) &nbsp;[1963]</p>
+                <p><strong>Hiley:</strong> Q<sub>u</sub> = Whη / (s + c/2) &nbsp;[1925]</p>
+                <p><strong>Case Method:</strong> R<sub>s</sub> = ½[(1−J<sub>c</sub>)(F₁+Zv₁) + (1+J<sub>c</sub>)(F₂−Zv₂)] &nbsp;[Goble et al., 1975]</p>
+
+                <h4>Field Permeability</h4>
+                <p><strong>Hvorslev:</strong> k = r² ln(L<sub>e</sub>/R) / (2 L<sub>e</sub> T₀) &nbsp;[1951]</p>
+                <p><strong>Thiem (confined):</strong> k = Q ln(r₂/r₁) / (2π H (h₂−h₁)) &nbsp;[1906]</p>
+                <p><strong>Thiem (unconfined):</strong> k = Q ln(r₂/r₁) / (π (h₂²−h₁²)) &nbsp;[1906]</p>
+
+                <h4>DCP–CBR</h4>
+                <p><strong>Webster:</strong> log₁₀(CBR) = 1.12 − 0.39 log₁₀(DCPI) &nbsp;[USACE, 1992]</p>
+                <p><strong>TRL:</strong> log₁₀(CBR) = 2.48 − 1.057 log₁₀(DCPI) &nbsp;[1993]</p>
             </section>
         </main>
     </div>
